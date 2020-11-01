@@ -1,0 +1,179 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: 'NotoSansCJKkr-Light';
+  font-style: normal;
+  font-weight: 300;
+  src: url(../../fonts/NotoSansKR-Light.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'NotoSansCJKkr-Regular';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../../fonts/NotoSansKR-Regular.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'NotoSansCJKkr-Medium';
+  font-style: normal;
+  font-weight: 500;
+  src: url(../../fonts/NotoSansKR-Medium.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'NotoSansCJKkr-Bold';
+  font-style: normal;
+  font-weight: 900;
+  src: url(../../fonts/NotoSansKR-Bold.otf) format('opentype');
+}
+
+/* Common Style */
+* { margin: 0; padding: 0; }
+/* set html5 elements to block */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p,
+blockquote, pre, a, abbr, address, cite, code, del, dfn, em, font,
+img, ins, q, s, samp, strike, strong, sub, sup, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend { 
+	line-height: 1.5; border: 0 none; 
+}
+body { 
+	background: #fff;
+	position: relative;
+	min-height: 320px;
+	margin: 0 auto;
+	font-size: 100%;
+	font-family: 'NotoSansCJKkr-Regular', sans-serif;
+	word-break: normal;
+	text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+}
+header, h1 { font-size: 100%; }
+html, body { height: 100%; }
+caption,legend { visibility:hidden; overflow:hidden; width:0; height:0; font-size:0;line-height:0; }
+caption { display: none; }
+img { border: none; vertical-align: top; }
+select, input { vertical-align: top; border: 0px; border-radius: 0; background-color: transparent; }
+hr { display: none; border: 0 none; }
+ol, ul, ul li{ list-style: none; }
+em { font-style: normal; }
+menu li { list-style: none; }
+address { display: inline; font-style: normal; }
+button { appearance: none; cursor: pointer; border: 0px; background-color: transparent; border-radius:0; }
+table {border-collapse:collapse;border-spacing:0;}
+input, textarea, keygen, select, button {
+	font-family: font-family: 'NotoSansCJKkr-Regular', sans-serif; border-radius: 0 !important;}
+input:focus, textarea:focus, button:focus {
+	box-shadow: none !important;
+	border-color: #82cbc4 !important;
+}
+strong { font-weight: normal; }
+dfn { font-style: normal; }
+i, b, u, s {
+font-style: inherit;
+font-family: inherit;
+font-weight: inherit;
+text-decoration: none;
+}
+
+/* link Style */
+a:link, a:visited, a:active, a:focus { text-decoration: none; }
+a:hover { text-decoration: none; }
+
+/*font / text */
+.font-regular { font-family: 'NotoSansCJKkr-Regular' }
+.font-medium { font-family: 'NotoSansCJKkr-Medium';}
+.font-bold {font-family: 'NotoSansCJKkr-Bold';}
+.font-green {color: #82cbc4;}
+.text-error {color: #FF7384;}
+
+/*display*/
+.inline-block {display: inline-block !important;}
+
+
+/*button*/
+.btn-tp-custom-green {
+	color: #fff;
+	border-color: #82cbc4;
+	background: #82cbc4;
+	border-radius: 0;
+}
+.btn-tp-custom-green:hover {
+	color: #fff;
+	border-color: #32978e;
+	background: #32978e;
+}
+.btn-tp-custom-white {
+	color: #82cbc4;
+	border-color: #82cbc4;
+	background: #fff;
+	border-radius: 0;
+}
+.btn-tp-custom-white:hover {
+	color: #82cbc4;
+	background: rgba(0, 0, 0, 0.1);
+}
+
+/* tab */
+
+.nav-tabs {
+	text-align: center;
+	border-bottom: 2px solid #82cbc4;
+}
+
+.nav-tabs .nav-link {
+	color: #82cbc4;
+	border: none;
+}
+.nav-tabs .nav-link.active {
+	color: #fff;
+	border-color: #82cbc4;
+	background: #82cbc4;
+	border-radius: 0;
+}
+
+/*breadcrumb*/
+.breadcrumb {
+	background: none;
+	font-size: 12px;
+}
+.breadcrumb-item a{
+	color: #666;
+}
+
+.breadcrumb-item.active {
+	color: #82cbc4;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+    display: inline-block;
+    padding-right: .5rem;
+    color: #666;
+    content: ">";
+}
+
+/* accordion*/
+
+.accordion .card-header {
+	background: #82cbc4;
+}
+
+.accordion .card-body {
+	border: 1px solid #82cbc4;
+}
+
+.accordion .btn-link {
+    font-weight: 400;
+    color: #fff;
+    text-decoration: none;
+    
+}
+
+
+/*wrap*/
+#wrap-contents {
+	padding: 120px 15px 30px 15px;
+}
