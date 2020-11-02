@@ -18,7 +18,7 @@
        <div class="container-fluid">
          <div class="row top-footer">
            <div class="col-md-12 text-center">
-           <a class="navbar-brand" href="<%= request.getContextPath() %>/index.jsp">
+           	<a class="navbar-brand" href="<%= request.getContextPath() %>/index.jsp">
 	   			<img src="<%= request.getContextPath() %>/resources/images/common/logo-horizontal.png" alt="Take Place" width="160" height="66"/>
 	   		</a>
              <p>Copyrights © 2020 Design by <span class="font-green">Take Place</span></p>
