@@ -49,11 +49,13 @@
 			<!-- 입력 안하고 로그인버튼 눌러보거나, 요구사항에 맞지 않게 입력해보시오(에러문구 다름) -->
 			<form id="frmLogin" method="post">
 			  <div class="form-group">
-			    <label for="exampleInputId1" class="font-green inline-block" >아이디</label>
-			    <input type="text" class="form-control inline-block" id="exampleInputId1" aria-describedby="emailHelp">
-			    <small id="" class="form-text text-muted infoId">5~20자 이상의 영문 소문자, 숫자만 사용 가능합니다.</small>
-			    <small id="" class="form-text text-error validationId" style="display:none;">5~20자 이상의 영문 소문자, 숫자만 사용 가능합니다.</small>
-			    <small id="" class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
+			    <label for="exampleInputId1" class="font-green font-bold" >아이디</label>
+		    	<div class="inline-block">
+		    		<input type="text" class="form-control inline-block" id="exampleInputId1" aria-describedby="emailHelp">
+		    		<small class="form-text text-muted infoId">5~20자 이상의 영문 소문자, 숫자만 사용 가능합니다.</small>
+		    		<small class="form-text text-error validationId" style="display:none;">5~20자 이상의 영문 소문자, 숫자만 사용 가능합니다.</small>
+		    		<small class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
+		  		</div>
 			  </div>
 			  <button type="button" class="btn btn-tp-custom-green" onclick="submitLogin(this)">로그인</button>
 			</form>
