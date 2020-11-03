@@ -73,22 +73,22 @@
 				    
 			        <ul class="navbar-nav mu-main-nav font-bold">
 			        	<li class="nav-item">
-		                	<a class="nav-link" href="#">사이트 소개</a>
+		                	<a class="nav-link" href="<%= request.getContextPath() %>/views/intro/intro.jsp">사이트 소개</a>
 			            </li>
 			            <li class="nav-item">
-		                	<a class="nav-link" href="#">공간 유형</a>
+		                	<a class="nav-link" href="<%= request.getContextPath() %>/views/products/productsList.jsp">공간 유형</a>
 			            </li>
 			            <li class="nav-item">
-		                	<a class="nav-link" href="#">공지사항</a>
+		                	<a class="nav-link" href="<%= request.getContextPath() %>/views/notice/noticeList.jsp">공지사항</a>
 			            </li>
 			            <li class="nav-item">
-		                	<a class="nav-link" href="#">이용방법</a>
+		                	<a class="nav-link" href="<%= request.getContextPath() %>/views/howto/howto.jsp">이용방법</a>
 			            </li>
 			            <li class="nav-item">
-		                	<a class="nav-link" href="#">로그인</a>
+		                	<a class="nav-link" href="<%= request.getContextPath() %>/views/member/signIn.jsp">로그인</a>
 			            </li>
 			            <li class="nav-item">
-		                	<a class="nav-link" href="#">회원가입</a>
+		                	<a class="nav-link" href="<%= request.getContextPath() %>/views/member/signUp.jsp">회원가입</a>
 			            </li>
 			        </ul>
 			    </div>
