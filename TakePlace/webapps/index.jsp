@@ -14,6 +14,7 @@
 <script src="resources/js/common/jquery-ui.min.js"></script>
 
 
+
 </head>
 <body>
 
@@ -27,6 +28,8 @@
 			</div>
 		</div>
 	</section>
+	
+	<a href="views/products/topProduct.jsp">인기상품</a>
 	
 	<%@ include file="views/common/footer.jsp" %>
 
