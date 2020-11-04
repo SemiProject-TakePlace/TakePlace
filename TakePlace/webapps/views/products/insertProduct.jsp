@@ -55,7 +55,7 @@ input[type="file"] {
 	
 	<section id="wrap-contents">
 		<div class="container">
-			<h2 class="font-bold">공간 등록</h2>
+			<h2 class="content-title">공간 등록</h2>
 			
 			<form id="addProducts" method="post" action="/">
 			  <div class="form-group">
@@ -112,10 +112,12 @@ input[type="file"] {
 			  </div>
 			  
 			  <div class="form-group">
-			    <label for="pAddress" class="font-green font-bold">위치</label>
+			    <label for="pAddress1" class="font-green font-bold">위치</label>
 			    <div class="inline-block">
-			    	<input type="text" name="pAddress" id="pAddress" class="form-control inline-block"/>
+			    	<input type="text" name="pZipCode" id="pZipCode" class="form-control inline-block"/>
 			    	<button type="button" class="btn btn-tp-custom-green" onclick="addrSearch()">검색</button>
+			    	<input type="text" name="pAddress1" id="pAddress1" class="form-control inline-block"/>
+			    	<input type="text" name="pAddress2" id="pAddress2" class="form-control inline-block"/>
 				    <small class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
 				</div>			 
 			  </div>
@@ -288,12 +290,12 @@ input[type="file"] {
 			                }
 	
 			                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-			                $('#zipCode').val(data.zonecode); //5자리 새우편번호 사용
+			                $("#pZipCode").val(data.zonecode); //5자리 새우편번호 사용
 			                
-			                $('#address1').val(fullAddr);
+			                $("#pAddress1").val(fullAddr);
 	
 			                // 커서를 상세주소 필드로 이동한다.
-			                $('#address2').focus();
+			                $("#pAddress2").focus();
 			            }
 			        }).open();
 			    };
