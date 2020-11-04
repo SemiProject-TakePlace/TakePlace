@@ -118,7 +118,7 @@ a:hover { text-decoration: none; }
 	width: 150px;
 }
 .form-control {
-	width: 300px;
+	width: 350px;
 }
 
 /* button */
@@ -253,6 +253,8 @@ a:hover { text-decoration: none; }
 	position: relative;
 	margin-bottom: 50px;
 	font-weight: bold;
+	border-bottom: 1px solid #ccc;
+    padding-bottom: 30px;
 }
 
 

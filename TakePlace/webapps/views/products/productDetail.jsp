@@ -5,16 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>공간 상세 페이지</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/bootstrap.min.css" type="text/css" />
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/common.css" type="text/css" />
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/main/main.css" type="text/css" />
+<%@ include file="../../resources/css/common/common.jsp" %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/datepicker.css" type="text/css" />
 
-<script src="<%= request.getContextPath() %>/resources/js/common/jquery-3.5.1.min.js"></script>
-<script src="<%= request.getContextPath() %>/resources/js/common/bootstrap.min.js"></script>
+<%@ include file="../../resources/js/common/common.jsp" %>
 <script src="<%= request.getContextPath() %>/resources/js/common/bootstrap-datepicker.js"></script>
 <script src="<%= request.getContextPath() %>/resources/js/common/bootstrap-datepicker.kr.js"></script>
-
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2e78244e6d0a409b391542fb720051d2&libraries=services"></script>
 
 <style>
@@ -81,13 +77,6 @@
 		color: #fff;
 	}
 	
-	/*
-	
-	.product-detail .details {
-		padding-top: 50px;
-	}
-	
-	*/
 	.product-detail .details .detail{
     	position: relative;
     	line-height: 25px;
