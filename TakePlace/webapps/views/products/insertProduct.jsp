@@ -114,10 +114,10 @@ input[type="file"] {
 			  <div class="form-group">
 			    <label for="pAddress1" class="font-green font-bold">위치</label>
 			    <div class="inline-block">
-			    	<input type="text" name="pZipCode" id="pZipCode" class="form-control inline-block"/>
+			    	<input type="text" name="pZipCode" id="pZipCode" class="form-control inline-block mb-1"/> <br>
+			    	<input type="text" name="pAddress1" id="pAddress1" class="form-control inline-block mb-1"/> <br>
+			    	<input type="text" name="pAddress2" id="pAddress2" class="form-control inline-block" placeholder="상세 주소 입력"/>
 			    	<button type="button" class="btn btn-tp-custom-green" onclick="addrSearch()">검색</button>
-			    	<input type="text" name="pAddress1" id="pAddress1" class="form-control inline-block"/>
-			    	<input type="text" name="pAddress2" id="pAddress2" class="form-control inline-block"/>
 				    <small class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
 				</div>			 
 			  </div>
@@ -147,7 +147,7 @@ input[type="file"] {
 			  <div class="form-group">
 			    <label for="pGuide" class="font-green font-bold">시설 안내</label>
 			    <div class="inline-block">
-			    	<textarea name="pGuide" id="pGuide" cols="70" rows="10" placeholder="시설 안내사항을 입력해주세요.(전화번호 등)"></textarea>
+			    	<textarea name="pGuide" id="pGuide" cols="100" rows="7" placeholder="시설 안내사항을 입력해주세요.(전화번호 등)"></textarea>
 				    <small class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
 				</div>			 
 			  </div>
@@ -155,7 +155,7 @@ input[type="file"] {
 			  <div class="form-group">
 			    <label for="pGuide" class="font-green font-bold">유의 사항</label>
 			    <div class="inline-block">
-			    	<textarea name="pGuide" id="pGuide" cols="70" rows="10" placeholder="유의 사항을 입력해주세요."></textarea>
+			    	<textarea name="pGuide" id="pGuide" cols="100" rows="7" placeholder="유의 사항을 입력해주세요."></textarea>
 				    <small class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
 				</div>			 
 			  </div>
