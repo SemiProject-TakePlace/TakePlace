@@ -25,7 +25,7 @@
 		<div id="main-bg" class="main-content">
 			<div class="main-bg-content">
 			<h2 class="main-bg-text font-bold">당신의 공간을 등록하세요!</h2>
-			<a href="views/products/addProducts.jsp" class="btn btn-dark">공간 등록하기</a>
+			<a href="views/products/insertProduct.jsp" class="btn btn-dark">공간 등록하기</a>
 			</div>
 		</div>
 		

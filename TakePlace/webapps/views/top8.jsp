@@ -27,7 +27,9 @@
 	
 	<section id="wrap-contents" class="footer-bottom">
 		<div class="container top8">
-			<h2 class="font-bold"><span class="font-green">최고의 인기</span> 상품</h2>
+			<h2 class="font-bold content-title">
+				<span class="font-green">최고의 인기</span> 상품
+			</h2>
 		</div>
 		
 		<div class="top8-content">

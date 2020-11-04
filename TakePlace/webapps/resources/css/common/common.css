@@ -64,7 +64,7 @@ menu li { list-style: none; }
 address { display: inline; font-style: normal; }
 button { appearance: none; cursor: pointer; border: 0px; background-color: transparent; border-radius:0; }
 table {border-collapse:collapse;border-spacing:0;}
-input, textarea, keygen, select, button {
+input, textarea, keygen, select, button, a {
 	font-family: 'NotoSansCJKkr-Regular', sans-serif; border-radius: 0 !important;}
 input:focus, select:focus, textarea:focus, button:focus {
 	box-shadow: none !important;
@@ -167,6 +167,8 @@ a:hover { text-decoration: none; }
 .breadcrumb {
 	background: none;
 	font-size: 12px;
+	margin: 0;
+	padding: 0;
 }
 .breadcrumb-item a{
 	color: #666;
@@ -229,6 +231,12 @@ a:hover { text-decoration: none; }
 /*wrap*/
 #wrap-contents {
 	padding: 150px 15px 30px 15px;
+}
+
+#wrap-contents .content-title {
+	position: relative;
+	margin-bottom: 50px;
+	font-weight: bold;
 }
 
 
