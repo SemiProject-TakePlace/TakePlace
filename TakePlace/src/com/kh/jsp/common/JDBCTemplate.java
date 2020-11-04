@@ -13,7 +13,7 @@ public class JDBCTemplate {
 			// getConnection(오라클서버url, 사용자계정, 비밀번호);
 			con = DriverManager.getConnection(
 					"jdbc:oracle:thin:@localhost:1521:xe",
-					"JSP", "JSP");
+					"TakePlace", "takeplace");
 			
 			con.setAutoCommit(false); // 에러 여부와 관계없이 자동 커밋하는 것을 방지
 		} catch (ClassNotFoundException | SQLException e) {
