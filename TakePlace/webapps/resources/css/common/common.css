@@ -228,6 +228,22 @@ a:hover { text-decoration: none; }
 	margin-bottom: 0;	
 }
 
+/* pagination */
+
+.pagination .page-item .page-link {
+	color: #212529;
+	border: none;
+}
+	
+.pagination .page-item .page-link:hover {
+    background: rgba(130, 203, 196, 0.2);
+}
+
+.pagination .page-item .page-link.active {
+	color: #fff;
+	background: #82cbc4;
+}
+
 /*wrap*/
 #wrap-contents {
 	padding: 150px 15px 30px 15px;
