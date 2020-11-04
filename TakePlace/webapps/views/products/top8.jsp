@@ -5,12 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>최고의 인기 상품</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/bootstrap.min.css" type="text/css" />
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/common.css" type="text/css" />
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/main/main.css" type="text/css" />
-
-<script src="<%= request.getContextPath() %>/resources/js/common/jquery-3.5.1.min.js"></script>
-<script src="<%= request.getContextPath() %>/resources/js/common/bootstrap.min.js"></script>
+<%@ include file="../../resources/css/common/common.jsp" %>
+<%@ include file="../../resources/js/common/common.jsp" %>
 
 <style>
 	.top8 h2 {
@@ -20,10 +16,11 @@
 		background : rgb(240, 240, 240);
 	}
 </style>
+
 </head>
 <body>
 
-	<%@ include file="common/header.jsp" %>
+	<%@ include file="../common/header.jsp" %>
 	
 	<section id="wrap-contents" class="footer-bottom">
 		<div class="container top8">
@@ -54,7 +51,7 @@
 		</div>
 		
 	</section>
-	<%@ include file="common/footer.jsp" %>
+	<%@ include file="../common/footer.jsp" %>
 
 </body>
 </html>
