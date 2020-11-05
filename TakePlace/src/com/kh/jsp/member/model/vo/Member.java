@@ -12,7 +12,7 @@ public class Member implements Serializable{
 	private String mName;		// 멤버 이름 (게스트 : 닉네임, 호스트 : 회사명)
 	private String pwd;			// 비밀번호
 	private Date joinDate;		// 가입일
-	private Date chdate;		// 변경일
+	private Date chDate;		// 변경일
 	private String mType;		// 멤버 타입 (1: 관리자 2: 호스트 3:게스트)
 	private String email;		// 이메일
 	
@@ -21,14 +21,14 @@ public class Member implements Serializable{
 		
 	}
 	
-	public Member(int mno, String id, String mName, String pwd, Date joinDate, Date chdate, String mType, String email) {
+	public Member(int mno, String id, String mName, String pwd, Date joinDate, Date chDate, String mType, String email) {
 		super();
 		this.mno = mno;
 		this.id = id;
 		this.mName = mName;
 		this.pwd = pwd;
 		this.joinDate = joinDate;
-		this.chdate = chdate;
+		this.chDate = chDate;
 		this.mType = mType;
 		this.email = email;
 		
@@ -57,7 +57,7 @@ public class Member implements Serializable{
 	@Override
 	public String toString() {
 		return "Member [mno=" + mno + ", id=" + id + ", mName=" + mName + ", pwd=" + pwd + ", joinDate=" + joinDate
-				+ ", chdate=" + chdate + ", mType=" + mType + ", email=" + email + "]";
+				+ ", chDate=" + chDate + ", mType=" + mType + ", email=" + email + "]";
 	}
 
 	public int getMno() {
@@ -76,11 +76,11 @@ public class Member implements Serializable{
 		this.id = id;
 	}
 
-	public String getmName() {
+	public String getMname() {
 		return mName;
 	}
 
-	public void setmName(String mName) {
+	public void setMname(String mName) {
 		this.mName = mName;
 	}
 
@@ -101,18 +101,18 @@ public class Member implements Serializable{
 	}
 
 	public Date getChdate() {
-		return chdate;
+		return chDate;
 	}
 
 	public void setChdate(Date chdate) {
-		this.chdate = chdate;
+		this.chDate = chdate;
 	}
 
-	public String getmType() {
+	public String getMtype() {
 		return mType;
 	}
 
-	public void setmType(String mType) {
+	public void setMtype(String mType) {
 		this.mType = mType;
 	}
 

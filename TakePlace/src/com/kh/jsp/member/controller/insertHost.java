@@ -1,6 +1,7 @@
 package com.kh.jsp.member.controller;
 
 import java.io.IOException;
+import java.sql.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
@@ -45,19 +46,26 @@ public class insertHost extends HttpServlet implements Servlet {
 		String bsName = request.getParameter("hostName");
 
 		Member m = new Member(id, mName, pwd, mType, email);
-		Host h = new Host(bsNum, bsName);
+		Host h = new Host(m.getMno(), id, mName, pwd, m.getJoinDate(), m.getChdate(), mType, email,
+				bsNum, bsName, 0, "N");
+		
+		// Host h = new Host(m.getMno(), id, mName, pwd, null, null, mType, email);
 
 		System.out.println("가입 정보 확인 : " + m);
 		System.out.println("가입 정보 확인 : " + h);
 		
 		MemberService ms = new MemberService();
 		
-		ms.insertMember(m);
 	
 		
 		
-		ms.insertHost(h);
+		ms.insertMember(m);
 		
+		
+		m = ms.selectOneHost(m);
+		ms.insertHost(m, h);
+		
+		System.out.println("회원 가입 성공!");
 		response.sendRedirect("/takeplace/views/member/hostSuccess.jsp");
 		
 	}
@@ -68,7 +76,6 @@ public class insertHost extends HttpServlet implements Servlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

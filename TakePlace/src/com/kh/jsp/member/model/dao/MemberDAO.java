@@ -62,7 +62,7 @@ public class MemberDAO {
 				
 				result.setId(m.getId());
 				result.setPwd(m.getPwd());
-				result.setmName(rset.getString("mname"));
+				result.setMname(rset.getString("mname"));
 				result.setEmail(rset.getString("email"));
 			
 			}
@@ -92,7 +92,7 @@ public class MemberDAO {
 			pstmt = con.prepareStatement(sql);
 			
 			pstmt.setString(1, joinMember.getId());
-			pstmt.setString(2, joinMember.getmName());
+			pstmt.setString(2, joinMember.getMname());
 			pstmt.setString(3, joinMember.getPwd());
 			pstmt.setString(4, joinMember.getEmail());
 			
@@ -138,7 +138,7 @@ public class MemberDAO {
 				
 				result.setId(m.getId());
 				result.setPwd(m.getPwd());
-				result.setmName(rset.getString("mname"));
+				result.setMname(rset.getString("mname"));
 				result.setEmail(rset.getString("email"));
 			
 			}
@@ -237,7 +237,7 @@ public class MemberDAO {
 			pstmt = con.prepareStatement(sql);
 			
 			pstmt.setString(1, m.getId());
-			pstmt.setString(2, m.getmName());
+			pstmt.setString(2, m.getMname());
 			pstmt.setString(3, m.getPwd());
 			pstmt.setString(4, m.getEmail());
 			
@@ -286,6 +286,74 @@ public class MemberDAO {
 			
 		} finally {
 			
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+	public Member selectOneHost(Connection con, Member m) {
+		Member result = null;     
+		PreparedStatement pstmt = null; 
+		ResultSet rset = null;  
+		
+		String sql = prop.getProperty("selectOneHost");
+		
+		// 쿼리 확인용
+		// System.out.println(sql);
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, m.getId());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) { 
+				
+				result = new Member();
+				result.setMno(rset.getInt("mno"));
+			}
+			
+			System.out.println("조회 결과 확인 : " + result);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+
+
+	public int insertHost(Connection con, Member m, Host h) {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertHost");
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, h.getBsNum());
+			pstmt.setInt(2, m.getMno());
+			pstmt.setString(3, h.getBsName());
+			
+			result = pstmt.executeUpdate();
+			
+			System.out.println(sql);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
 			close(pstmt);
 		}
 		
