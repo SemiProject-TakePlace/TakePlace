@@ -202,16 +202,39 @@
         <div class="sidebar-sticky">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/host/profile/hostPageProfile.jsp">프로필</a>
+              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/manager/member/memberList.jsp">회원관리</a>
+            </li>
+            <li class="nav-item dropdown-btn">
+              <a class="nav-link" href="#">상품 관리<i class="fa fa-chevron-down"></i></a>
+              <ul style="display: none;">
+              	<li class="nav-item">
+	              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/manager/products/studyRoom.jsp">스터디룸</a>
+	            </li>
+	            <li class="nav-item">
+	              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/manager/products/studioRoom.jsp">스튜디오</a>
+	            </li>
+	            <li class="nav-item">
+	              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/manager/products/seminarRoom.jsp">세미나룸</a>
+	            </li>
+	            <li class="nav-item">
+	              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/manager/products/partyRoom.jsp">파티룸</a>
+	            </li>
+	            <li class="nav-item">
+	              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/manager/products/officeRoom.jsp">오피스</a>
+	            </li>
+              </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/host/products/productsList.jsp">내 상품 목록</a>
+              <a class="nav-link active" href="http://localhost:8088/takeplace/views/mypage/manager/notice/noticeList.jsp">공지사항</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/host/reservation/reservationList.jsp">예약 현황</a>
+              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/manager/review/reviewList.jsp">이용 후기</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="http://localhost:8088/takeplace/views/mypage/host/question/questionList.jsp">문의 내역</a>
+              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/manager/oneToOneQuestion/oneToOneQuestionList.jsp">1:1 문의</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/manager/frequentlyAskedQuestions/frequentlyAskedQuestionsList.jsp">FAQ</a>
             </li>
           </ul>
         </div>
@@ -248,16 +271,16 @@
 				  <ol class="breadcrumb">
 				    <li class="breadcrumb-item"><a href="#">Home</a></li>
 				    <li class="breadcrumb-item"><a href="#">마이페이지</a></li>
-				    <li class="breadcrumb-item active" aria-current="page">문의 내역</li>
+				    <li class="breadcrumb-item active" aria-current="page">공지사항</li>
 				  </ol>
 				</nav>
-				<h2 class="content-title">문의 내역</h2>
+				<h2 class="content-title">공지사항</h2>
 				
 				<!-- 여기서부터 자유롭게 컨텐츠 잡으면서 시작 -->
 				<nav>
                 	<div class="nav nav-tabs" id="nav-tab" role="tablist">
-                		<a style="width: 50%" class="nav-link active" id="nav-waiting-tab" data-toggle="tab" href="#nav-waiting" role="tab" aria-controls="nav-waiting" aria-selected="true">문의 대기</a>
-                		<a style="width: 50%" class="nav-link" id="nav-complete-tab" data-toggle="tab" href="#nav-complete" role="tab" aria-controls="nav-complete" aria-selected="false">문의 완료</a>
+                		<a style="width: 50%" class="nav-link active" id="nav-waiting-tab" data-toggle="tab" href="#nav-waiting" role="tab" aria-controls="nav-waiting" aria-selected="true">게스트</a>
+                		<a style="width: 50%" class="nav-link" id="nav-host-tab" data-toggle="tab" href="#nav-host" role="tab" aria-controls="nav-host" aria-selected="false">호스트</a>
               		</div>
          		</nav>
 				<div class="tab-content" id="nav-tabContent" >
@@ -266,6 +289,7 @@
                 <div class ="outer">
                 
                 <form action="#" method="post" id="create_waitingAccount" name="waitingForm">
+                <!-- 게스트 회원가입 -->
              
                 <div class="outer">
 							 <div id="mainWrapper">
@@ -372,9 +396,8 @@
 						                </div> 
 						                <div id='liSearchOption'>
 						                    <select id='selSearchOption' >
-						                        <option value='A'>제목+내용</option>
-						                        <option value='T'>제목</option>
-						                        <option value='C'>내용</option>
+						                        <option value='I'>아이디</option>
+						                        <option value='E'>이메일주소</option>
 						                    </select>
 						                    <input type="text" class="form-control inline-block" id="exampleInputId1" aria-describedby="emailHelp">
 						                    <button class="btn btn-tp-custom-green">검색</button>
@@ -392,120 +415,56 @@
                 
                  <div style="border: 1px solid #82cbc4">
                  <form action="#" method="post" id="create_completeAccount">
-                 <div class="outer">
-							 <div id="mainWrapper">
-						        <ul>
-						            <li>
-						                <ul id ="ulTable">
-						                    <li>
-						                        <ul>
-						                            <li>No</li>
-						                            <li>공간명</li>
-						                            <li>문의자</li>
-						                            <li>문의 제목</li>
-						                            <li>문의 날짜</li>
-						                            <li>답변</li>
-						                        </ul>
-						                    </li>
-						                    <!-- 게시물이 출력될 영역 -->
-						                    <li>
-						                        <ul>
-						                            <li>20</li>
-						                            <li class="left">강남 일등 스터디룸</li>
-						                            <li>guest01</li>
-						                            <li>기본 인원에 대해 ...</li>
-						                            <li>2020-10-29</li>
-						                            <li>답변완료</li>
-						                        </ul>
-						                    </li>
-						                    <li>
-						                        <ul>
-						                            <li>19</li>
-						                            <li class="left">강남 일등 스터디룸</li>
-						                            <li>guest02</li>
-						                            <li>내일도 예약 가능한가요?</li>
-						                            <li>2020-10-29</li>
-						                            <li>답변완료</li>
-						                        </ul>
-						                    </li>
-						                    <li>
-						                        <ul>
-						                            <li>18</li>
-						                            <li class="left">강남 일등 스터디룸</li>
-						                            <li>guest03</li>
-						                            <li>예약했는데 시간 변경 가능한가요?</li>
-						                            <li>2020-10-29</li>
-						                            <li>답변완료</li>
-						                        </ul>
-						                    </li>
-						                    <li>
-						                        <ul>
-						                            <li>17</li>
-						                            <li class="left">강북 세미 파티룸</li>
-						                            <li>guest04</li>
-						                            <li>방 몇개인가요?</li>
-						                            <li>2020-10-29</li>
-						                            <li>답변완료</li>
-						                        </ul>
-						                        <ul>
-						                            <li>16</li>
-						                            <li class="left">강북 세미 파티룸</li>
-						                            <li>guest05</li>
-						                            <li>고기 구워먹어도 되나요...</li>
-						                            <li>2020-10-29</li>
-						                            <li>답변완료</li>
-						                        </ul>
-						                        <ul>
-						                            <li>15</li>
-						                            <li class="left">역삼 KH 스터디룸</li>
-						                            <li>guest06</li>
-						                            <li>화장실 깨끗한가요?</li>
-						                            <li>2020-10-29</li>
-						                            <li>답변대기</li>
-						                        </ul>
-						                        <ul>
-						                            <li>14</li>
-						                            <li class="left">강남 일등 스터디룸</li>
-						                            <li>guest07</li>
-						                            <li>최대인원 몇명인가요?</li>
-						                            <li>2020-10-29</li>
-						                            <li>답변대기</li>
-						                        </ul>
-						                        <ul>
-						                            <li>13</li>
-						                            <li class="left">강남 일등 스터디룸</li>
-						                            <li>guest08</li>
-						                            <li>시간변경 가능한가요?</li>
-						                            <li>2020-10-29</li>
-						                            <li>답변완료</li>
-						                        </ul>
-						                    <li>                                        
-						                </ul>
-						            </li>
-						            </ul>
-						            <!-- 게시판 페이징 영역 -->
-						            <br>
-						                <div id="divPaging">
-						                    <button class="btn btn-tp-custom-white">◀</button>
-						                    <button class="btn btn-tp-custom-white">1</button>
-						                    <button class="btn btn-tp-custom-white">2</button>
-						                    <button class="btn btn-tp-custom-white">3</button>
-						                    <button class="btn btn-tp-custom-white">4</button>
-						                    <button class="btn btn-tp-custom-white">5</button>
-						                    <button class="btn btn-tp-custom-white">▶</button>
-						                    
-						                </div> 
-						                <div id='liSearchOption'>
-						                    <select id='selSearchOption' >
-						                        <option value='A'>제목+내용</option>
-						                        <option value='T'>제목</option>
-						                        <option value='C'>내용</option>
-						                    </select>
-						                    <input type="text" class="form-control inline-block" id="exampleInputId1" aria-describedby="emailHelp">
-						                    <button class="btn btn-tp-custom-green">검색</button>
-						                </div>
-						                </div>
-						                </div>
+                 <!-- 호스트 회원가입 -->
+                  <div class="form-group">
+                  <label for="companyName" class="font-green inline-block" >회사명</label>
+                <input type="text" class="form-control inline-block" id="companyName" aria-describedby="emailHelp" placeholder="회사명 입력">
+              </div>
+                 
+                <div class="form-group">
+                  <label for="completeName" class="font-green inline-block" >사업자명</label>
+                <input type="text" class="form-control inline-block" id="completeName" aria-describedby="emailHelp" placeholder="사업자명 입력">
+              </div>
+              
+              <div class="form-group">
+                  <label for="companyNo" class="font-green inline-block" >사업자 등록 번호</label>
+                <input type="password" class="form-control inline-block" id="companyNo" aria-describedby="emailHelp" placeholder="사업자 등록 번호 입력">
+              </div>
+              
+              <div class="form-group">
+                  <label for="hostid" class="font-green inline-block" >아이디</label>
+                <input type="text" class="form-control inline-block" id="hostid" aria-describedby="emailHelp" placeholder="아이디 입력" maxlength="">
+                <small id="hostinfoId" class="form-text text-muted">5~20자 이상의 영문 소문자, 숫자만 사용 가능합니다.</small>
+                <small id="hostvalidationId" class="form-text text-error" style="display:none;">5~20자 이상의 영문 소문자, 숫자만 사용 가능합니다.</small>
+                <small id="hostrequiredId" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
+                <small id="hostchkId" class="form-text text-emuted" style="display:none; color: green;">사용 가능한 아이디 입니다.</small>
+                
+                 <!-- <button class="btn btn-tp-custom-green">중복확인</button> -->
+              </div>
+              
+              <div class="form-group">
+                  <label for="hostpwd" class="font-green inline-block" >비밀번호</label>
+                <input type="password" class="form-control inline-block" id="hostpwd" aria-describedby="emailHelp" placeholder="비밀번호 입력">
+                <small id="hostinfoPwd" class="form-text text-muted">영대문자, 숫자, 특수문자를 조합하여 8~30자를 입력하세요.</small>
+                <small id="hostvalidationPwd" class="form-text text-error" style="display:none;">영대문자, 숫자, 특수문자를 조합하여 8~30자를 입력하세요.</small>
+                <small id="hostrequiredPwd" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
+                <small id="hostchkPwd" class="form-text text-emuted" style="display:none; color: green;">사용 가능한 비밀번호 입니다.</small>
+              </div>
+              
+              <div class="form-group">
+                  <label for="pwdchk2" class="font-green inline-block" >비밀번호 확인</label>
+                <input type="password" class="form-control inline-block" id="pwdchk2" aria-describedby="emailHelp" placeholder="비밀번호 입력 확인">
+                <small id="hostrequiredPwd" class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
+                <small id="hostvalidationPwd" class="form-text text-error" style="display:none;">비밀 번호가 일치하지 않습니다.</small>
+              </div>
+              
+              <div class="form-group">
+                  <label for="hostemail" class="font-green inline-block" >이메일</label>
+                <input type="text" class="form-control inline-block" id="userEmail" aria-describedby="emailHelp" placeholder="이메일 입력">
+                 <button class="btn btn-tp-custom-green">이메일 인증</button>
+              </div>
+              
+              <button type="button" class="btn btn-tp-custom-green" onclick="signUp();">회원가입</button>
                 
                 </form>
                 </div>
