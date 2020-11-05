@@ -15,12 +15,16 @@
 
 <style>
 
+	/*
+   	컨텐츠 상하 가운데 정렬 / 해상도에 따라 다르기때문에 우선 보류
 	.join-content {
 		position: absolute;
 	    top: 45%;
 	    left: 50%;
 	    transform: translate(-50%, -50%);
 	}
+	
+	*/
 	
    form {
       padding: 30px;
@@ -61,7 +65,7 @@
 		                   <small id="validationId" class="form-text text-error" style="display:none;">5~20자 이상의 영문 소문자, 숫자만 사용 가능합니다.</small>
 		               	   <small id="idErr" class="form-text text-error" style="display:none;">중복된 아이디 입니다.</small>
 		                   <small id="requiredId" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
-		                   <small id="chkId" class="form-text text-emuted" style="display:none; color: green;">사용 가능한 아이디 입니다.</small>
+		                   <small id="chkId" class="form-text text-emuted font-green" style="display:none;">사용 가능한 아이디 입니다.</small>
 		                   <input id="duplicationId" type="hidden" value="idUncheck"> <!-- 아아디 중복체크용 -->
 	              		</div>
 	              </div>
@@ -75,7 +79,7 @@
 		                   <small id="validationNick" class="form-text text-error" style="display:none;">한글, 숫자, 영소문자를 조합하여 6자 이상 입력하세요.</small>
 		                   <small id="nickErr" class="form-text text-error" style="display:none;">중복된 닉네임 입니다.</small>
 		                   <small id="requiredNick" class="form-text text-error " style="display:none;">필수 입력 사항 입니다.</small>
-		                   <small id="chkNick" class="form-text text-emuted" style="display:none; color: green;">사용 가능한 닉네임 입니다.</small>
+		                   <small id="chkNick" class="form-text text-emuted font-green" style="display:none;">사용 가능한 닉네임 입니다.</small>
 		              	   <input id="duplicationNick" type="hidden" value="NickUncheck"> <!-- 아아디 중복체크용 -->
 	              		</div>
 	              </div>
@@ -90,7 +94,7 @@
 		                      <small id="validationPwd" class="form-text text-error" style="display:none;">영문자, 숫자, 특수문자를 조합하여 8~30자를 입력하세요.</small>
 		                      <small id="requiredPwd" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
 		                     <small id="checkSpace" class="form-text text-error" style="display:none;">공백은 입력하실 수 없습니다.</small>
-		                     <small id="chkPwd" class="form-text text-emuted" style="display:none; color: green;">사용 가능한 비밀번호 입니다.</small>
+		                     <small id="chkPwd" class="form-text text-emuted font-green" style="display:none;">사용 가능한 비밀번호 입니다.</small>
 	             		</div>
 	              </div>
 	              
@@ -157,7 +161,7 @@
 			              </div>
 			              
 			              <div class="form-group">
-			                     <label for="hostid" class="font-green" >아이디</label>
+			                     <label for="hostid" class="font-green">아이디</label>
 			                   <div class="inline-block">
 			                   
 				                   <input type="text" class="form-control" id="hostid" name="hostid"
@@ -167,27 +171,27 @@
 				                   <small id="hostvalidationId" class="form-text text-error" style="display:none;">5~20자 이상의 영문 소문자, 숫자만 사용 가능합니다.</small>
 				                   <small id="hostidErr" class="form-text text-error" style="display:none;">중복된 아이디 입니다.</small>
 				                   <small id="hostrequiredId" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
-				                   <small id="hostchkId" class="form-text text-emuted" style="display:none; color: green;">사용 가능한 아이디 입니다.</small>
+				                   <small id="hostchkId" class="form-text text-emuted font-green" style="display:none;">사용 가능한 아이디 입니다.</small>
 				             	   <input id="hostduplicationId" type="hidden" value="idUncheck"> <!-- 아아디 중복체크용 -->
 			              	</div>
 			              </div>
 			              
 			              <div class="form-group">
-			                     <label for="hostpwd" class="font-green" >비밀번호</label>
+			                     <label for="hostpwd" class="font-green">비밀번호</label>
 			                   <div class="inline-block">
-				                   <input type="password" class="form-contro" id="hostpwd" name="hostpwd"
+				                   <input type="password" class="form-control" id="hostpwd" name="hostpwd"
 				                   			placeholder="비밀번호 입력" required="required">
 				                   
 				                   <small id="hostinfoPwd" class="form-text text-muted">영대문자, 숫자, 특수문자를 조합하여 8~30자를 입력하세요.</small>
 				                   <small id="hostvalidationPwd" class="form-text text-error" style="display:none;">영대문자, 숫자, 특수문자를 조합하여 8~30자를 입력하세요.</small>
 				                   <small id="hostrequiredPwd" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
 				                   <small id="hostcheckSpace" class="form-text text-error" style="display:none;">공백은 입력하실 수 없습니다.</small>
-				                   <small id="hostchkPwd" class="form-text text-emuted" style="display:none; color: green;">사용 가능한 비밀번호 입니다.</small>
+				                   <small id="hostchkPwd" class="form-text text-emuted font-green" style="display:none;">사용 가능한 비밀번호 입니다.</small>
 			             	</div>
 			              </div>
 			              
 			              <div class="form-group">
-			                     <label for="pwdchk2" class="font-green" >비밀번호 확인</label>
+			                     <label for="pwdchk2" class="font-green">비밀번호 확인</label>
 			                     <div class="inline-block">
 				                   <input type="password" class="form-control" id="pwdchk2"
 				                   			placeholder="비밀번호 입력 확인" required="required">
