@@ -148,7 +148,8 @@
 	
 	<script>
 		function search() {
-			
+			// 예시로 넣어 놓은 것
+			location.href="<%=request.getContextPath()%>/searchProduct.pr?con="+$('#searchCondition').val()+"&keyword="+$('#keyword').val();
 		}
 		
 		function insertProduct() {

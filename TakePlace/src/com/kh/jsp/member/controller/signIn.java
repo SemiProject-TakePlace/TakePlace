@@ -42,24 +42,9 @@ public class signIn extends HttpServlet {
     *      response)
     */
    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      
+      
          // doGet(request, response);
-         String command = request.getParameter("command");
-         
-         if(command.equals("idChk")){
-            idChk(request, response);
-         }
-         
-         if(command.equals("nickChk")){
-            nickChk(request, response);
-         }
-
-   }
-   
-   private void nickChk(HttpServletRequest request, HttpServletResponse response) {
-   
-         }
-
-   private void idChk(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
       
        String id = request.getParameter("userId");
        String pwd = request.getParameter("userPwd");
@@ -84,6 +69,7 @@ public class signIn extends HttpServlet {
           return;
 
        }
+
    }
 
 }
