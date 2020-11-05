@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,10 +28,6 @@
 		text-align: center;
 	}
 	
-	.userinfo {
-		margin: 30px;
-	}
-	
 	#logo {
 		width: 200px;
 		height: 100px;
@@ -39,21 +36,25 @@
 	#findBox {
 		width: 80%;
 		border:1px solid black;
-		padding: 20px;
+		padding: 70px;
 		margin: 30px;
+		display: table;
 	}
 	
-	#userimage {
-		display: inline;
-	}
-	
-	#userinfo {
-		display: inline;
+	.userinfobox {
+		margin: 30px;
+		display: table-cell;
 	}
 	
 	#btn {
 		text-align: center;
 		padding-top: 30px;
+	}
+	
+	#line {
+		border-left: 1px solid black;
+		display: table-cell;
+		height: 100px
 	}
 	
 </style>
@@ -71,13 +72,15 @@
     				<img id="logo" src="<%= request.getContextPath() %>/resources/images/common/logo-horizontal.png" alt="유저이미지" />
     			</div>
     			
-    			<div class="userinfo" id="userinfo">
+    			<div id ="line"></div>
+    			
+    			<div class="userinfobox">
     				<div class="userinfo">
-    				아이디 : 찾은 아이디 (회원유형 + 회원, 가입일) <br>
-    				이메일 : 찾은 이메일
+	    				아이디 : 찾은 아이디 (회원유형 + 회원, 가입일)<br>
+	    				이메일 : 찾은 이메일 
     				</div>
     				<div class="userinfo">
-    				TAKE PLACE를 이용해 주셔서 감사합니다.
+    				<br><br>TAKE PLACE를 이용해 주셔서 감사합니다.
     				</div>
     			</div>
     		</div>

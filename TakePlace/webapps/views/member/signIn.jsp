@@ -73,11 +73,11 @@
    }
    
    #box {
-   		text-align: center;
+         text-align: center;
    }
    
    #message {
-   		margin-bottom: 10px;
+         margin-bottom: 10px;
    }
 </style>
 
@@ -100,21 +100,21 @@
               
               <!-- 비밀번호 입력 -->
               <div class="form-group">
-               	<label for="userpwd" class="font-green inline-block" >비밀번호</label>
-               	<br><input type="password" class="form-control inline-block" name="userPwd" id="userpwd" required="required" placeholder="비밀번호 입력">
+                  <label for="userpwd" class="font-green inline-block" >비밀번호</label>
+                  <br><input type="password" class="form-control inline-block" name="userPwd" id="userpwd" required="required" placeholder="비밀번호 입력">
               </div>
               
               <div id="box">
               <div id="message"></div>
               <input type="button" class="input-submit inline-block" value="로그인" id="loginSubmit">
-         	  </div>
+              </div>
          </form>
          
          <br>
          
          <div id="atag">
             <a href="signUp.jsp">회원가입</a> &nbsp;&nbsp;&nbsp;
-            <a href="idFwdFind.jsp">ID/비밀번호 찾기</a>
+            <a href="idPwdFind.jsp">ID/비밀번호 찾기</a>
          </div>
       </div>
    </section>

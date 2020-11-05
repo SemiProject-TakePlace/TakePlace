@@ -34,7 +34,7 @@ public class insertGeust extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String id = request.getParameter("guestId");
-		String mName = request.getParameter("guestNick");
+		String mName = request.getParameter("userNick");
 		String pwd = request.getParameter("guestPwd");
 		String mType = request.getParameter("mType");
 		String email = request.getParameter("guestEmail");
@@ -46,7 +46,7 @@ public class insertGeust extends HttpServlet {
 		MemberService ms = new MemberService();
 		
 		try {
-			ms.insertMember(m);
+			ms.insertGuest(m);
 			
 			System.out.println("회원 가입 성공!");
 			response.sendRedirect("index.jsp");

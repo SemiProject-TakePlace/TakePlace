@@ -42,9 +42,10 @@ public class findId extends HttpServlet {
 		m = ms.findId(m);
 		
 		if(m != null) {
-		
-			 response.sendRedirect("views/member/idFindSuccess.jsp");
+			 
 			
+			 response.sendRedirect("views/member/idFindSuccess.jsp");
+			 
 		} else {
 			
 			response.setContentType("text/html;charset=utf-8");
