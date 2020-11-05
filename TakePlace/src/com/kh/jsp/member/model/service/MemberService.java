@@ -88,6 +88,7 @@ public class MemberService {
 		
 	}
 
+
 	public int insertHost(Host h) {
 		con = getConnection();
 		int result = mDAO.insertHost(con, h);
@@ -102,6 +103,34 @@ public class MemberService {
 		
 		return result;
 	}
+	
+	
+	public Member selectOneHost(Member m) {
+		con = getConnection();
+		Member result = mDAO.selectOneHost(con, m);
+		
+		close(con);
+		
+		return result;
+		
+	}
 
+	public int insertHost(Member m, Host h) {
+		con = getConnection();
+		int result = mDAO.insertHost(con, m, h);
+		
+		if( result > 0 ) { // 회원 가입 성공!
+			commit(con);
+		} else {           // 회원 가입 실패...
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+		
+	}
+		
+	
 
 }

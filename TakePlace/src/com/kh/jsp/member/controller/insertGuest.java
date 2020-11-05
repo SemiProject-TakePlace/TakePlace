@@ -17,13 +17,13 @@ import com.kh.jsp.member.model.vo.Member;
  * Servlet implementation class insertGeust
  */
 @WebServlet("/insertG.me")
-public class insertGeust extends HttpServlet {
+public class insertGuest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public insertGeust() {
+    public insertGuest() {
         super();
         // TODO Auto-generated constructor stub
     }

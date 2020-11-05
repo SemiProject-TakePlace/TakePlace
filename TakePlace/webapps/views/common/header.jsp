@@ -99,18 +99,16 @@
 			            
 			            <% } else { %>
 			            
-						<li class="nav-item">
-		                	<a class="nav-link" href="#">마이페이지</a>
-			            </li>
-			       
-						
-						<li class="nav-item">
-							<a class="nav-link"><%= mem.getmName() %>님</a>
-						</li>
-						
-						<li class="nav-item">
-							<button class="btn btn-tp-custom-green" onclick='logout()'>로그아웃</button>
-						</li>		
+				            <div class="dropdown">
+							  <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							    <span class="font-green"><%= mem.getMname() %></span> 님
+							  </a>
+							
+							  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+							    <a class="dropdown-item" href="#">마이페이지</a>
+							    <a class="dropdown-item" onclick="logout()">로그아웃</a>
+							  </div>
+							</div>
 				
 						
 						<% } %>

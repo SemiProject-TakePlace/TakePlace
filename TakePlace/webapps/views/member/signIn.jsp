@@ -9,13 +9,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Take Place : 로그인</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/bootstrap.min.css" type="text/css" />
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/common.css" type="text/css" />
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/main/main.css" type="text/css" />
-
-<script src="<%= request.getContextPath() %>/resources/js/common/jquery-3.5.1.min.js"></script>
-<script src="<%= request.getContextPath() %>/resources/js/common/bootstrap.min.js"></script>
-<script src="<%= request.getContextPath() %>/resources/js/common/jquery-ui.min.js"></script>
+<%@ include file="../../resources/css/common/common.jsp" %>
+<%@ include file="../../resources/js/common/common.jsp" %>
 
 <style>
    
@@ -24,61 +19,23 @@
       margin-bottom: 40px;
       border-bottom: 2px solid #ccc;
    }
-   
-      
-   h2, #atag {
+
+   h2, .to-login, #box {
       text-align: center;
    }
    
-   /*
-   h2 {
-      position: relative;
+   .login-content {
+	   	position: absolute;
+	    top: 45%;
+	    left: 50%;
+	    transform: translate(-50%, -50%);
    }
+ 
+   .to-login a:hover {
+   		color: #82cbc4;
+   }
+  
    
-   h2:before {
-         border-top: 2px solid #82cbc4;
-       content: "";
-       margin: 0 auto;
-       position: absolute;
-       top: 115%;
-       left: 0;
-       right: 0;
-       bottom: 0;
-       width: 30%;
-       z-index: -1;
-   }
-   */
-
-    
-   .form-group input{
-      width: 50%;
-   }
-   
-   .input-submit {
-        display: block;
-       width: 30%;
-        height: 40px;
-        padding: 6px 12px;
-        font-size: 15px;
-        line-height: 1.42857143;
-        color: #fff;
-        background-color: #82cbc4;
-        border: 1px solid #ccc;
-        border-radius: 3x;
-        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-                box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-        -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
-             -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-                transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-   }
-   
-   #box {
-         text-align: center;
-   }
-   
-   #message {
-         margin-bottom: 10px;
-   }
 </style>
 
 </head>
@@ -86,8 +43,8 @@
    <%@ include file="../common/header.jsp" %>
    
    <section id="wrap-contents" class="footer-bottom">
-       <div class="container">
-         <h2 class="font-green">로그인</h2>
+       <div class="container login-content">
+         <h2 class="font-bold font-green content-title">로그인</h2>
                   
          <!-- 로그인 -->
          <form action="/takeplace/signIn.me" id="frmLogin" method="post" style="margin: 0 auto; width: 50%;">
@@ -95,26 +52,30 @@
             <!-- 아이디 입력 -->
             <div class="form-group">
                <label for="userid" class="font-green inline-block" >아이디</label>
-               <br><input type="text" class="form-control inline-block" name="userId" id="userid" required="required" placeholder="아이디 입력">         
+               <div class="inline-block">
+               		<input type="text" class="form-control inline-block" name="userId" id="userid" required="required" placeholder="아이디 입력">         
+            	</div>
             </div>
               
               <!-- 비밀번호 입력 -->
               <div class="form-group">
                   <label for="userpwd" class="font-green inline-block" >비밀번호</label>
-                  <br><input type="password" class="form-control inline-block" name="userPwd" id="userpwd" required="required" placeholder="비밀번호 입력">
+                  <div class="inline-block">
+                  	<input type="password" class="form-control inline-block" name="userPwd" id="userpwd" required="required" placeholder="비밀번호 입력">
+              	</div>
               </div>
               
               <div id="box">
-              <div id="message"></div>
-              <input type="button" class="input-submit inline-block" value="로그인" id="loginSubmit">
+              <div id="message" class="mb-3"></div>
+              <button type="button" class="btn btn-tp-custom-green mt-3" value="로그인" id="loginSubmit">로그인</button>
               </div>
          </form>
          
          <br>
          
-         <div id="atag">
-            <a href="signUp.jsp">회원가입</a> &nbsp;&nbsp;&nbsp;
-            <a href="idPwdFind.jsp">ID/비밀번호 찾기</a>
+         <div class="to-login">
+            <a class="font-green ml-3 mr-3" href="signUp.jsp">회원가입</a>
+            <a class="font-green ml-3 mr-3" href="idPwdFind.jsp">ID/비밀번호 찾기</a>
          </div>
       </div>
    </section>
@@ -140,7 +101,7 @@
                if(data != "fail"){
                   window.location.href="<%= request.getContextPath() %>/index.jsp";
                } else {
-                  $("#message").html("<p style='color:red'>아이디 또는 비밀번호가 잘못되었습니다.</p>");   
+            	   $("#message").html("<small class='form-text text-error'>아이디 또는 비밀번호가 잘못되었습니다.</span>");
                }
                
             },

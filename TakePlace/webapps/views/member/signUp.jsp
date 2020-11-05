@@ -14,21 +14,33 @@
 <script src="<%= request.getContextPath() %>/resources/js/common/jquery-ui.min.js"></script>
 
 <style>
+
+	.join-content {
+		position: absolute;
+	    top: 45%;
+	    left: 50%;
+	    transform: translate(-50%, -50%);
+	}
+	
    form {
       padding: 30px;
+      margin: 0 auto;
+      width: 700px;
    }
    
 </style>
 </head>
 <body>
-   <%@ include file="../common/header.jsp" %>
+	<%@ include file="../common/header.jsp" %>
    
-   <section id="wrap-contents">
-      <div class="container">
+   <section id="wrap-contents" class="footer-bottom">
+      <div class="container join-content">
          <nav>
               <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                   <a style="width: 50%" class="nav-link active" id="nav-gest-tab" data-toggle="tab" href="#nav-gest" role="tab" aria-controls="nav-gest" aria-selected="true">게스트 회원가입</a>
-                   <a style="width: 50%" class="nav-link" id="nav-host-tab" data-toggle="tab" href="#nav-host" role="tab" aria-controls="nav-host" aria-selected="false">호스트 회원가입</a>
+                   <a style="width: 50%" class="nav-link active" id="nav-gest-tab" data-toggle="tab"
+                   		href="#nav-gest" role="tab" aria-controls="nav-gest" aria-selected="true">게스트 회원가입</a>
+                   <a style="width: 50%" class="nav-link" id="nav-host-tab" data-toggle="tab"
+                   		href="#nav-host" role="tab" aria-controls="nav-host" aria-selected="false">호스트 회원가입</a>
               </div>
          </nav>
             
@@ -39,58 +51,74 @@
              <div style="border: 1px solid #82cbc4">
                 
              <form action="/takeplace/insertG.me" method="post" id="create_gestAccount" name="gestForm">
-             <!-- 게스트 회원가입 -->
-             <div class="form-group">
-                   <label for="userid" class="font-green inline-block" >아이디</label>
-                   <input type="text" class="form-control inline-block" id="userid" name="guestId" aria-describedby="emailHelp" placeholder="아이디 입력" maxlength="20" required="required">
-                   &nbsp;&nbsp;&nbsp;
-                   <small id="infoId" class="form-text text-muted">5~20자 이상의 영문 소문자, 숫자만 사용 가능합니다.</small>
-                   <small id="validationId" class="form-text text-error" style="display:none;">5~20자 이상의 영문 소문자, 숫자만 사용 가능합니다.</small>
-               	   <small id="idErr" class="form-text text-error" style="display:none;">중복된 아이디 입니다.</small>
-                   <small id="requiredId" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
-                   <small id="chkId" class="form-text text-emuted" style="display:none; color: green;">사용 가능한 아이디 입니다.</small>
-                   <input id="duplicationId" type="hidden" value="idUncheck"> <!-- 아아디 중복체크용 -->
-              </div>
-                 
-              <div class="form-group">
-                   <label for="userNick" class="font-green inline-block" >닉네임</label>
-                   <input type="text" class="form-control inline-block" id="userNick" name="userNick" aria-describedby="emailHelp" placeholder="닉네임 입력" required="required">
-                   &nbsp;&nbsp;&nbsp;
-                   <small id="infoNick" class="form-text text-muted">한글, 숫자, 영소문자를 조합하여 5자 이상 입력하세요.</small>
-                   <small id="validationNick" class="form-text text-error" style="display:none;">한글, 숫자, 영소문자를 조합하여 6자 이상 입력하세요.</small>
-                   <small id="nickErr" class="form-text text-error" style="display:none;">중복된 닉네임 입니다.</small>
-                   <small id="requiredNick" class="form-text text-error " style="display:none;">필수 입력 사항 입니다.</small>
-                   <small id="chkNick" class="form-text text-emuted" style="display:none; color: green;">사용 가능한 닉네임 입니다.</small>
-              	   <input id="duplicationNick" type="hidden" value="NickUncheck"> <!-- 아아디 중복체크용 -->
-              </div>
-              
-              <div class="form-group">
-                   <label for="userpwd" class="font-green inline-block" >비밀번호</label>
-                   <input type="password" class="form-control inline-block" id="userpwd" name="guestPwd" aria-describedby="emailHelp" placeholder="비밀번호 입력" maxlength="30" required="required">
-                      &nbsp;&nbsp;&nbsp;
-                   <small id="infoPwd" class="form-text text-muted">영문자, 숫자, 특수문자를 조합하여 8~30자를 입력하세요.</small>
-                      <small id="validationPwd" class="form-text text-error" style="display:none;">영문자, 숫자, 특수문자를 조합하여 8~30자를 입력하세요.</small>
-                      <small id="requiredPwd" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
-                     <small id="checkSpace" class="form-text text-error" style="display:none;">공백은 입력하실 수 없습니다.</small>
-                     <small id="chkPwd" class="form-text text-emuted" style="display:none; color: green;">사용 가능한 비밀번호 입니다.</small>
-              </div>
-              
-              <div class="form-group">
-                    <label for="pwdchk" class="font-green inline-block" >비밀번호 확인</label>
-                   <input type="password" class="form-control inline-block" id="pwdchk" aria-describedby="emailHelp" placeholder="비밀번호 입력 확인" required="required">
-                   &nbsp;&nbsp;&nbsp;
-                   <small id="requiredPwdchk" class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
-                   <small id="validationPwdchk" class="form-text text-error" style="display:none;">입력하신 비밀번호와 일치하지 않습니다.</small>
-              </div>
-              
-              <div class="form-group">
-                     <label for="userEmail" class="font-green inline-block" >이메일</label>
-                   <input type="text" class="form-control inline-block" id="userEmail" name="guestEmail" aria-describedby="emailHelp" placeholder="이메일 입력" required="required">
-                   &nbsp;&nbsp;&nbsp;
-                   <button class="btn btn-tp-custom-green">이메일 인증</button>
-              </div>
-              
-              <button type="button" class="btn btn-tp-custom-green" id="insertGuest" onclick="guestSignUp();">회원가입</button>
+	             <!-- 게스트 회원가입 -->
+	             <div class="form-group">
+	                   <label for="userid" class="font-green font-bold" >아이디</label>
+	                   <div class="inline-block">
+		                   <input type="text" class="form-control" id="userid" name="guestId"
+		                   		placeholder="아이디 입력" maxlength="20" required="required">
+		                   <small id="infoId" class="form-text text-muted">5~20자 이상의 영문 소문자, 숫자만 사용 가능합니다.</small>
+		                   <small id="validationId" class="form-text text-error" style="display:none;">5~20자 이상의 영문 소문자, 숫자만 사용 가능합니다.</small>
+		               	   <small id="idErr" class="form-text text-error" style="display:none;">중복된 아이디 입니다.</small>
+		                   <small id="requiredId" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
+		                   <small id="chkId" class="form-text text-emuted" style="display:none; color: green;">사용 가능한 아이디 입니다.</small>
+		                   <input id="duplicationId" type="hidden" value="idUncheck"> <!-- 아아디 중복체크용 -->
+	              		</div>
+	              </div>
+	                 
+	              <div class="form-group">
+	                   <label for="userNick" class="font-green font-bold" >닉네임</label>
+	                   <div class="inline-block">
+		                   <input type="text" class="form-control" id="userNick" name="userNick"
+		                   		 placeholder="닉네임 입력" required="required">
+		                   <small id="infoNick" class="form-text text-muted">한글, 숫자, 영소문자를 조합하여 5자 이상 입력하세요.</small>
+		                   <small id="validationNick" class="form-text text-error" style="display:none;">한글, 숫자, 영소문자를 조합하여 6자 이상 입력하세요.</small>
+		                   <small id="nickErr" class="form-text text-error" style="display:none;">중복된 닉네임 입니다.</small>
+		                   <small id="requiredNick" class="form-text text-error " style="display:none;">필수 입력 사항 입니다.</small>
+		                   <small id="chkNick" class="form-text text-emuted" style="display:none; color: green;">사용 가능한 닉네임 입니다.</small>
+		              	   <input id="duplicationNick" type="hidden" value="NickUncheck"> <!-- 아아디 중복체크용 -->
+	              		</div>
+	              </div>
+	              
+	              <div class="form-group">
+	                   <label for="userpwd" class="font-green font-bold" >비밀번호</label>
+	                   <div class="inline-block">
+		                   <input type="password" class="form-control" id="userpwd" name="guestPwd"
+		                   		placeholder="비밀번호 입력" maxlength="30" required="required">
+		                      
+		                   <small id="infoPwd" class="form-text text-muted">영문자, 숫자, 특수문자를 조합하여 8~30자를 입력하세요.</small>
+		                      <small id="validationPwd" class="form-text text-error" style="display:none;">영문자, 숫자, 특수문자를 조합하여 8~30자를 입력하세요.</small>
+		                      <small id="requiredPwd" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
+		                     <small id="checkSpace" class="form-text text-error" style="display:none;">공백은 입력하실 수 없습니다.</small>
+		                     <small id="chkPwd" class="form-text text-emuted" style="display:none; color: green;">사용 가능한 비밀번호 입니다.</small>
+	             		</div>
+	              </div>
+	              
+	              <div class="form-group">
+                    <label for="pwdchk" class="font-green font-bold" >비밀번호 확인</label>
+                   		<div class="inline-block">
+		                   <input type="password" class="form-control" id="pwdchk"
+		                   		 placeholder="비밀번호 입력 확인" required="required">
+		                  
+		                   <small id="requiredPwdchk" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
+		                   <small id="validationPwdchk" class="form-text text-error" style="display:none;">입력하신 비밀번호와 일치하지 않습니다.</small>
+	              		</div>
+	              </div>
+	              
+	              <div class="form-group">
+                     <label for="userEmail" class="font-green font-bold" >이메일</label>
+                     <div class="inline-block">
+	                   <input type="text" class="form-control inline-block" id="userEmail" name="guestEmail"
+	                   			placeholder="이메일 입력" required="required">
+	                   
+	                   <button type="button" class="btn btn-tp-custom-white">이메일 인증</button>
+	                  </div>
+	              </div>
+	              
+	              <div class="text-center">
+	              	 <button type="button" class="btn btn-tp-custom-green mt-5" id="insertGuest" onclick="guestSignUp();">회원가입</button>
+	              </div>
+	           
               
               </form>
                 
@@ -102,66 +130,89 @@
               <div class="tab-pane fade" id="nav-host" role="tabpanel" aria-labelledby="nav-host-tab">
                 
                 <div style="border: 1px solid #82cbc4">
-                <form action="/takeplace/insertH.me" method="post" id="create_hostAccount">
-                <!-- 호스트 회원가입 -->
-                <div class="form-group">
-                     <label for="companyName" class="font-green inline-block" >회사명</label>
-                   <input type="text" class="form-control inline-block" id="companyName" name="companyName" aria-describedby="emailHelp" placeholder="회사명 입력" required="required">
-                 </div>
-                 
-                <div class="form-group">
-                     <label for="hostName" class="font-green inline-block" >사업자명</label>
-                   <input type="text" class="form-control inline-block" id="hostName" name="hostName" aria-describedby="emailHelp" placeholder="사업자명 입력" required="required">
-              </div>
-              
-              <div class="form-group">
-                     <label for="companyNo" class="font-green inline-block" >사업자 등록 번호</label>
-                   <input type="text" class="form-control inline-block" id="companyNo" name="companyNo" aria-describedby="emailHelp" placeholder="사업자 등록 번호 입력" required="required">
-              </div>
-              
-              <div class="form-group">
-                     <label for="hostid" class="font-green inline-block" >아이디</label>
-                   <input type="text" class="form-control inline-block" id="hostid" name="hostid" aria-describedby="emailHelp" placeholder="아이디 입력" maxlength="" required="required">
-                   &nbsp;&nbsp;&nbsp;
-                   <small id="hostinfoId" class="form-text text-muted">5~20자 이상의 영문 소문자, 숫자만 사용 가능합니다.</small>
-                   <small id="hostvalidationId" class="form-text text-error" style="display:none;">5~20자 이상의 영문 소문자, 숫자만 사용 가능합니다.</small>
-                   <small id="hostidErr" class="form-text text-error" style="display:none;">중복된 아이디 입니다.</small>
-                   <small id="hostrequiredId" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
-                   <small id="hostchkId" class="form-text text-emuted" style="display:none; color: green;">사용 가능한 아이디 입니다.</small>
-             	   <input id="hostduplicationId" type="hidden" value="idUncheck"> <!-- 아아디 중복체크용 -->
-              </div>
-              
-              <div class="form-group">
-                     <label for="hostpwd" class="font-green inline-block" >비밀번호</label>
-                   <input type="password" class="form-control inline-block" id="hostpwd" name="hostpwd" aria-describedby="emailHelp" placeholder="비밀번호 입력" required="required">
-                   &nbsp;&nbsp;&nbsp;
-                   <small id="hostinfoPwd" class="form-text text-muted">영대문자, 숫자, 특수문자를 조합하여 8~30자를 입력하세요.</small>
-                   <small id="hostvalidationPwd" class="form-text text-error" style="display:none;">영대문자, 숫자, 특수문자를 조합하여 8~30자를 입력하세요.</small>
-                   <small id="hostrequiredPwd" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
-                   <small id="hostcheckSpace" class="form-text text-error" style="display:none;">공백은 입력하실 수 없습니다.</small>
-                   <small id="hostchkPwd" class="form-text text-emuted" style="display:none; color: green;">사용 가능한 비밀번호 입니다.</small>
-              </div>
-              
-              <div class="form-group">
-                     <label for="pwdchk2" class="font-green inline-block" >비밀번호 확인</label>
-                   <input type="password" class="form-control inline-block" id="pwdchk2" aria-describedby="emailHelp" placeholder="비밀번호 입력 확인" required="required">
-                   &nbsp;&nbsp;&nbsp;
-                   <small id="hostrequiredPwdchk" class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
-                   <small id="hostvalidationPwdchk" class="form-text text-error" style="display:none;">비밀 번호가 일치하지 않습니다.</small>
-              </div>
-              
-              <div class="form-group">
-                     <label for="hostemail" class="font-green inline-block" >이메일</label>
-                   <input type="text" class="form-control inline-block" id="hostEmail" name="hostEmail" aria-describedby="emailHelp" placeholder="이메일 입력" required="required">
-                   &nbsp;&nbsp;&nbsp;
-                   <button class="btn btn-tp-custom-green">이메일 인증</button>
-              </div>
-              
-              <button type="button" class="btn btn-tp-custom-green" onclick="hostSignUp();">회원가입</button>
-                
-                </form>
+	                <form action="/takeplace/insertH.me" method="post" id="create_hostAccount">
+			                <!-- 호스트 회원가입 -->
+			                <div class="form-group">
+			                     <label for="companyName" class="font-green" >회사명</label>
+				                 <div class="inline-block">
+				                   <input type="text" class="form-control" id="companyName" name="companyName"
+				                   		placeholder="회사명 입력" required="required">
+		                   		</div>
+			                 </div>
+			                 
+			                <div class="form-group">
+			                     <label for="hostName" class="font-green" >사업자명</label>
+			                   	<div class="inline-block">
+			                   		<input type="text" class="form-control" id="hostName" name="hostName"
+			                   			placeholder="사업자명 입력" required="required">
+			              		</div>
+			              </div>
+			              
+			              <div class="form-group">
+			                     <label for="companyNo" class="font-green" >사업자 등록 번호</label>
+			                   <div class="inline-block">
+			                   	<input type="text" class="form-control" id="companyNo" name="companyNo"
+			                   		placeholder="사업자 등록 번호 입력" required="required">
+			              		</div>
+			              </div>
+			              
+			              <div class="form-group">
+			                     <label for="hostid" class="font-green" >아이디</label>
+			                   <div class="inline-block">
+			                   
+				                   <input type="text" class="form-control" id="hostid" name="hostid"
+				                   			placeholder="아이디 입력" maxlength="" required="required">
+				                  
+				                   <small id="hostinfoId" class="form-text text-muted">5~20자 이상의 영문 소문자, 숫자만 사용 가능합니다.</small>
+				                   <small id="hostvalidationId" class="form-text text-error" style="display:none;">5~20자 이상의 영문 소문자, 숫자만 사용 가능합니다.</small>
+				                   <small id="hostidErr" class="form-text text-error" style="display:none;">중복된 아이디 입니다.</small>
+				                   <small id="hostrequiredId" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
+				                   <small id="hostchkId" class="form-text text-emuted" style="display:none; color: green;">사용 가능한 아이디 입니다.</small>
+				             	   <input id="hostduplicationId" type="hidden" value="idUncheck"> <!-- 아아디 중복체크용 -->
+			              	</div>
+			              </div>
+			              
+			              <div class="form-group">
+			                     <label for="hostpwd" class="font-green" >비밀번호</label>
+			                   <div class="inline-block">
+				                   <input type="password" class="form-contro" id="hostpwd" name="hostpwd"
+				                   			placeholder="비밀번호 입력" required="required">
+				                   
+				                   <small id="hostinfoPwd" class="form-text text-muted">영대문자, 숫자, 특수문자를 조합하여 8~30자를 입력하세요.</small>
+				                   <small id="hostvalidationPwd" class="form-text text-error" style="display:none;">영대문자, 숫자, 특수문자를 조합하여 8~30자를 입력하세요.</small>
+				                   <small id="hostrequiredPwd" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
+				                   <small id="hostcheckSpace" class="form-text text-error" style="display:none;">공백은 입력하실 수 없습니다.</small>
+				                   <small id="hostchkPwd" class="form-text text-emuted" style="display:none; color: green;">사용 가능한 비밀번호 입니다.</small>
+			             	</div>
+			              </div>
+			              
+			              <div class="form-group">
+			                     <label for="pwdchk2" class="font-green" >비밀번호 확인</label>
+			                     <div class="inline-block">
+				                   <input type="password" class="form-control" id="pwdchk2"
+				                   			placeholder="비밀번호 입력 확인" required="required">
+				                   
+				                   <small id="hostrequiredPwdchk" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
+				                   <small id="hostvalidationPwdchk" class="form-text text-error" style="display:none;">비밀 번호가 일치하지 않습니다.</small>
+			              		</div>
+			              </div>
+			              
+			              <div class="form-group">
+			                     <label for="hostemail" class="font-green" >이메일</label>
+			                     <div class="inline-block">
+				                   <input type="text" class="form-control inline-block" id="hostEmail" name="hostEmail"
+				                   			placeholder="이메일 입력" required="required">
+				                  
+				                   <button class="btn btn-tp-custom-white">이메일 인증</button>
+			                   </div>
+			              </div>
+			              
+			              <div class="text-center">
+			              	<button type="button" class="btn btn-tp-custom-green mt-5" onclick="hostSignUp();">회원가입</button>
+	                	</div>
+	                </form>
                 </div>
-                </div>
+              </div>
          </div>                            
    </div>
           <!-- 회원가입 종료-->
