@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.kh.jsp.member.model.vo.*"%>
+<%
+	Member mem = (Member)session.getAttribute("member");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -84,16 +87,44 @@
 			            <li class="nav-item">
 		                	<a class="nav-link" href="<%= request.getContextPath() %>/views/howto/howto.jsp">이용방법</a>
 			            </li>
+			            
+			            <%if ( mem == null ) { %>
+			            
 			            <li class="nav-item">
 		                	<a class="nav-link" href="<%= request.getContextPath() %>/views/member/signIn.jsp">로그인</a>
 			            </li>
 			            <li class="nav-item">
 		                	<a class="nav-link" href="<%= request.getContextPath() %>/views/member/signUp.jsp">회원가입</a>
 			            </li>
+			            
+			            <% } else { %>
+			            
+				            <div class="dropdown">
+							  <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							    <span class="font-green"><%= mem.getMname() %></span> 님
+							  </a>
+							
+							  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+							    <a class="dropdown-item" href="#">마이페이지</a>
+							    <a class="dropdown-item" onclick="logout()">로그아웃</a>
+							  </div>
+							</div>
+				
+						
+						<% } %>
+						
 			        </ul>
 			    </div>
 			</nav>
 		</div>
 	</header>
+	
+	<script>
+		
+		function logout(){
+			location.href="/takeplace/logout.me";
+		}
+		
+	</script>
 </body>
 </html>
