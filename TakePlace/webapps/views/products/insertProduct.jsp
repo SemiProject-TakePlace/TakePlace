@@ -53,8 +53,7 @@ input[type="file"] {
 	<section id="wrap-contents">
 		<div class="container">
 			<h2 class="content-title">공간 등록</h2>
-			
-			<form id="addProducts" method="post" action="/">
+			<form id="insertProduct" method="post" action="/">
 			  <div class="form-group">
 			    <label for="pCity" class="font-green font-bold">지역</label>
 			    <select name="pCity" id="pCity" class="form-control inline-block">
@@ -66,7 +65,6 @@ input[type="file"] {
 			    	<option value="gys">경상</option>
 			    	<option value="jej">제주</option>
 			    </select>
-			    <small class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
 			  </div>
 			  
 			  <div class="form-group">
@@ -79,7 +77,6 @@ input[type="file"] {
 				    	<option value="party">파티룸</option>
 				    	<option value="office">오피스</option>
 				    </select>
-				    <small class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
 			  	</div>
 			  </div>
 			  
@@ -87,8 +84,8 @@ input[type="file"] {
 			    <label for="pName" class="font-green font-bold">제목</label>
 			    <div class="inline-block">
 				    <input type="text" name="pName" id="pName" class="form-control" maxlength="25"/>
-				    <small id="" class="form-text text-muted infoId">25자 이내로 입력해주세요.</small>
-				    <small class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
+				    <small id="infoName" class="form-text text-muted">25자 이내로 입력해주세요.</small>
+				    <small id="reqName" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
 				</div>			 
 			  </div>
 			  
@@ -96,7 +93,7 @@ input[type="file"] {
 			    <label for="pPrice" class="font-green font-bold">가격</label>
 			    <div class="inline-block">
 			    	<input type="text" name="pPrice" id="pPrice" class="form-control inline-block"/>
-			    	<small class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
+			    	<small id="reqPrice" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
 			  	</div>
 			  </div>
 			  
@@ -105,18 +102,20 @@ input[type="file"] {
 			    <div class="inline-block">
 			    	 <input type="text" id="pAbleDate" data-range="true" data-multiple-dates-separator=" - "
     				data-language="en"class="form-control inlne-block" data-timepicker="true"/>
-				    <small class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
+    				<small id="infoDate" class="form-text text-muted">예약 받을 날짜 및 시간의 범위를 입력해주세요.<br>
+    				하루만 입력하시면 예약 마감일은 선택한 날의 23시 59분까지입니다.</small>
+				    <small id="reqDate" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
 				</div>			 
 			  </div>
 			  
 			  <div class="form-group">
 			    <label for="pAddress1" class="font-green font-bold">위치</label>
 			    <div class="inline-block">
-			    	<input type="text" name="pZipCode" id="pZipCode" class="form-control inline-block mb-1"/> <br>
-			    	<input type="text" name="pAddress1" id="pAddress1" class="form-control inline-block mb-1"/> <br>
+			    	<input type="text" name="pZipCode" id="pZipCode" class="form-control inline-block mb-1" readonly/> <br>
+			    	<input type="text" name="pAddress1" id="pAddress1" class="form-control inline-block mb-1" readonly/> <br>
 			    	<input type="text" name="pAddress2" id="pAddress2" class="form-control inline-block" placeholder="상세 주소 입력"/>
 			    	<button type="button" class="btn btn-tp-custom-white" onclick="addrSearch()">검색</button>
-				    <small class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
+				    <small id="reqAddr" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
 				</div>			 
 			  </div>
 			  
@@ -124,9 +123,10 @@ input[type="file"] {
 			    <label for="pTitleImg" class="font-green font-bold">대표 이미지</label>
 			    <div class="inline-block">
 			    	<input class="upload-name" value="파일선택" disabled="disabled" />
-			    	<input type="file" name="pTitleImg" id="pTitleImg" class="form-control inline-block title-upload-hidden"/>
+			    	<input type="file" name="pTitleImg" id="pTitleImg" class="form-control inline-block title-upload-hidden"
+			    			accept="image/*"/>
 			    	<button type="button" class="btn btn-tp-custom-white titleFileUpload">첨부파일 등록</button>
-				    <small class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
+				    <small id="reqTitleImg" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
 				</div>			 
 			  </div>
 			  
@@ -135,33 +135,123 @@ input[type="file"] {
 			    <div class="inline-block">
 			    	<input class="upload-name" value="파일선택" disabled="disabled" />
 			    	<input type="file" name="pSubImg" id="pSubImg" class="form-control inline-block sub-upload-hidden"
-			    			multiple="multiple" accept="image/jpg, image/jpeg" />
+			    			multiple="multiple" accept="image/*" />
 			    	<button type="button" class="btn btn-tp-custom-white subFileUpload">첨부파일 등록</button>
 			    	<small class="form-text text-muted infoMsg">최대 4장까지 가능합니다.</small>
-				    <small class="form-text text-error requiredMsg" style="display:none;">필수 입력 사항 입니다.</small>
 				</div>			 
 			  </div>
 			  
 			  <div class="form-group">
 			    <label for="pGuide" class="font-green font-bold">시설 안내</label>
 			    <div class="inline-block">
-			    	<textarea name="pGuide" id="pGuide" cols="100" rows="7" placeholder="시설 안내사항을 입력해주세요.(전화번호 등)"></textarea>
-				    <small class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
+			    	<textarea name="pGuide" id="pGuide" cols="100" rows="7" placeholder="시설 안내 사항을 입력해주세요(전화번호 등)."></textarea>
+				    <small id="reqGuide" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
 				</div>			 
 			  </div>
 			  
 			  <div class="form-group">
-			    <label for="pGuide" class="font-green font-bold">유의 사항</label>
+			    <label for="pWarn" class="font-green font-bold">유의 사항</label>
 			    <div class="inline-block">
-			    	<textarea name="pWarn" id="pGuide" cols="100" rows="7" placeholder="유의 사항을 입력해주세요."></textarea>
-				    <small class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
+			    	<textarea name="pWarn" id="pWarn" cols="100" rows="7" placeholder="유의 사항을 입력해주세요."></textarea>
+				    <small id="reqWarn" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
 				</div>			 
 			  </div>
-			  
+			  <small class="form-text text-error">공간 등록을 요청하시면 1시간 이내에 승인/비승인 처리를 해드립니다.(평일 오전 10시 ~ 오후 6시)</small>
 			  <div class="text-center mt-5">
-			  	<button type="button" class="btn btn-tp-custom-green" onclick="">등록 요청 하기</button>
+			  	<button type="button" class="btn btn-tp-custom-green" onclick="submitProduct()">등록 요청 하기</button>
 			  </div>
 			</form>
+			
+			
+			<script>
+				function submitProduct() {
+				
+					var isError = false;
+					
+					if($("#pName").val().length == 0 || $("#pName").val() == "") {
+						$("#infoName").css("display", "none");
+						$("#reqName").css("display", "block");
+						isError = true;
+						
+						$("#pName").focusout(function () {
+							$("#reqName").css("display", "none");
+						})
+						
+					}
+					
+					if($("#pPrice").val().length == 0 || $("#pPrice").val() == "") {	
+						$("#reqPrice").css("display", "block");
+						isError = true;
+						
+						$("#pPrice").focusout(function () {
+							$("#reqPrice").css("display", "none");
+						})
+					}
+					
+					if($("#pAbleDate").val().length == 0 || $("#pAbleDate").val() == "") {
+						$("#reqDate").css("display", "block");
+						isError = true;
+						
+						$("#pAbleDate").focusout(function () {
+							$("#reqDate").css("display", "none");
+						})
+					
+					}
+					
+					if($("#pZipCode").val().length == 0 || $("#pZipCode").val() == "" ||
+						$("#pAddress1").val().length == 0 || $("#pAddress1").val() == "" ||
+						$("#pAddress2").val().length == 0 || $("#pAddress2").val() == "" ) {
+						$("#reqAddr").css("display", "block");
+						isError = true;
+						
+						$("#pAddress2").focusout(function () {
+							$("#reqAddr").css("display", "none");
+						});
+						
+					}
+					
+					if($("#pTitleImg").val().length == 0 || $("#pTitleImg").val() == "") {
+						$("#reqTitleImg").css("display", "block");
+						isError = true;
+					} 
+					if($("#pTitleImg").val() !== ""){
+						$("#reqTitleImg").css("display", "none");
+					}
+					
+					
+					
+					if($("#pGuide").val().length == 0 || $("#pGuide").val() == "") {
+						$("#reqGuide").css("display", "block");
+						isError = true;
+						
+						$("#pGuide").focusout(function () {
+							$("#reqGuide").css("display", "none");
+						});
+					} 
+					
+					
+					if($("#pWarn").val().length == 0 || $("#pWarn").val() == "") {
+						$("#reqWarn").css("display", "block");
+						isError = true;
+						
+						$("#pWarn").focusout(function () {
+							$("#reqWarn").css("display", "none");
+						});
+					} 
+					
+					submit(isError);
+				}
+				
+				function submit(isError) {
+					console.log(isError);
+					if(isError) {
+						return;
+					} else {
+						alert("전송");
+						// $("#insertProduct").submit();
+					}
+				}
+			</script>
 			
 			<script>
 				$(function() {
@@ -191,12 +281,11 @@ input[type="file"] {
 				        // maxHours: 18,
 				        onSelect: function (fd, d, picker) {
 				            // Do nothing if selection was cleared
-				            if (!d) return;
 				            
-				           console.log(fd);
+				            if (!d) return;
+				           
 				            var day = d[0].getDay();
 				       
-
 				            // Trigger only if date is changed
 				            if (prevDay != undefined && prevDay == day) return;
 				            prevDay = day;
@@ -214,15 +303,26 @@ input[type="file"] {
 				                    maxHours: 24
 				                })
 				            }
+				          
+				            console.log($("#pAbleDate").val());
 				        }
+				    
+				    
 				    })
 					// Access instance of plugin
 					
 					// 이렇게하면 value 값을 넣을 수 있음
 					// $('#test').data('datepicker').selectDate(new Date(new Date().getFullYear(), new Date().getMonth(), 10));
 				    $("#pAbleDate").data('datepicker')
+				    
 					
-				});//ready end
+				});
+				
+				console.log($("#pAbleDate").val());
+				
+			</script>
+				
+			<script>
 				
 				$(function() {
 					var titleFileTarget = $('.title-upload-hidden');
@@ -268,7 +368,9 @@ input[type="file"] {
 					
 				});
 
-		
+			</script>
+			
+			<script>
 				// 참조 API : http://postcode.map.daum.net/guide
 				function addrSearch() {
 			        new daum.Postcode({
@@ -312,7 +414,6 @@ input[type="file"] {
 			            }
 			        }).open();
 			    };
-			    
 			    
 			</script>
 			
