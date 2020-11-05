@@ -24,12 +24,15 @@
       text-align: center;
    }
    
+   /*
+   	컨텐츠 상하 가운데 정렬 / 해상도에 따라 다르기때문에 우선 보류
    .login-content {
 	   	position: absolute;
 	    top: 45%;
 	    left: 50%;
 	    transform: translate(-50%, -50%);
    }
+   */
  
    .to-login a:hover {
    		color: #82cbc4;
