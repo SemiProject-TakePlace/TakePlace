@@ -100,9 +100,9 @@
 				  </div>
 				  
 				  <div class="form-group">
-				    <label for="exampleInputId1" id="price" class="font-green font-bold" >결제 가격</label>
+				    <label for="exampleInputId1" id="price-title" class="font-green font-bold" >결제 가격</label>
 			    	<div class="inline-block">
-						<p class="font-regular" id="price">font-regular</p>
+						<p class="font-regular" id="price-title">font-regular</p>
 			  		</div>
 				  </div>
 				  
