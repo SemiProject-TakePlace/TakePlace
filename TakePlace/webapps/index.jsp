@@ -5,16 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Take Place</title>
-<link rel="stylesheet" href="resources/css/common/bootstrap.min.css" type="text/css" />
-<link rel="stylesheet" href="resources/css/common/common.css" type="text/css" />
+<%@ include file="resources/css/common/common.jsp" %>
 <link rel="stylesheet" href="resources/css/main/main.css" type="text/css" />
 
-<script src="resources/js/common/jquery-3.5.1.min.js"></script>
-<script src="resources/js/common/bootstrap.min.js"></script>
-<script src="resources/js/common/jquery-ui.min.js"></script>
+<%@ include file="resources/js/common/common.jsp" %>
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-
-
 
 </head>
 <body>
@@ -79,7 +74,7 @@
 		<div class="product-card top8-content">
 			<div class="top8">
 				<h3 class="font-bold">최고의 인기상품
-					<a href="views/top8.jsp" class="btn-tp-custom-green font-normal">더보기</a>
+					<a href="views/products/top8.jsp" class="btn-tp-custom-green font-normal">더보기</a>
 				</h3>
 				<div class="container">
 					<div class="row">

@@ -56,10 +56,10 @@
 		
 		<div>
 			<div class="find">
-				<form action="#">
+				<form action="/takeplace/findId.me">
 					<h2>아이디 찾기</h2>
 					<label for="findId" class="font-green inline-block" >이메일 주소</label>
-					<input type="text" class="form-control inline-block name="findId" id="findId" />
+			    	<input type="text" class="form-control inline-block" name="findId" id="findid" />
 					<button class="btn btn-tp-custom-green">아이디 찾기</button>
 				</form>
 			</div>
