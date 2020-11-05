@@ -54,12 +54,14 @@
                  
               <div class="form-group">
                    <label for="userNick" class="font-green inline-block" >닉네임</label>
-                   <input type="text" class="form-control inline-block" id="userNick" name="guestNick" aria-describedby="emailHelp" placeholder="닉네임 입력" required="required">
+                   <input type="text" class="form-control inline-block" id="userNick" name="userNick" aria-describedby="emailHelp" placeholder="닉네임 입력" required="required">
                    &nbsp;&nbsp;&nbsp;
                    <small id="infoNick" class="form-text text-muted">한글, 숫자, 영소문자를 조합하여 5자 이상 입력하세요.</small>
                    <small id="validationNick" class="form-text text-error" style="display:none;">한글, 숫자, 영소문자를 조합하여 6자 이상 입력하세요.</small>
+                   <small id="nickErr" class="form-text text-error" style="display:none;">중복된 닉네임 입니다.</small>
                    <small id="requiredNick" class="form-text text-error " style="display:none;">필수 입력 사항 입니다.</small>
                    <small id="chkNick" class="form-text text-emuted" style="display:none; color: green;">사용 가능한 닉네임 입니다.</small>
+              	   <input id="duplicationNick" type="hidden" value="NickUncheck"> <!-- 아아디 중복체크용 -->
               </div>
               
               <div class="form-group">
@@ -88,8 +90,7 @@
                    <button class="btn btn-tp-custom-green">이메일 인증</button>
               </div>
               
-            
-              <button type="button" class="btn btn-tp-custom-green" id="insertGuest" onclick="signUp();">회원가입</button>
+              <button type="button" class="btn btn-tp-custom-green" id="insertGuest" onclick="guestSignUp();">회원가입</button>
               
               </form>
                 
@@ -101,11 +102,11 @@
               <div class="tab-pane fade" id="nav-host" role="tabpanel" aria-labelledby="nav-host-tab">
                 
                 <div style="border: 1px solid #82cbc4">
-                <form action="/insertH.me" method="post" id="create_hostAccount">
+                <form action="/takeplace/insertH.me" method="post" id="create_hostAccount">
                 <!-- 호스트 회원가입 -->
                 <div class="form-group">
                      <label for="companyName" class="font-green inline-block" >회사명</label>
-                   <input type="text" class="form-control inline-block" id="companyName" name="companName" aria-describedby="emailHelp" placeholder="회사명 입력" required="required">
+                   <input type="text" class="form-control inline-block" id="companyName" name="companyName" aria-describedby="emailHelp" placeholder="회사명 입력" required="required">
                  </div>
                  
                 <div class="form-group">
@@ -115,7 +116,7 @@
               
               <div class="form-group">
                      <label for="companyNo" class="font-green inline-block" >사업자 등록 번호</label>
-                   <input type="password" class="form-control inline-block" id="companyNo" name="companyNo" aria-describedby="emailHelp" placeholder="사업자 등록 번호 입력" required="required">
+                   <input type="text" class="form-control inline-block" id="companyNo" name="companyNo" aria-describedby="emailHelp" placeholder="사업자 등록 번호 입력" required="required">
               </div>
               
               <div class="form-group">
@@ -137,6 +138,7 @@
                    <small id="hostinfoPwd" class="form-text text-muted">영대문자, 숫자, 특수문자를 조합하여 8~30자를 입력하세요.</small>
                    <small id="hostvalidationPwd" class="form-text text-error" style="display:none;">영대문자, 숫자, 특수문자를 조합하여 8~30자를 입력하세요.</small>
                    <small id="hostrequiredPwd" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
+                   <small id="hostcheckSpace" class="form-text text-error" style="display:none;">공백은 입력하실 수 없습니다.</small>
                    <small id="hostchkPwd" class="form-text text-emuted" style="display:none; color: green;">사용 가능한 비밀번호 입니다.</small>
               </div>
               
@@ -150,12 +152,12 @@
               
               <div class="form-group">
                      <label for="hostemail" class="font-green inline-block" >이메일</label>
-                   <input type="text" class="form-control inline-block" id="userEmail" name="hostName" aria-describedby="emailHelp" placeholder="이메일 입력" required="required">
+                   <input type="text" class="form-control inline-block" id="hostEmail" name="hostEmail" aria-describedby="emailHelp" placeholder="이메일 입력" required="required">
                    &nbsp;&nbsp;&nbsp;
                    <button class="btn btn-tp-custom-green">이메일 인증</button>
               </div>
               
-              <button type="button" class="btn btn-tp-custom-green" onclick="signUp();">회원가입</button>
+              <button type="button" class="btn btn-tp-custom-green" onclick="hostSignUp();">회원가입</button>
                 
                 </form>
                 </div>
@@ -166,7 +168,7 @@
     
    </section>
 
-   <!------------------------- 유효성 체크 함수 ----------------------->
+   <!------------------------------------------------->
       <script type="text/javascript">
       // 엔터 전송 방지
       $('input').keydown(function() {
@@ -175,6 +177,7 @@
          };
        });
       
+      // 정규식 테스트
       function chk(re, e){
           if(re.test(e)){
              return true;
@@ -182,6 +185,7 @@
           return false;
        }
       
+   	   // 공백 체크
 	   function chkSpace(e) {
 		   if(e.search(/\s/) != -1){
 			   return true;
@@ -189,17 +193,76 @@
 			   return false;
 		   }
 	   }
+	   
+   	   // 제대로 작성되었는지 확인용
+	   var checkedId = "";
+	   var checkedNick = "";
+	   var checkedPwd = "";
+
+	    // 모든 칸 제대로 입력시에만 가입 가능 (게스트)
+	   function guestSignUp() {
+			$("#create_gestAccount").submit();
+			
+		}
+		
+		$("#create_gestAccount").submit(function(event){
+			if(checkedId != "true") {
+				alert("아이디를 입력하지 않으셨거나 잘못입력하셨습니다.");
+			} else if(checkedPwd != "true"){
+				alert("비밀번호를 입력하지 않으셨거나 잘못입력하셨습니다.");
+			} else if(checkedNick != "true"){
+				alert("닉네임을 입력하지 않으셨거나 잘못입력하셨습니다.");
+			} else if($("#userEmail").val() == ""){
+					alert("이메일 미입력");
+			} else if($("#pwdchk").val() == ""){
+				alert("비밀번호 확인 칸을 입력하지 않으셨거나 잘못입력하셨습니다.");
+			} else if ($('#pwdchk').val() != $('#userpwd').val()){
+				alert("비밀번호 확인 칸을 잘못입력하셨습니다.");
+			} else 
+			
+			return;
+			event.preventDefault();
+		});
+
+		// 모든 칸 제대로 입력시에만 가입 가능 (호스트)
+		function hostSignUp() {
+				$("#create_hostAccount").submit();				
+			}
+	    
+		$("#create_hostAccount").submit(function(event){
+			
+			if(checkedId != "true") {
+				alert("아이디를 입력하지 않으셨거나 잘못입력하셨습니다.");
+			} else if(checkedPwd != "true"){
+				alert("비밀번호를 입력하지 않으셨거나 잘못입력하셨습니다.");
+			} else if($("#hostEmail").val() == ""){
+					alert("이메일 미입력");
+			} else if($("#pwdchk2").val() == ""){
+				alert("비밀번호 확인 칸을 입력하지않으셨습니다.");
+			} else if($('#pwdchk2').val() != $('#hostpwd').val()){
+				alert("비밀번호 확인 칸을 잘못입력하셨습니다.");
+			} else if($("#companyName").val() == ""){
+				
+			} else if($("#companyNo").val() == ""){
+				
+			} else if($("#hostName").val() == ""){
+				
+			} else 
+			return;
+			event.preventDefault();
+		});
       
+	  //////////////////////// 유효성(게스트)  //////////////////////
       $(document).ready(function() {
          $("#userid").on("blur", function() {
               var userId = document.getElementById("userid").value;
               // 아이디 정규식 : 영소문자와 숫자만 사용 5~20글자
               var idReg = /^[a-z0-9]{5,20}$/; 
               var duplicationChk = document.getElementById("duplicationId").value; 
-              
+           
             // 중복검사된 아이디 인지 확인
               if(duplicationChk != "idUncheck"){
-                 $("#duplicationId").value("idUncheck");
+                 $("#duplicationId").val("idUncheck");
                // 중복체크 후 다시 아이디 창이 새로운 아이디를 입력했을 때
                // 다시 중복체크를 하도록 한다.
               }      
@@ -240,7 +303,8 @@
                                   $("#idErr").css("display", "none");                                                                    
 
                                   // 중복체크 통과
-                                  $("#duplicationId").value("idCheck");
+                                  $("#duplicationId").val("idCheck");
+                                  checkedId = "true";
                               } else {
                                  // 중복체크 미 통과
                                  $("#infoId").css("display", "none");
@@ -279,13 +343,22 @@
               var userNick = document.getElementById("userNick").value;
               // 닉네임 정규식 특수문자 한글, 영소문자, 숫자 사용가능 5자 이상 20자 이하
               var NickReg = /^[a-z0-9가-힣]{5,20}$/
-           
-              if(userNick == "" || userpwd == null){
+              var duplicationChk = document.getElementById("duplicationNick").value; 
+              
+              // 중복검사된 아이디 인지 확인
+              if(duplicationChk != "NickUncheck"){
+                 $("#duplicationNick").val("NickUncheck");
+               // 중복체크 후 다시 아이디 창이 새로운 아이디를 입력했을 때
+               // 다시 중복체크를 하도록 한다.
+              }      
+              
+              if(userNick == "" || userNick == null){
                // 닉네임 입력칸이 빈칸일 시 필수사항 문구 
                $("#infoNick").css("display", "none");
                $("#requiredNick").css("display", "block");
                $("#validationNick").css("display", "none");
                $("#chkNick").css("display", "none");
+               $("#nickErr").css("display", "none");   
               } else {
                  if(userNick.length >= 5){
                     if(!chk(NickReg, userNick)){
@@ -294,21 +367,58 @@
                       $("#requiredPNick").css("display", "none");
                       $("#validationNick").css("display", "block");
                       $("#chkNick").css("display", "none");
+                      $("#nickErr").css("display", "none");   
                      } else {
-                      // 유효성 검사 통과 / 사용가능 닉네임 문구
-                      $("#infoNick").css("display", "none");
-                      $("#requiredNick").css("display", "none");
-                      $("#validationNick").css("display", "none");
-                      $("#chkNick").css("display", "block");
-                      
-                     }   
-                    
-                 } else {
+
+                         // 닉네임 중복검사 ajax
+                         $.ajax({
+                            url : "/takeplace/duplicationId.me?command=nickChk" ,
+                            type : "post" ,
+                            data : {
+                            	userNick : $("#userNick").val()
+                            },
+                            success : function(data) {
+                                 // 유효성 검사 통과 / 사용가능 닉네임 문구
+                                 
+                                 if(data == "success"){
+                                     $("#infoNick").css("display", "none");
+                                     $("#requiredNick").css("display", "none");
+                                     $("#validationNick").css("display", "none");
+                                     $("#chkNick").css("display", "block");
+                                     $("#nickErr").css("display", "none");                                                                    
+
+                                     // 중복체크 통과
+                                     $("#duplicationNick").val("NickCheck");
+                                     checkedNick = "true";
+                                     
+                                 } else {
+                                    // 중복체크 미 통과
+                                     $("#infoNick").css("display", "none");
+                                     $("#requiredNick").css("display", "none");
+                                     $("#validationNick").css("display", "none");
+                                     $("#chkNick").css("display", "none");
+                                     $("#nickErr").css("display", "block");
+
+                                 }
+                                         
+                        
+                     },
+                       error : function(status, error) {
+                       alert("오류 입니다. 관리자에게 문의 하세요 ;ㅁ;");
+                     }
+                     
+                         });
+                         // ajax 종료
+                         
+                        }   
+                       
+                    }  else {
                   // 닉네임의 길이가 5미만일 때
                   $("#infoNick").css("display", "none");
                   $("#requiredNick").css("display", "none");
                   $("#validationNick").css("display", "block");
                   $("#chkNick").css("display", "none");
+                  $("#nickErr").css("display", "none");   
                  }
               }
                    
@@ -337,18 +447,20 @@
                       $("#chkPwd").css("display", "none");
                       $("#checkSpace").css("display", "none");
                      } else if(chkSpace(userpwd)){
+                    	  // 공백검사 (공백입력시)
                     	  $("#infoPwd").css("display", "none");
                           $("#requiredPwd").css("display", "none");
                           $("#validationPwd").css("display", "none");
                           $("#chkPwd").css("display", "none");
                           $("#checkSpace").css("display", "block");
-                      } else {
+                      } else if(!chkSpace(userpwd)){
                     	 // 유효성 검사 통과 / 사용가능 비밀번호 문구
                           $("#infoPwd").css("display", "none");
                           $("#requiredPwd").css("display", "none");
                           $("#validationPwd").css("display", "none");
                           $("#chkPwd").css("display", "block");
-                          $("#checkSpace").css("display", "none");	  
+                          $("#checkSpace").css("display", "none");
+                          checkedPwd = "true";
                      }   
                     
                  } else {
@@ -376,6 +488,7 @@
                     $("#validationPwdchk").css("display", "block");
               } else {
                  $("#validationPwdchk").css("display", "none");
+                 checkedPwd2 = "ture";
               }
          }
     });  
@@ -389,7 +502,7 @@
               
               // 중복검사된 아이디 인지 확인
               if(duplicationChk != "idUncheck"){
-                 $("#hostduplicationId").value("idUncheck");
+                 $("#hostduplicationId").val("idUncheck");
                // 중복체크 후 다시 아이디 창에 새로운 아이디를 입력했을 때
                // 다시 중복체크를 하도록 한다.
               }      
@@ -430,7 +543,8 @@
                                      $("#hostidErr").css("display", "none");                                                                    
 
                                      // 중복체크 통과
-                                     $("#hostduplicationId").value("idCheck");
+                                     $("#hostduplicationId").val("idCheck");
+                                     checkedId = "true";
                                  } else {
                                     // 중복체크 미 통과
                                      $("#hostinfoId").css("display", "none");
@@ -476,6 +590,7 @@
                $("#hostrequiredPwd").css("display", "block");
                $("#hostvalidationPwd").css("display", "none");
                $("#hostchkPwd").css("display", "none");
+               $("#hostcheckSpace").css("display", "none"); 
               } else {
                  if(hostpwd.length >= 8){
                     if(!chk(pwdReg, hostpwd)){
@@ -484,13 +599,24 @@
                       $("#hostrequiredPwd").css("display", "none");
                       $("#hostvalidationPwd").css("display", "block");
                       $("#hostchkPwd").css("display", "none");
-                     } else {
+                      $("#hostcheckSpace").css("display", "none"); 
+                    
+                    } else if(chkSpace(hostpwd)){
+                    	 
+                   	  $("#hostinfoPwd").css("display", "none");
+                      $("#hostrequiredPwd").css("display", "none");
+                      $("#hostvalidationPwd").css("display", "none");
+                      $("#hostchkPwd").css("display", "none");
+                      $("#hostcheckSpace").css("display", "block"); 
+                    
+                 	 } else if(!chkSpace(hostpwd)){
                       // 유효성 검사 통과 / 사용가능 비밀번호 문구
                       $("#hostinfoPwd").css("display", "none");
                       $("#hostrequiredPwd").css("display", "none");
                       $("#hostvalidationPwd").css("display", "none");
                       $("#hostchkPwd").css("display", "block");
-                      
+                      $("#hostcheckSpace").css("display", "none"); 
+                      checkedPwd = "true";
                      }   
                     
                  } else {
@@ -499,6 +625,7 @@
                   $("#hostrequiredPwd").css("display", "none");
                   $("#hostvalidationPwd").css("display", "block");
                   $("#hostchkPwd").css("display", "none");
+                  $("#hostcheckSpace").css("display", "none"); 
                  }
               }             
           
@@ -514,13 +641,16 @@
                  if($('#hostpwd').val() != $('#pwdchk2').val()) { // 비밀번호값과 비밀번호 확인값이 다르다면
                     $("#hostrequiredPwdchk").css("display", "none");
                      $("#hostvalidationPwdchk").css("display", "block"); // 일치하지 않습니다.
-              } else { // 그 외
+              } else { // 일치시
                  $("#hostvalidationPwdchk").css("display", "none");
+                 $("#hostrequiredPwdchk").css("display", "none");
+                 checkedPwd2 = "ture"
                  }
             }
        });  
-          
+       
 });
+     
 
    </script>
    

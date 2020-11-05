@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import com.kh.jsp.member.model.vo.Host;
 import com.kh.jsp.member.model.vo.Member;
 
 public class MemberDAO {
@@ -80,7 +81,7 @@ public class MemberDAO {
 		return result;
 	}
 
-	public int insertMember(Connection con, Member joinMember) {
+	public int insertGuest(Connection con, Member joinMember) {
 		int result = 0;
 		
 		PreparedStatement pstmt = null;
@@ -155,39 +156,6 @@ public class MemberDAO {
 		return result;
 	}
 
-
-	public int insertHost(Connection con, Member m) {
-		int result = 0;
-		
-		PreparedStatement pstmt = null;
-		
-		String sql = prop.getProperty("insertHost");
-		
-		try {
-			pstmt = con.prepareStatement(sql);
-			
-			pstmt.setString(1, m.getId());
-			pstmt.setString(2, m.getmName());
-			pstmt.setString(3, m.getPwd());
-			pstmt.setString(4, m.getEmail());
-			
-			result = pstmt.executeUpdate();
-			
-			// System.out.println(sql);
-			
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			
-			
-		} finally {
-			
-			close(pstmt);
-		}
-		
-		return result;
-	
-	}
 	
 	   public String duplicationId(Connection con, String id) {
 		      // TODO Auto-generated method stub
@@ -222,5 +190,107 @@ public class MemberDAO {
 		 
 		      return result;
 		   }
+
+
+	public String duplicationNick(Connection con, String userNick) {
+		  String result = null;     
+	      PreparedStatement pstmt = null; 
+	      ResultSet rset = null;  
+	      
+	      String sql = prop.getProperty("duplicationNick");
+	      
+	      try {
+	         pstmt = con.prepareStatement(sql);
+	         
+	         pstmt.setString(1, userNick);
+	         
+	         rset = pstmt.executeQuery();
+	            
+	         if(rset.next()){
+	            
+	            result = rset.getString(1);
+	            
+	         }
+	         
+	         // System.out.println("조회 결과 확인 : " + result);
+
+	      } catch (SQLException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      } finally{
+	         close(rset);
+	         close(pstmt);
+	      }
+	 
+	      return result;
+	   }
+
+
+	public int insertMember(Connection con, Member m) {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertMember");
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, m.getId());
+			pstmt.setString(2, m.getmName());
+			pstmt.setString(3, m.getPwd());
+			pstmt.setString(4, m.getEmail());
+			
+			result = pstmt.executeUpdate();
+			
+			// System.out.println(sql);
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			
+			
+		} finally {
+			
+			close(pstmt);
+		}
+		
+		return result;
+	
+	
+	}
+
+
+	public int insertHost(Connection con, Host h) {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertHost");
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, h.getBsNum());
+			pstmt.setInt(2, h.getMno());
+			pstmt.setString(3, h.getBsName());
+			
+			result = pstmt.executeUpdate();
+			
+			System.out.println(sql);
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			
+			
+		} finally {
+			
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 
 }
