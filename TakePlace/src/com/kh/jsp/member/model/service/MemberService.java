@@ -130,6 +130,16 @@ public class MemberService {
 		return result;
 		
 	}
+
+	public Host selectHost(Host h, Member m) {
+		con = getConnection();
+		
+		Host result = mDAO.selectHost(con, h, m);
+		
+		close(con);
+		
+		return result;
+	}
 		
 	
 

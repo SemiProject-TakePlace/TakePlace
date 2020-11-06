@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"  import="com.kh.jsp.member.model.vo.*"%>
+ <%
+ 	Host ho = (Host)session.getAttribute("host");
+ %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,7 +45,6 @@ input[type="file"] {
 	-moz-appearance: none; 
 	appearance: none;
 }
-
 </style>
 
 </head>
@@ -53,7 +55,12 @@ input[type="file"] {
 	<section id="wrap-contents">
 		<div class="container">
 			<h2 class="content-title">공간 등록</h2>
-			<form id="insertProduct" method="post" action="/">
+			<form id="insertProduct" method="post" name="insertProduct"
+					action="<%=request.getContextPath()%>/insertProduct.pr"
+					enctype="multipart/form-data">
+					
+				<input type="hidden" name="bsNum" id="bsNum" value="<%=ho.getBsNum()%>"/>
+				
 			  <div class="form-group">
 			    <label for="pCity" class="font-green font-bold">지역</label>
 			    <select name="pCity" id="pCity" class="form-control inline-block">
@@ -100,7 +107,7 @@ input[type="file"] {
 			  <div class="form-group">
 			    <label for="pAbleDate" class="font-green font-bold">예약 가능 날짜</label>
 			    <div class="inline-block">
-			    	 <input type="text" id="pAbleDate" data-range="true" data-multiple-dates-separator=" - "
+			    	 <input type="text" name="pAbleDate" id="pAbleDate" data-range="true" data-multiple-dates-separator=" - "
     				data-language="en"class="form-control inlne-block" data-timepicker="true"/>
     				<small id="infoDate" class="form-text text-muted">예약 받을 날짜 및 시간의 범위를 입력해주세요.<br>
     				하루만 입력하시면 예약 마감일은 선택한 날의 23시 59분까지입니다.</small>
@@ -114,7 +121,7 @@ input[type="file"] {
 			    	<input type="text" name="pZipCode" id="pZipCode" class="form-control inline-block mb-1" readonly/> <br>
 			    	<input type="text" name="pAddress1" id="pAddress1" class="form-control inline-block mb-1" readonly/> <br>
 			    	<input type="text" name="pAddress2" id="pAddress2" class="form-control inline-block" placeholder="상세 주소 입력"/>
-			    	<button type="button" class="btn btn-tp-custom-white" onclick="addrSearch()">검색</button>
+			    	<button type="button" class="btn btn-tp-custom-white" onclick="searchAddr()">검색</button>
 				    <small id="reqAddr" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
 				</div>			 
 			  </div>
@@ -123,22 +130,37 @@ input[type="file"] {
 			    <label for="pTitleImg" class="font-green font-bold">대표 이미지</label>
 			    <div class="inline-block">
 			    	<input class="upload-name" value="파일선택" disabled="disabled" />
-			    	<input type="file" name="pTitleImg" id="pTitleImg" class="form-control inline-block title-upload-hidden"
-			    			accept="image/*"/>
+			    	<input type="file" name="pTitleImg" id="pTitleImg" accept="image/*"
+			    			class="form-control inline-block title-upload-hidden"/>
+			    	
 			    	<button type="button" class="btn btn-tp-custom-white titleFileUpload">첨부파일 등록</button>
 				    <small id="reqTitleImg" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
+				    
+				    <div id="titleImgArea">
+				    	<img class="titleImg"/>
+                     </div>
 				</div>			 
 			  </div>
 			  
-			  <div class="form-group">
+			   <div class="form-group">
 			    <label for="pSubImg" class="font-green font-bold">서브 이미지</label>
 			    <div class="inline-block">
-			    	<input class="upload-name" value="파일선택" disabled="disabled" />
-			    	<input type="file" name="pSubImg" id="pSubImg" class="form-control inline-block sub-upload-hidden"
-			    			multiple="multiple" accept="image/*" />
-			    	<button type="button" class="btn btn-tp-custom-white subFileUpload">첨부파일 등록</button>
-			    	<small class="form-text text-muted infoMsg">최대 4장까지 가능합니다.</small>
+				    <div id="subImgArea">
+                       <img id="subImg1" width="120" height="100"/>
+                       <img id="subImg2" width="120" height="100"/>
+                       <img id="subImg3" width="120" height="100"/>
+                       <img id="subImg4" width="120" height="100"/>
+                    </div>
 				</div>			 
+			  </div>
+			  
+			  
+			  
+			  <div class="fileArea" id="fileArea">
+	    			<input type="file" name="subImgInput1" id="subImgInput1" onchange="loadImg(this,1);" />
+		            <input type="file" name="subImgInput2" id="subImgInput2" onchange="loadImg(this,2);" />
+		            <input type="file" name="subImgInput3" id="subImgInput3" onchange="loadImg(this,3);" />
+		            <input type="file" name="subImgInput4" id="subImgInput4" onchange="loadImg(this,4);" />
 			  </div>
 			  
 			  <div class="form-group">
@@ -157,11 +179,11 @@ input[type="file"] {
 				</div>			 
 			  </div>
 			  <small class="form-text text-error">공간 등록을 요청하시면 1시간 이내에 승인/비승인 처리를 해드립니다.(평일 오전 10시 ~ 오후 6시)</small>
+			  
 			  <div class="text-center mt-5">
 			  	<button type="button" class="btn btn-tp-custom-green" onclick="submitProduct()">등록 요청 하기</button>
 			  </div>
 			</form>
-			
 			
 			<script>
 				function submitProduct() {
@@ -198,6 +220,13 @@ input[type="file"] {
 					
 					}
 					
+					if($("#pTitleImg").val().length == 0 || $("#pTitleImg").val() == "") {
+						$("#reqTitleImg").css("display", "block");
+						isError = true;
+					} else {
+						$("#reqTitleImg").css("display", "none");
+					}
+					
 					if($("#pZipCode").val().length == 0 || $("#pZipCode").val() == "" ||
 						$("#pAddress1").val().length == 0 || $("#pAddress1").val() == "" ||
 						$("#pAddress2").val().length == 0 || $("#pAddress2").val() == "" ) {
@@ -209,16 +238,6 @@ input[type="file"] {
 						});
 						
 					}
-					
-					if($("#pTitleImg").val().length == 0 || $("#pTitleImg").val() == "") {
-						$("#reqTitleImg").css("display", "block");
-						isError = true;
-					} 
-					if($("#pTitleImg").val() !== ""){
-						$("#reqTitleImg").css("display", "none");
-					}
-					
-					
 					
 					if($("#pGuide").val().length == 0 || $("#pGuide").val() == "") {
 						$("#reqGuide").css("display", "block");
@@ -239,18 +258,18 @@ input[type="file"] {
 						});
 					} 
 					
-					submit(isError);
+					submitForm(isError);
+					
 				}
 				
-				function submit(isError) {
-					console.log(isError);
+				function submitForm(isError) {
 					if(isError) {
 						return;
 					} else {
-						alert("전송");
-						// $("#insertProduct").submit();
+						$("#insertProduct").submit();
 					}
 				}
+				
 			</script>
 			
 			<script>
@@ -304,7 +323,8 @@ input[type="file"] {
 				                })
 				            }
 				          
-				            console.log($("#pAbleDate").val());
+				            // console.log($("#pAbleDate").val());
+				            // return $("#pAbleDate").val();
 				        }
 				    
 				    
@@ -318,16 +338,22 @@ input[type="file"] {
 					
 				});
 				
-				console.log($("#pAbleDate").val());
+				// return $("#pAbleDate").val();
 				
 			</script>
 				
 			<script>
-				
-				$(function() {
-					var titleFileTarget = $('.title-upload-hidden');
-					var subFileTarget = $(".sub-upload-hidden");
-					titleFileTarget.on('change', function(){
+			
+				// 사진 게시글 미리 보기 기능 구현
+		   		$(function() {
+		   			
+		   			$(".titleFileUpload").click(function() {
+		   				$("#pTitleImg").click();
+		   			});
+		   			
+		   			var titleFileTarget = $('.title-upload-hidden');
+					
+					titleFileTarget.on('change', function(e){
 						// 대표 이미지 값이 변경되면 
 						if(window.FileReader){ // modern browser
 							var filename = $(this)[0].files[0].name;
@@ -337,42 +363,67 @@ input[type="file"] {
 						
 						// 추출한 파일명 삽입 
 						$(this).siblings('.upload-name').val(filename); 
+		   				  
+		   				if($(this)[0].files[0]) {
+			   				var reader = new FileReader();
+			   				
+			   				reader.onload = function(e) {
+			   					
+			   					
+			   					$("#titleImgArea").children(".titleImg").attr('src', e.target.result)
+			   				  	.css('width', "120")
+			   				  	.css("height", "100")
+			   				
+			   				}
+			   				
+			   				reader.readAsDataURL($(this)[0].files[0]);
+			   			}
 					}); 
+				
 					
-					subFileTarget.on('change', function(){
-						if(window.FileReader){
-							var filename = $(this)[0].files.length + "개 선택하셨습니다.";
-							console.log($(this)[0].files.length);
-						}
-						
-						// 추출한 파일명 삽입 
-						$(this).siblings('.upload-name').val(filename); 
-					});
-					
-					
-					$(".titleFileUpload").click(function() {
-		   				$("#pTitleImg").click();
+					$("#subImg1").click(function() {
+		   				$("#subImgInput1").click();
 		   			});
-					
-					$(".subFileUpload").click(function() {
-		   				$("#pSubImg").click();
-		   				
-		   				var pSubImgs = $("#pSubImg");
-		   		        if (parseInt(pSubImgs.get(0).files.length) > 4){
-		   		         alert("You can only upload a maximum of 2 files");
-		   		         $("#infoMsg").css("color", "red");
-		   		        }
-		   				
+		   			$("#subImg2").click(function() {
+		   				$("#subImgInput2").click();
 		   			});
+		   			$("#subImg3").click(function() {
+		   				$("#subImgInput3").click();
+		   			});
+		   			$("#subImg4").click(function() {
+		   				$("#subImgInput4").click();
+		   			});
+		   			
+		   			$("#fileArea").hide();
 					
-					
-				});
+		   		});
+				
+		   		function loadImg(img, num) {
+		   			if(img.files && img.files[0]) {
+		   				var reader = new FileReader();
+		   				
+		   				reader.onload = function(e) {
+		   					switch(num) {
+		   					case 1: $("#subImg1").attr("src", e.target.result);
+   									break;
+		   					case 2: $("#subImg2").attr("src", e.target.result);
+									break;
+		   					case 3: $("#subImg3").attr("src", e.target.result);
+									break;
+		   					case 4: $("#subImg4").attr("src", e.target.result);
+									break;
+		   					}
+		   				}
+		   				
+		   				reader.readAsDataURL(img.files[0]);
+		   			}
+		   		};
 
 			</script>
 			
 			<script>
 				// 참조 API : http://postcode.map.daum.net/guide
-				function addrSearch() {
+				function searchAddr() {
 			        new daum.Postcode({
 			            oncomplete: function(data) {
 			                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
