@@ -5,12 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>guest Manual</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/bootstrap.min.css" type="text/css" />
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/common.css" type="text/css" />
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/main/main.css" type="text/css" />
+<%@ include file="../../resources/css/common/common.jsp" %>
 
-<script src="<%= request.getContextPath() %>/resources/js/common/jquery-3.5.1.min.js"></script>
-<script src="<%= request.getContextPath() %>/resources/js/common/bootstrap.min.js"></script>
+<%@ include file="../../resources/js/common/common.jsp" %>
 
 <style>
 	.top8 h2 {
@@ -38,6 +35,7 @@
 			<h2 class="font-bold">이용 방법 </h2>
 		</div>
 		
+		<div style="border: 1px solid #82cbc4">
 		<nav>
 		  <div class="nav nav-tabs" id="nav-tab" role="tablist">
 		  	<!-- 3개 탭일때는 33.3% -->
@@ -87,7 +85,12 @@
 				
 				<p class="font-bold">'Take Place'에게 질문을 하고 싶으면 어떻게 해야하나요?</p>
 				<p class="font-regular">테이크 플레이스 이용 및 예약 등 관련 문의는 테이크 플레이스 홈페이지 하단에 있는 '1:1 문의'를 이용하여 주시기 바랍니다.</p>
+				<br />
+				<br />
+				<br />
+				<br />
 			</div>
+		</div>
 		</div>
 		
 	</section>
