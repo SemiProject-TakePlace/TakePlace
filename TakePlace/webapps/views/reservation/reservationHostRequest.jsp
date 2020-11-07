@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"  import="com.kh.jsp.reservation.model.vo.*, com.kh.jsp.member.model.vo.*, com.kh.jsp.products.model.vo.*"%>
+<%
+	Reservation r = (Reservation)request.getAttribute("Reservation");
+
+	Host h = (Host)request.getAttribute("host");
+	
+	Host ho = (Host)session.getAttribute("host");
+	
+	Product p = (Product)request.getAttribute("Product");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,7 +40,10 @@
 			
 			<br /><br />
 			
-			<form id="frmLogin" method="post">
+			<form id="reHostRequest" method="post" name="reHostRequest"
+				action="<%=request.getContextPath()%>/ReservationHostRequest.re">
+				
+				<input type="hidden" name="pno" id="pno" value="<%=p.getPno()%>"/>
 			
 				<div class="form-group" id="rentName">
 				    <label for="exampleInputId1" id="rentName" class="font-green font-bold" >예약자 이름</label>

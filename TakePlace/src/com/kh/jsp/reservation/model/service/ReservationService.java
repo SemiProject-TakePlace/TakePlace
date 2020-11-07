@@ -12,29 +12,19 @@ public class ReservationService {
 	
 	private Connection con;
 	private ReservationDAO rDAO = new ReservationDAO();
-/*
-	public Reservation selectOne(int preqno) {
+
+	public int insertReservation(Reservation r) {
 		
 		con = getConnection();
 		
-		Reservation r = rDAO.selectOne(con, preqno);
+		int result = rDAO.insertReservation(con, r);
 		
-		if( r != null ) {
-			// 조회수 1 증가
-			int result = rDAO.updateReadCount(con, preqno);
-			
-			if(result > 0 ) {
-				commit(con);
-			} else {
-				rollback(con);
-			}
-		}
-		
+		if(result > 0) commit(con);
+		else rollback(con);
 		
 		close(con);
 		
-		return r;
+		return result;
 		
 	}
-*/
 }
