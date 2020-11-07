@@ -60,6 +60,7 @@ public class MemberDAO {
 				
 				result = new Member();
 				
+				result.setMtype(rset.getString("mtype"));
 				result.setMno(rset.getInt("mno"));
 				result.setId(m.getId());
 				result.setPwd(m.getPwd());

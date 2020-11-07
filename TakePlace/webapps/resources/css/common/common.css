@@ -224,6 +224,13 @@ a:hover { text-decoration: none; }
 	border: 1px solid #82cbc4;
 }
 
+.product-card .card .card-body h5 {
+	text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 198px;
+    overflow: hidden;
+}
+
 .product-card .card .card-body h5, p{
 	margin-bottom: 0;	
 }

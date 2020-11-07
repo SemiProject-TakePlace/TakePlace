@@ -26,6 +26,8 @@ public class Product implements Serializable {
     private Date pokDate;  // 승인 날짜
     private char isDelete; // 삭제여부
     private int pbookCnt;  // 예약수
+    private String productFile; // 사진
+    private int mno;
    
     
 	public Product() {
@@ -35,7 +37,7 @@ public class Product implements Serializable {
 
 	public Product(int pno, String bsNum, String ptype, String pcity, String pname, int pprice, String pableDate,
 			String paddress, String pguide, String pwarn, char pisOk, int prating, Date preqDate, Date pokDate,
-			char isDelete, int pbookCnt) {
+			char isDelete, int pbookCnt, String productFile, int mno) {
 		super();
 		this.pno = pno;
 		this.bsNum = bsNum;
@@ -53,6 +55,8 @@ public class Product implements Serializable {
 		this.pokDate = pokDate;
 		this.isDelete = isDelete;
 		this.pbookCnt = pbookCnt;
+		this.productFile = productFile;
+		this.mno = mno;
 	}
 
 
@@ -61,7 +65,7 @@ public class Product implements Serializable {
 		return "Product [pno=" + pno + ", bsNum=" + bsNum + ", ptype=" + ptype + ", pcity=" + pcity + ", pname=" + pname
 				+ ", pprice=" + pprice + ", pableDate=" + pableDate + ", paddress=" + paddress + ", pguide=" + pguide
 				+ ", pwarn=" + pwarn + ", pisOk=" + pisOk + ", prating=" + prating + ", preqDate=" + preqDate
-				+ ", pokDate=" + pokDate + ", isDelete=" + isDelete + ", pbookCnt=" + pbookCnt + "]";
+				+ ", pokDate=" + pokDate + ", isDelete=" + isDelete + ", pbookCnt=" + pbookCnt + ",productFile" + productFile + ", mno" + mno + "]";
 	}
 
 
@@ -233,7 +237,25 @@ public class Product implements Serializable {
 	public void setPbookCnt(int pbookCnt) {
 		this.pbookCnt = pbookCnt;
 	}
+
+
+	public String getProductFile() {
+		return productFile;
+	}
+
+
+	public void setProductFile(String productFile) {
+		this.productFile = productFile;
+	}
+
+
+	public int getMno() {
+		return mno;
+	}
+
+
+	public void setMno(int mno) {
+		this.mno = mno;
+	}
 	
 }
-
-

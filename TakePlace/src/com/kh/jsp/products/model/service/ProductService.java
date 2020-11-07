@@ -15,9 +15,47 @@ public class ProductService {
 	private ProductDAO pDAO = new ProductDAO();
 	
 	public ArrayList<Product> selectList() {
-		return null;
+		con = getConnection();
+		
+		ArrayList<Product> list = pDAO.selectList(con);
+		
+		close(con);
+		
+		return list;
 	}
 	
+	public ArrayList<Product> selectProductList(String type) {
+		con = getConnection();
+		
+		ArrayList<Product> list = null;
+		
+		if(type.length() > 0) {
+			list = pDAO.selectProductList(con, type);
+		} else {
+			list = pDAO.selectList(con);
+		}
+		
+		close(con);
+		
+		return list;
+	}
+	
+	public ArrayList<Product> searchProduct(String condition, String keyword) {
+		con = getConnection();
+		
+		ArrayList<Product> list = null;
+		
+		if(condition.length() > 0) {
+			list = pDAO.searchProduct(con, condition, keyword);
+		} else {
+			// list = pDAO.searchAll(con, keyword);
+			list = pDAO.selectList(con);
+		}
+		
+		close(con);
+		
+		return list;
+	}
 
 	public int insertProduct(Product p, ArrayList<ProductImages> list) {
 		con = getConnection();
@@ -57,5 +95,6 @@ public class ProductService {
 		
 		return result;
 	}
+
 
 }

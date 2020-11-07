@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import com.kh.jsp.products.model.vo.Product;
@@ -34,6 +35,100 @@ public class ProductDAO {
 		}
 		
 	}
+	
+	public ArrayList<Product> selectList(Connection con) {
+		ArrayList<Product> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectList");
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				
+				p.setMno(rset.getInt("mno"));
+				p.setPno(rset.getInt("pno"));
+				p.setProductFile(rset.getString("changename"));
+				p.setPtype(rset.getString("ptype"));
+				p.setPcity(rset.getString("pcity"));
+				p.setPname(rset.getString("pname"));
+				p.setPprice(rset.getInt("pprice"));
+				p.setPrating(rset.getInt("prating"));
+				
+				list.add(p);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
+	public ArrayList<Product> selectProductList(Connection con, String type) {
+		ArrayList<Product> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = null;
+
+		
+		switch(type) {
+			case "all":
+				sql = prop.getProperty("selectList");
+				break;
+			case "study":
+				sql = prop.getProperty("selectStudyList");
+				break;
+			case "studio":
+				sql = prop.getProperty("selectStudioList");
+				break;
+			case "seminar":
+				sql = prop.getProperty("selectSeminarList");
+				break;
+			case "party":
+				sql = prop.getProperty("selectPartyList");
+				break;
+			case "office":
+				sql = prop.getProperty("selectOfficeList");
+				break;
+		}
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				
+				p.setMno(rset.getInt("mno"));
+				p.setPno(rset.getInt("pno"));
+				p.setProductFile(rset.getString("changename"));
+				p.setPtype(rset.getString("ptype"));
+				p.setPcity(rset.getString("pcity"));
+				p.setPname(rset.getString("pname"));
+				p.setPprice(rset.getInt("pprice"));
+				p.setPrating(rset.getInt("prating"));
+				
+				list.add(p);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
 
 	public int insertProduct(Connection con, Product p) {
 		int result = 0;
@@ -135,6 +230,54 @@ public class ProductDAO {
 		}
 		
 		return result;
+	}
+
+	public ArrayList<Product> searchProduct(Connection con, String condition, String keyword) {
+		ArrayList<Product> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = null;
+		
+		switch(condition) {
+			case "pname" :
+				sql = prop.getProperty("searchPname");
+				break;
+			case "mname" :
+				sql = prop.getProperty("searchMname");
+				break;
+			case "pcity" :
+				sql = prop.getProperty("searchPcity");
+				break;
+		}
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				
+				p.setMno(rset.getInt("mno"));
+				p.setPno(rset.getInt("pno"));
+				p.setProductFile(rset.getString("changename"));
+				p.setPtype(rset.getString("ptype"));
+				p.setPcity(rset.getString("pcity"));
+				p.setPname(rset.getString("pname"));
+				p.setPprice(rset.getInt("pprice"));
+				p.setPrating(rset.getInt("prating"));
+				
+				list.add(p);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
 	}
 
 }
