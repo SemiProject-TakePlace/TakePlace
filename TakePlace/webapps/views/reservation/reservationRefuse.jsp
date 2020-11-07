@@ -5,12 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>예약 승인 거절</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/bootstrap.min.css" type="text/css" />
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/common.css" type="text/css" />
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/main/main.css" type="text/css" />
+<%@ include file="../../resources/css/common/common.jsp" %>
 
-<script src="<%= request.getContextPath() %>/resources/js/common/jquery-3.5.1.min.js"></script>
-<script src="<%= request.getContextPath() %>/resources/js/common/bootstrap.min.js"></script>
+<%@ include file="../../resources/js/common/common.jsp" %>
 
 <style>
 .font-regular-content{

@@ -1,23 +1,27 @@
-package com.kh.jsp.rent.controller;
+package com.kh.jsp.reservation.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.jsp.reservation.model.service.ReservationService;
+import com.kh.jsp.reservation.model.vo.Reservation;
+
 /**
  * Servlet implementation class rentHostRequest
  */
-@WebServlet("/rentHostRequest.re")
-public class rentHostRequest extends HttpServlet {
+@WebServlet("/ReservationHostRequest.re")
+public class ReservationHostRequest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public rentHostRequest() {
+    public ReservationHostRequest() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,10 +31,32 @@ public class rentHostRequest extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String page = "views/rent/rentWait.jsp";
+		int preqno = Integer.parseInt(request.getParameter("preqno"));
+		
+		ReservationService rs = new ReservationService();
+		
+		String page = "views/reservation/reservationWait.jsp";
+		
+		try {
+			
+			//Reservation r = rs.selectOne(preqno);
+			//request.setAttribute("reservation", r);
+			
+			page = "views/notice/noticeDetail.jsp";
+			
+		} catch (Exception e) {
+			
+			request.setAttribute("exception", e);
+			request.setAttribute("error-msg", "예약 요청 페이지 조회 실패!");
+			
+			page = "views/common/errorPage.jsp";
+			
+			e.printStackTrace();
+		} finally {
+			request.getRequestDispatcher(page).forward(request, response);
+		}
 		
 		
-		request.getRequestDispatcher(page).forward(request, response);
 		
 	}
 
