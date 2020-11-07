@@ -79,7 +79,7 @@
 		                	<a class="nav-link" href="<%= request.getContextPath() %>/views/intro/intro.jsp">사이트 소개</a>
 			            </li>
 			            <li class="nav-item">
-		                	<a class="nav-link" href="<%= request.getContextPath() %>/views/products/productsList.jsp">공간 유형</a>
+		                	<a class="nav-link" href="<%= request.getContextPath() %>/productsList.pr">공간 유형</a>
 			            </li>
 			            <li class="nav-item">
 		                	<a class="nav-link" href="<%= request.getContextPath() %>/noticeList">공지사항</a>
