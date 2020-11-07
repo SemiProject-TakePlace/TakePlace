@@ -82,7 +82,8 @@
 		                	<a class="nav-link" href="<%= request.getContextPath() %>/views/products/productsList.jsp">공간 유형</a>
 			            </li>
 			            <li class="nav-item">
-		                	<a class="nav-link" href="<%= request.getContextPath() %>/views/notice/noticeList.jsp">공지사항</a>
+		                	<a class="nav-link" href="<%= request.getContextPath() %>/noticeList">공지사항</a>
+
 			            </li>
 			            <li class="nav-item">
 		                	<a class="nav-link" href="<%= request.getContextPath() %>/views/howto/howto.jsp">이용방법</a>
