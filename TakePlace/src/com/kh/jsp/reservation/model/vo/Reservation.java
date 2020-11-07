@@ -7,16 +7,16 @@ public class Reservation implements Serializable{
 
 	private static final long serialVersionUID = 1002L;
 	
-	private int preqno;
-	private int pno;
-	private String gname;
-	private String gtel;
-	private Date resDate;
-	private String gdemand;
-	private char pisOk;
-	private char pisPaid;
-	private char pisCncld;
-	private int payAmount;
+	private int preqno;        // 예약 고유 번호
+	private int pno;           // 공간 고유 번호
+	private String gname;      // 게스트 이름
+	private String gtel;       // 게스트 연락처
+	private Date resDate;      // 예약 날짜시간
+	private String gdemand;    // 요구 사항
+	private char pisOk;        // 승인 여부
+	private char pisPaid;      // 결제 여부
+	private char pisCncld;     // 예약 취소 여부
+	private int payAmount;     // 총 결제금액
 	
 	public Reservation() {
 		super();
