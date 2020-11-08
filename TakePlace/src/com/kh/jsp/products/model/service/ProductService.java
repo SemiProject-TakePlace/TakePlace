@@ -107,5 +107,15 @@ public class ProductService {
 		return hmap;
 	}
 
+	public ArrayList<Product> productsTop() {
+		con = getConnection();
+		
+		ArrayList<Product> list = pDAO.productsTop(con);
+		
+		close(con);
+		
+		return list;
+	}
+
 
 }
