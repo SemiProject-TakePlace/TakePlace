@@ -48,22 +48,19 @@ public class insertHost extends HttpServlet implements Servlet {
 		Member m = new Member(id, mName, pwd, mType, email);
 		Host h = new Host(m.getMno(), id, mName, pwd, m.getJoinDate(), m.getChdate(), mType, email,
 				bsNum, bsName, 0, "N");
-		
-		// Host h = new Host(m.getMno(), id, mName, pwd, null, null, mType, email);
 
 		System.out.println("가입 정보 확인 : " + m);
 		System.out.println("가입 정보 확인 : " + h);
 		
 		MemberService ms = new MemberService();
 		
-	
-		
-		
 		ms.insertMember(m);
 		
 		
 		m = ms.selectOneHost(m);
 		ms.insertHost(m, h);
+		
+		request.setAttribute("host", h);
 		
 		System.out.println("회원 가입 성공!");
 		response.sendRedirect("/takeplace/views/member/hostSuccess.jsp");

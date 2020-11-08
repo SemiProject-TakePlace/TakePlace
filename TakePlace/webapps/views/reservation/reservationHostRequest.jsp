@@ -1,16 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"  import="com.kh.jsp.reservation.model.vo.*, com.kh.jsp.member.model.vo.*, com.kh.jsp.products.model.vo.*"%>
+<%
+	Reservation r = (Reservation)request.getAttribute("Reservation");
+
+	Host h = (Host)request.getAttribute("host");
+	
+	Host ho = (Host)session.getAttribute("host");
+	
+	Product p = (Product)request.getAttribute("Product");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>공간 대여 요청</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/bootstrap.min.css" type="text/css" />
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/common.css" type="text/css" />
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/main/main.css" type="text/css" />
+<%@ include file="../../resources/css/common/common.jsp" %>
 
-<script src="<%= request.getContextPath() %>/resources/js/common/jquery-3.5.1.min.js"></script>
-<script src="<%= request.getContextPath() %>/resources/js/common/bootstrap.min.js"></script>
+<%@ include file="../../resources/js/common/common.jsp" %>
 
 <style>
 .mb-5{
@@ -34,7 +40,10 @@
 			
 			<br /><br />
 			
-			<form id="frmLogin" method="post">
+			<form id="reHostRequest" method="post" name="reHostRequest"
+				action="<%=request.getContextPath()%>/ReservationHostRequest.re">
+				
+				<input type="hidden" name="pno" id="pno" value="<%=p.getPno()%>"/>
 			
 				<div class="form-group" id="rentName">
 				    <label for="exampleInputId1" id="rentName" class="font-green font-bold" >예약자 이름</label>
@@ -133,7 +142,7 @@
 		}
 		
 		function submitRequest(sr){
-			location.href="/takeplace/rentHostRequest.re";
+			location.href="/takeplace/ReservationHostRequest.re";
 		}
 		
 		

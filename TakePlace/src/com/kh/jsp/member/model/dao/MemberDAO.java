@@ -60,6 +60,8 @@ public class MemberDAO {
 				
 				result = new Member();
 				
+				result.setMtype(rset.getString("mtype"));
+				result.setMno(rset.getInt("mno"));
 				result.setId(m.getId());
 				result.setPwd(m.getPwd());
 				result.setMname(rset.getString("mname"));
@@ -80,6 +82,7 @@ public class MemberDAO {
 		
 		return result;
 	}
+	
 
 	public int insertGuest(Connection con, Member joinMember) {
 		int result = 0;
@@ -97,8 +100,6 @@ public class MemberDAO {
 			pstmt.setString(4, joinMember.getEmail());
 			
 			result = pstmt.executeUpdate();
-			
-			// System.out.println(sql);
 			
 		} catch (SQLException e) {
 			
@@ -277,8 +278,6 @@ public class MemberDAO {
 			
 			result = pstmt.executeUpdate();
 			
-			System.out.println(sql);
-			
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
@@ -314,9 +313,13 @@ public class MemberDAO {
 				
 				result = new Member();
 				result.setMno(rset.getInt("mno"));
+				result.setId(rset.getString("id"));
+				result.setMname(rset.getString("pwd"));
+				result.setJoinDate(rset.getDate("joindate"));
+				result.setJoinDate(rset.getDate("chdate"));
+				result.setMtype(rset.getString("mtype"));
+				result.setEmail((rset.getString("email")));
 			}
-			
-			System.out.println("조회 결과 확인 : " + result);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -349,11 +352,51 @@ public class MemberDAO {
 			
 			result = pstmt.executeUpdate();
 			
-			System.out.println(sql);
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+	public Host selectHost(Connection con, Host h, Member m) {
+		Host result = null;     
+		PreparedStatement pstmt = null; 
+		ResultSet rset = null;  
+		
+		String sql = prop.getProperty("selectHost");
+		
+		// 쿼리 확인용
+		// System.out.println(sql);
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, m.getMno());
+//			pstmt.setString(2, h.getPwd());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) { 
+				
+				result = new Host();
+				
+				result.setBsNum(rset.getString("bsnum"));
+				result.setMno(rset.getInt("mno"));
+				result.setBsName(rset.getString("bsname"));
+				result.setHtating(rset.getDouble("hrating"));
+				result.setHisok(rset.getString("hisok"));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		} finally {
+			close(rset);
 			close(pstmt);
 		}
 		

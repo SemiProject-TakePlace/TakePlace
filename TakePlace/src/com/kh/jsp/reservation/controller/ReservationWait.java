@@ -1,4 +1,4 @@
-package com.kh.jsp.products.controller;
+package com.kh.jsp.reservation.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class productDetail
+ * Servlet implementation class ReservationWait
  */
-@WebServlet("/productDetail.pr")
-public class productDetail extends HttpServlet {
+@WebServlet("/ReservationWait.re")
+public class ReservationWait extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public productDetail() {
+    public ReservationWait() {
         super();
         // TODO Auto-generated constructor stub
     }

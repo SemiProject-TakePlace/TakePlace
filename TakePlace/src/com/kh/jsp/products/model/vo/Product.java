@@ -2,27 +2,32 @@ package com.kh.jsp.products.model.vo;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class Product implements Serializable {
                     
 	private static final long serialVersionUID = 1001L;
 	
-	private int pno;
-    private String bsNum;
-    private String pType;
-    private String pCity;
-    private String pName;
-    private int pPrice;
-    private Date pAbleDate;
-    private String pAddress;
-    private String pGuide;
-    private String pWarn;
-    private char pIsOk;
-    private int pRating;
-    private Date pReqDate;
-    private Date pOkDate;
-    private char isDelete;
-    private int pBookCnt;
+	private ArrayList<ProductImages> ProductImages;
+	
+	private int pno;      // 공간 고유 번호
+    private String bsNum; // 사업자 번호
+    private String ptype; // 공간 유형
+    private String pcity; // 도시
+    private String pname; // 공간 이름
+    private int pprice;   // 공간 가격
+    private String pableDate; // 예약 가능 날짜
+    private String paddress; // 상세 주소
+    private String pguide; // 시설 소개
+    private String pwarn;  // 유의 사항
+    private char pisOk;   // 승인 여부
+    private int prating;  // 공간 평점
+    private Date preqDate; // 승인 요청 날짜
+    private Date pokDate;  // 승인 날짜
+    private char isDelete; // 삭제여부
+    private int pbookCnt;  // 예약수
+    private String productFile; // 사진
+    private int mno;
    
     
 	public Product() {
@@ -30,35 +35,47 @@ public class Product implements Serializable {
 	}
 
 
-	public Product(int pno, String bsNum, String pType, String pCity, String pName, int pPrice, Date pAbleDate,
-			String pAddress, String pGuide, String pWarn, char pIsOk, int pRating, Date pReqDate, Date pOkDate,
-			char isDelete, int pBookCnt) {
+	public Product(int pno, String bsNum, String ptype, String pcity, String pname, int pprice, String pableDate,
+			String paddress, String pguide, String pwarn, char pisOk, int prating, Date preqDate, Date pokDate,
+			char isDelete, int pbookCnt, String productFile, int mno) {
 		super();
 		this.pno = pno;
 		this.bsNum = bsNum;
-		this.pType = pType;
-		this.pCity = pCity;
-		this.pName = pName;
-		this.pPrice = pPrice;
-		this.pAbleDate = pAbleDate;
-		this.pAddress = pAddress;
-		this.pGuide = pGuide;
-		this.pWarn = pWarn;
-		this.pIsOk = pIsOk;
-		this.pRating = pRating;
-		this.pReqDate = pReqDate;
-		this.pOkDate = pOkDate;
+		this.ptype = ptype;
+		this.pcity = pcity;
+		this.pname = pname;
+		this.pprice = pprice;
+		this.pableDate = pableDate;
+		this.paddress = paddress;
+		this.pguide = pguide;
+		this.pwarn = pwarn;
+		this.pisOk = pisOk;
+		this.prating = prating;
+		this.preqDate = preqDate;
+		this.pokDate = pokDate;
 		this.isDelete = isDelete;
-		this.pBookCnt = pBookCnt;
+		this.pbookCnt = pbookCnt;
+		this.productFile = productFile;
+		this.mno = mno;
 	}
 
 
 	@Override
 	public String toString() {
-		return "Product [pno=" + pno + ", bsNum=" + bsNum + ", pType=" + pType + ", pCity=" + pCity + ", pName=" + pName
-				+ ", pPrice=" + pPrice + ", pAbleDate=" + pAbleDate + ", pAddress=" + pAddress + ", pGuide=" + pGuide
-				+ ", pWarn=" + pWarn + ", pIsOk=" + pIsOk + ", pRating=" + pRating + ", pReqDate=" + pReqDate
-				+ ", pOkDate=" + pOkDate + ", isDelete=" + isDelete + ", pBookCnt=" + pBookCnt + "]";
+		return "Product [pno=" + pno + ", bsNum=" + bsNum + ", ptype=" + ptype + ", pcity=" + pcity + ", pname=" + pname
+				+ ", pprice=" + pprice + ", pableDate=" + pableDate + ", paddress=" + paddress + ", pguide=" + pguide
+				+ ", pwarn=" + pwarn + ", pisOk=" + pisOk + ", prating=" + prating + ", preqDate=" + preqDate
+				+ ", pokDate=" + pokDate + ", isDelete=" + isDelete + ", pbookCnt=" + pbookCnt + ",productFile" + productFile + ", mno" + mno + "]";
+	}
+
+
+	public ArrayList<ProductImages> getProductImages() {
+		return ProductImages;
+	}
+
+
+	public void setProductImages(ArrayList<ProductImages> productImages) {
+		ProductImages = productImages;
 	}
 
 
@@ -82,123 +99,123 @@ public class Product implements Serializable {
 	}
 
 
-	public String getpType() {
-		return pType;
+	public String getPtype() {
+		return ptype;
 	}
 
 
-	public void setpType(String pType) {
-		this.pType = pType;
+	public void setPtype(String ptype) {
+		this.ptype = ptype;
 	}
 
 
-	public String getpCity() {
-		return pCity;
+	public String getPcity() {
+		return pcity;
 	}
 
 
-	public void setpCity(String pCity) {
-		this.pCity = pCity;
+	public void setPcity(String pcity) {
+		this.pcity = pcity;
 	}
 
 
-	public String getpName() {
-		return pName;
+	public String getPname() {
+		return pname;
 	}
 
 
-	public void setpName(String pName) {
-		this.pName = pName;
+	public void setPname(String pname) {
+		this.pname = pname;
 	}
 
 
-	public int getpPrice() {
-		return pPrice;
+	public int getPprice() {
+		return pprice;
 	}
 
 
-	public void setpPrice(int pPrice) {
-		this.pPrice = pPrice;
+	public void setPprice(int pprice) {
+		this.pprice = pprice;
 	}
 
 
-	public Date getpAbleDate() {
-		return pAbleDate;
+	public String getPableDate() {
+		return pableDate;
 	}
 
 
-	public void setpAbleDate(Date pAbleDate) {
-		this.pAbleDate = pAbleDate;
+	public void setPableDate(String pableDate) {
+		this.pableDate = pableDate;
 	}
 
 
-	public String getpAddress() {
-		return pAddress;
+	public String getPaddress() {
+		return paddress;
 	}
 
 
-	public void setpAddress(String pAddress) {
-		this.pAddress = pAddress;
+	public void setPaddress(String paddress) {
+		this.paddress = paddress;
 	}
 
 
-	public String getpGuide() {
-		return pGuide;
+	public String getPguide() {
+		return pguide;
 	}
 
 
-	public void setpGuide(String pGuide) {
-		this.pGuide = pGuide;
+	public void setPguide(String pguide) {
+		this.pguide = pguide;
 	}
 
 
-	public String getpWarn() {
-		return pWarn;
+	public String getPwarn() {
+		return pwarn;
 	}
 
 
-	public void setpWarn(String pWarn) {
-		this.pWarn = pWarn;
+	public void setPwarn(String pwarn) {
+		this.pwarn = pwarn;
 	}
 
 
-	public char getpIsOk() {
-		return pIsOk;
+	public char getPisOk() {
+		return pisOk;
 	}
 
 
-	public void setpIsOk(char pIsOk) {
-		this.pIsOk = pIsOk;
+	public void setPisOk(char pisOk) {
+		this.pisOk = pisOk;
 	}
 
 
-	public int getpRating() {
-		return pRating;
+	public int getPrating() {
+		return prating;
 	}
 
 
-	public void setpRating(int pRating) {
-		this.pRating = pRating;
+	public void setPrating(int prating) {
+		this.prating = prating;
 	}
 
 
-	public Date getpReqDate() {
-		return pReqDate;
+	public Date getPreqDate() {
+		return preqDate;
 	}
 
 
-	public void setpReqDate(Date pReqDate) {
-		this.pReqDate = pReqDate;
+	public void setPreqDate(Date preqDate) {
+		this.preqDate = preqDate;
 	}
 
 
-	public Date getpOkDate() {
-		return pOkDate;
+	public Date getPokDate() {
+		return pokDate;
 	}
 
 
-	public void setpOkDate(Date pOkDate) {
-		this.pOkDate = pOkDate;
+	public void setPokDate(Date pokDate) {
+		this.pokDate = pokDate;
 	}
 
 
@@ -212,19 +229,33 @@ public class Product implements Serializable {
 	}
 
 
-	public int getpBookCnt() {
-		return pBookCnt;
+	public int getPbookCnt() {
+		return pbookCnt;
 	}
 
 
-	public void setpBookCnt(int pBookCnt) {
-		this.pBookCnt = pBookCnt;
+	public void setPbookCnt(int pbookCnt) {
+		this.pbookCnt = pbookCnt;
 	}
-	
-	
-	
-	
+
+
+	public String getProductFile() {
+		return productFile;
+	}
+
+
+	public void setProductFile(String productFile) {
+		this.productFile = productFile;
+	}
+
+
+	public int getMno() {
+		return mno;
+	}
+
+
+	public void setMno(int mno) {
+		this.mno = mno;
+	}
 	
 }
-
-
