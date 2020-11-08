@@ -60,12 +60,14 @@ public class MemberDAO {
 				
 				result = new Member();
 				
-				result.setMtype(rset.getString("mtype"));
 				result.setMno(rset.getInt("mno"));
 				result.setId(m.getId());
 				result.setPwd(m.getPwd());
+				result.setMtype(rset.getString("mtype"));
 				result.setMname(rset.getString("mname"));
 				result.setEmail(rset.getString("email"));
+				result.setJoinDate(rset.getDate("joindate"));
+				result.setChdate(rset.getDate("chdate"));
 			
 			}
 			
@@ -116,48 +118,49 @@ public class MemberDAO {
 	}
 
 
-	public Member findId(Connection con, Member m) {
-		Member result = null;     
-		PreparedStatement pstmt = null; 
-		ResultSet rset = null;  
-		
-		String sql = prop.getProperty("findId");
-		
-		// 쿼리 확인용
-		// System.out.println(sql);
-		
-		try {
-			pstmt = con.prepareStatement(sql);
-			
-			pstmt.setString(1, m.getEmail());
-			
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()) { 
-				
-				result = new Member();
-				
-				result.setId(m.getId());
-				result.setPwd(m.getPwd());
-				result.setMname(rset.getString("mname"));
+	 public Member findId(Connection con, Member m) {
+	      Member result = null;     
+	      PreparedStatement pstmt = null; 
+	      ResultSet rset = null;  
+	      
+	      String sql = prop.getProperty("findId");
+	      
+	      // 쿼리 확인용
+	      System.out.println(sql);
+	      
+	      try {
+	         pstmt = con.prepareStatement(sql);
+	         
+	         pstmt.setString(1, m.getEmail());
+	      
+	         rset = pstmt.executeQuery();
+	         
+	         if(rset.next()) { 	
+	        	 
+	            result = new Member();
+	            
+				result.setId(rset.getString("id"));
 				result.setEmail(rset.getString("email"));
-			
-			}
-			
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		return result;
-	}
+				result.setMtype(rset.getString("mtype"));
+				result.setJoinDate(rset.getDate("joindate"));
+	            
+	            System.out.println(result);
+	            
+	         }
+	         
+	         
+	      } catch (SQLException e) {
+	      
+	         e.printStackTrace();
+	         
+	      } finally {
+	         close(rset);
+	         close(pstmt);
+	      }
+	      
+	      return result;
+	   }
 
-	
 	   public String duplicationId(Connection con, String id) {
 		      // TODO Auto-generated method stub
 		      String result = null;     
@@ -386,6 +389,7 @@ public class MemberDAO {
 				
 				result.setBsNum(rset.getString("bsnum"));
 				result.setMno(rset.getInt("mno"));
+				result.setMtype(rset.getString("mtype"));
 				result.setBsName(rset.getString("bsname"));
 				result.setHtating(rset.getDouble("hrating"));
 				result.setHisok(rset.getString("hisok"));
@@ -402,6 +406,7 @@ public class MemberDAO {
 		
 		return result;
 	}
+
 
 
 }
