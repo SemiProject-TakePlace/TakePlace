@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.*, com.kh.jsp.products.model.vo.*" %>
+<%@ page import="java.util.*, com.kh.jsp.products.model.vo.*, com.kh.jsp.common.model.vo.*" %>
 <%
 	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
  %>
@@ -59,6 +59,13 @@
 		background: #82cbc4;
 		color: #fff;
 	}
+	
+	.disabled {
+	  color: currentColor;
+	  cursor: not-allowed;
+	  opacity: 0.5;
+	  text-decoration: none;
+	}
 </style>
 </head>
 <body>
@@ -112,7 +119,8 @@
 					<!-- 여기서부터 for문 사용하여 여러 개 상품 돌리기 -->
 					<% for(Product p : list) { %>
 					<div class="col">
-						<a href="#">
+						<input type="hidden" name="pno" id="pno" value="<%= p.getPno() %>" />
+						
 							<div class="card">
 							  <img src="<%=request.getContextPath() %>/resources/images/product/<%= p.getMno()%>/<%= p.getProductFile() %>"
 							  	class="card-img-top" alt="대표이미지" width="238" height="158">
@@ -130,29 +138,13 @@
 								  				<span class="product">오피스</span> /
 								  			<% } %>
 								  			
-								  			<% if(p.getPcity().equals("seo")) {%>
-								  				<span class="location">서울</span>
-								  			<% } else if (p.getPcity().equals("gyg")) {%>
-								  				<span class="location">경기</span>
-								  			<% } else if (p.getPcity().equals("gan")) {%>
-								  				<span class="location">강원</span>
-								  			<% } else if (p.getPcity().equals("chu")) {%>
-								  				<span class="location">충청</span>
-								  			<% } else if (p.getPcity().equals("jnl")) {%>
-								  				<span class="location">전라</span>
-							  				<% } else if (p.getPcity().equals("gys")) {%>
-							  					<span class="location">경상</span>
-						  					<% } else if (p.getPcity().equals("jej")) {%>
-							  					<span class="location">제주</span>
-								  			<% } %>
-								  			
+								  			<span class="location"><%= p.getPcity() %></span>
 								  		</small>
 									    <h5 class="card-title font-bold"><%= p.getPname() %></h5>
 									    <p class="card-text"><%= p.getPprice() %>원</p>
 									    <small class="rating">평점 <span class="font-green"><%= p.getPrating() %></span></small>
 								  </div>
 							</div>
-						</a>
 					</div>
 					<% } %>
 				</div>
@@ -165,6 +157,64 @@
 		
 	</section>
 	
+	<%--
+	페이지네이션 보류
+	<nav class="form-group justify-content-md-center">
+	  <ul class="pagination">
+	  <%  if(currentPage <= 1){  %>	
+  	    <li class="page-item" onclick="location.href='<%= request.getContextPath() %>/productsList.pr?currentPage=1'">
+	      <a class="page-link" href="#" aria-label="Previous">
+	        <span aria-hidden="true" style="font-size:12px;"><i class="fas fa-angle-double-left"></i></span>
+	      </a>
+	    </li>
+	    <%  }else{ %>
+	    <li class="page-item" onclick="location.href='<%= request.getContextPath() %>/productsList.pr?currentPage=<%=currentPage - 1 %>'">
+	      <a class="page-link" href="#" aria-label="Previous">
+	        <span aria-hidden="true" style="font-size:10px;"><i class="fas fa-chevron-left"></i></span>
+	      </a>
+	    </li>
+	    <%  } %>
+	    
+	    <% for(int p = startPage; p <= endPage; p++){
+					if(p == currentPage){	
+		%>
+			<li class="page-item disable" onclick="location.href='<%= request.getContextPath() %>/productsList.pr?currentPage=<%= p %>'">
+			 	<a class="page-link"><%= p %></a>
+		 	</li>
+		<%      }else{ %>
+			 <li class="page-item" onclick="location.href='<%= request.getContextPath() %>/productsList.pr?currentPage=<%= p %>'">
+			 	<a class="page-link"><%= p %></a>
+		 	</li>
+		<%      } %>
+		<% } %>
+	    
+	    <!-- 
+	    <li class="page-item"><a class="page-link active" href="#">1</a></li>
+	    <li class="page-item"><a class="page-link" href="#">2</a></li>
+	    <li class="page-item"><a class="page-link" href="#">3</a></li>
+	    -->
+	    <%  if(currentPage >= maxPage){  %>
+	    <li class="page-item disable">
+		 	<a class="page-link"></a>
+	 	</li>
+	 	<%  }else{ %>
+	    <li class="page-item" onclick="location.href='<%= request.getContextPath() %>/productsList.pr?currentPage=<%=currentPage + 1 %>'">
+	      <a class="page-link" href="#" aria-label="Next">
+	        <span aria-hidden="true" style="font-size:10px;"><i class="fas fa-chevron-right"></i></span>
+	      </a>
+	    </li>
+	    <%  } %>
+	    <li class="page-item" onclick="location.href='<%= request.getContextPath() %>/productsList.pr?currentPage=<%= maxPage %>'">
+	      <a class="page-link" href="#" aria-label="Previous">
+	        <span aria-hidden="true" style="font-size:12px;"><i class="fas fa-angle-double-right"></i></span>
+	      </a>
+	    </li>
+	  </ul>
+	</nav>
+	
+	--%>
+	
+	<!--
 	<nav class="form-group justify-content-md-center">
 	  <ul class="pagination">	
   	    <li class="page-item">
@@ -192,7 +242,7 @@
 	    </li>
 	  </ul>
 	</nav>
-	
+	 -->
 	
 	<%@ include file="../common/footer.jsp" %>
 	
@@ -244,6 +294,11 @@
 				$("#all").addClass("active");
 			     $(".product-name").text("전체");
 			}
+			
+			$(".col").click(function() {
+				var pno = $(this).children("#pno").val();
+				location.href="<%= request.getContextPath()%>/selectOneProduct.pr?pno=" + pno;
+			})
 		});		
 		
 		function search() {
@@ -257,13 +312,8 @@
 		}
 		
 		function insertProduct() {
-			location.href="<%=request.getContextPath()%>/insertProduct.pr";
+			location.href="<%=request.getContextPath()%>/views/products/insertProduct.jsp";
 		}
-		
-		function cheap() {
-			alert("ddd");
-		}
-		
 		
 	</script>
 

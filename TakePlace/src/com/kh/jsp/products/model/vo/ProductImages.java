@@ -16,7 +16,7 @@ public class ProductImages implements Serializable{
 	private String changeName;
 	private String imgPath;
 	private int imgLevel;
-	private Date updateDete;
+	private Date uploadDate;
 	private String isDelete;
 	
 	public ProductImages() {
@@ -32,7 +32,7 @@ public class ProductImages implements Serializable{
 	}
 
 	public ProductImages(int pimgno, int pno, String originName, String changeName, String imgPath, int imgLevel,
-			Date updateDete, String isDelete) {
+			Date uploadDate, String isDelete) {
 		super();
 		this.pimgno = pimgno;
 		this.pno = pno;
@@ -40,14 +40,14 @@ public class ProductImages implements Serializable{
 		this.changeName = changeName;
 		this.imgPath = imgPath;
 		this.imgLevel = imgLevel;
-		this.updateDete = updateDete;
+		this.uploadDate = uploadDate;
 		this.isDelete = isDelete;
 	}
 
 	@Override
 	public String toString() {
 		return "ProductImages [pimgno=" + pimgno + ", pno=" + pno + ", origiNname=" + originName + ", changeName="
-				+ changeName + ", imgPath=" + imgPath + ", imgLevle=" + imgLevel + ", updateDete=" + updateDete
+				+ changeName + ", imgPath=" + imgPath + ", imgLevle=" + imgLevel + ", uploadDate=" + uploadDate
 				+ ", isDelete=" + isDelete + "]";
 	}
 
@@ -99,12 +99,12 @@ public class ProductImages implements Serializable{
 		this.imgLevel = imgLevel;
 	}
 
-	public Date getUpdateDete() {
-		return updateDete;
+	public Date getUploadDate() {
+		return uploadDate;
 	}
 
-	public void setUpdateDete(Date updateDete) {
-		this.updateDete = updateDete;
+	public void setUploadDate(Date uploadDate) {
+		this.uploadDate = uploadDate;
 	}
 
 	public String getIsDelete() {

@@ -64,13 +64,13 @@ input[type="file"] {
 			  <div class="form-group">
 			    <label for="pCity" class="font-green font-bold">지역</label>
 			    <select name="pCity" id="pCity" class="form-control inline-block">
-			    	<option value="seo" selected>서울</option>
-			    	<option value="gyg">경기</option>
-			    	<option value="gan">강원</option>
-			    	<option value="chu">충청</option>
-			    	<option value="jnl">전라</option>
-			    	<option value="gys">경상</option>
-			    	<option value="jej">제주</option>
+			    	<option value="서울" selected>서울</option>
+			    	<option value="경기">경기</option>
+			    	<option value="강원">강원</option>
+			    	<option value="충청">충청</option>
+			    	<option value="전라">전라</option>
+			    	<option value="경상">경상</option>
+			    	<option value="제주">제주</option>
 			    </select>
 			  </div>
 			  
