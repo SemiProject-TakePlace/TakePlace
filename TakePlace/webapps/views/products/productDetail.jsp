@@ -1,5 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.*, com.kh.jsp.products.model.vo.*"%>
+<%
+	Product p = (Product)request.getAttribute("product");
+	ArrayList<ProductImages> fileList
+	 	= (ArrayList<ProductImages>)request.getAttribute("fileList");
+	 
+	ProductImages titleImg = fileList.get(0);
+	ProductImages subImg1 = fileList.get(1);
+	ProductImages subImg2= fileList.get(2);
+	ProductImages subImg3 = fileList.get(3);
+	ProductImages subImg4 = fileList.get(4);
+	
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,10 +20,11 @@
 <title>공간 상세 페이지</title>
 <%@ include file="../../resources/css/common/common.jsp" %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/datepicker.css" type="text/css" />
+<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/datepicker.min.css" type="text/css" />
 
 <%@ include file="../../resources/js/common/common.jsp" %>
-<script src="<%= request.getContextPath() %>/resources/js/common/bootstrap-datepicker.js"></script>
-<script src="<%= request.getContextPath() %>/resources/js/common/bootstrap-datepicker.kr.js"></script>
+<script src="<%= request.getContextPath() %>/resources/js/common/datepicker.min.js"></script>
+<script src="<%= request.getContextPath() %>/resources/js/common/datepicker.en.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2e78244e6d0a409b391542fb720051d2&libraries=services"></script>
 
 <style>
@@ -155,6 +169,15 @@
 		font-size: 18px;
 	}
 	
+	textarea {
+		background: transparent;
+    	border: none;
+	}
+	
+	textarea:focus{
+		outline: none;
+	}
+	
 	.sticky {
 		position: fixed;
 	    top: 90px;
@@ -173,11 +196,23 @@
 		<div class="container">
 			<h2 class="font-bold content-title">공간 유형 
 				<!-- 유형에 따라 다른 유형 이름 보여주기 -->
-				<span class="font-green">스터디룸</span>
-				<!-- 유저가 호스트일때만 버튼 보이기 -->
-				<a href="views/products/updateProduct.jsp" class="btn btn-tp-custom-green active"
-					role="button" aria-pressed="true">상품 수정
-				</a>
+				
+				<% if(p.getPtype().equals("STUDY")) {%>
+	  				<span class="font-green">스터티룸</span> 
+	  			<% } else if (p.getPtype().equals("STUDIO")) {%>
+	  				<span class="font-green">스튜디오</span>
+	  			<% } else if (p.getPtype().equals("SEMINAR")) {%>
+	  				<span class="font-green">세미나룸</span>
+	  			<% } else if (p.getPtype().equals("PARTY")) {%>
+	  				<span class="font-green">파티룸</span>
+	  			<% } else if (p.getPtype().equals("OFFICE")) {%>
+	  				<span class="font-green">오피스</span>
+	  			<% } %>
+				<% if( mem != null && mem.getMtype().equals("HOST")) { %> 
+					<a href="views/products/updateProduct.jsp" class="btn btn-tp-custom-green active"
+						role="button" aria-pressed="true">상품 수정
+					</a>
+				<% } %>
 			</h2>
 		</div>
 		<div class="product-detail">
@@ -186,24 +221,43 @@
 					<div class="col-md-7 col-sm-12">
 					
 						<div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
-							<!-- 호스트가 올린 사진 수 만큼 for문 -->
 							<ol class="carousel-indicators">
+							<% for(ProductImages pi : fileList) { %>
 							    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-							    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-							    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+						  	<% } %>
 						  	</ol>
 						  	
 							 <div class="carousel-inner">
+							 <% if(titleImg.getChangeName() != null) { %>
 							   <div class="carousel-item active" data-interval="3000">
-							     <img src="<%= request.getContextPath() %>/resources/images/main-sample.jpg" class="d-block w-100" alt="공간 사진">
+							     <img src="<%=request.getContextPath() %>/resources/images/product/<%= p.getMno()%>/<%= titleImg.getChangeName() %>"
+							     class="d-block w-100" alt="공간 사진" width="635" height="360">
 							    </div>
+							 <% } %>
+							  <% if(subImg1.getChangeName() != null) { %>
 							    <div class="carousel-item" data-interval="2000">
-							      <img src="<%= request.getContextPath() %>/resources/images/main-sample.jpg" class="d-block w-100" alt="공간 사진">
+							      <img src="<%=request.getContextPath() %>/resources/images/product/<%= p.getMno()%>/<%= subImg1.getChangeName() %>"
+							      class="d-block w-100" alt="공간 사진" width="635" height="360">
 							    </div>
+							  <% } %>
+							  <% if(subImg2.getChangeName() != null) { %>
 							    <div class="carousel-item">
-							      <img src="<%= request.getContextPath() %>/resources/images/main-sample.jpg" class="d-block w-100" alt="공간 사진">
+							      <img src="<%=request.getContextPath() %>/resources/images/product/<%= p.getMno()%>/<%= subImg2.getChangeName() %>"
+							      class="d-block w-100" alt="공간 사진" width="635" height="360">
 							    </div>
-							  </div>
+							  <% } %>
+							  <% if(subImg3.getChangeName() != null) { %>
+							    <div class="carousel-item">
+							      <img src="<%=request.getContextPath() %>/resources/images/product/<%= p.getMno()%>/<%= subImg3.getChangeName() %>"
+							      class="d-block w-100" alt="공간 사진" width="635" height="360">
+							    </div>
+							  <% } %>
+							  <% if(subImg4.getChangeName() != null) { %>
+							    <div class="carousel-item">
+							      <img src="<%=request.getContextPath() %>/resources/images/product/<%= p.getMno()%>/<%= subImg4.getChangeName() %>"
+							      class="d-block w-100" alt="공간 사진" width="635" height="360">
+							    </div>
+							  <% } %>
 							  <a class="carousel-control-prev" href="#carouselExampleInterval" role="button" data-slide="prev">
 							    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 							    <span class="sr-only">Previous</span>
@@ -212,6 +266,7 @@
 							    <span class="carousel-control-next-icon" aria-hidden="true"></span>
 							    <span class="sr-only">Next</span>
 							  </a>
+							  </div>
 						</div>
 					
 					</div>
@@ -222,7 +277,9 @@
 							<div class="form-group">
 							    <label for="pAbleDate" class="font-green font-bold">예약 날짜 선택</label>
 							    <div class="inline-block">
-							    	<input type="text" id="pAbleDate" class="form-control inlne-block"/>
+							    	<input type="hidden" id="pAbleDate" value="<%= p.getPableDate() %>"/>
+							    	<input type="text" name="selectDate" id="selectDate" data-range="true" data-multiple-dates-separator=" - "
+    				data-language="en"class="form-control inlne-block" data-timepicker="true"/>
 								    <small class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
 								</div>			 
 						  </div>
@@ -235,19 +292,30 @@
 				
 				<div class="mb-5">
 					<p class="font-bold font-green">
-						<span class="product">스터디룸</span>/<span class="location">서울시</span>
+						<% if(p.getPtype().equals("STUDY")) {%>
+			  				<span class="product">스터티룸</span> /
+			  			<% } else if (p.getPtype().equals("STUDIO")) {%>
+			  				<span class="product">스튜디오</span> /
+			  			<% } else if (p.getPtype().equals("SEMINAR")) {%>
+			  				<span class="product">세미나룸</span> /
+			  			<% } else if (p.getPtype().equals("PARTY")) {%>
+			  				<span class="product">파티룸</span> /
+			  			<% } else if (p.getPtype().equals("OFFICE")) {%>
+			  				<span class="product">오피스</span> /
+			  			<% } %>
+						<span class="location"><%= p.getPcity() %></span>
 					<p>
-					<h3 class="font-bold">강남 일등 스터디룸 공간 대여</h3>
+					<h3 class="font-bold"><%= p.getPname() %></h3>
 					
 					<dl>
 						<dt class="font-bold font-green">HOST</dt>
-						<dd>HOST의 회사명</dd>
+						<dd><%= p.getMname() %></dd>
 						<dt class="font-bold font-green">가격</dt>
-						<dd>10,000원</dd>
+						<dd><%= p.getPprice() %></dd>
 						<dt class="font-bold font-green">HOST 평점</dt>
-						<dd>10.0</dd>
+						<dd>10.0</dd> <!-- 호스트의 시설평점 / 시설 개수 -->
 						<dt class="font-bold font-green">시설 평점</dt>
-						<dd>10.0</dd>
+						<dd><%= p.getPrating() %></dd>
 					</dl>
 				</div>
 				
@@ -264,24 +332,21 @@
 				<div class="details col-md-7 col-sm-12">
 					<div id="info" class="detail detail-info">
 						<h4 class="font-bold font-green">시설 안내</h4>
-						<p>사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-							사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-							사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-							사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-						</p>
+						<textarea cols="75" rows="8" readonly><%= p.getPguide() %></textarea>
 					</div>
 					
 					<div id="caution" class="detail detail-caution">
 						<h4 class="font-bold font-green">유의사항</h4>
-						<p>사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-							사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-							사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-							사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
+						<p>
+							<%= p.getPwarn() %>
 						</p>
 					</div>
 					
 					<div id="location" class="detail detail-location">
 						<h4 class="font-bold font-green">위치</h4>
+						<input type="hidden" name="mName" id="mName" value="<%= p.getMname() %>">
+						<input type="hidden" name="pAddress" id="pAddress" value="<%= p.getPaddress() %>">
+						<p class="full-address mb-3"></p>
 						<div id="map" style="width:100%;height:400px;"></div>
 					</div>
 					
@@ -348,46 +413,100 @@
 	<%@ include file="../common/footer.jsp" %>
 	
 	<script>
-	
-		/*
-			date-picker 스크립트
-		*/
-		$(function() {	
-			$('#pAbleDate').datepicker({
-			    format: "yyyy-mm-dd",	//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
-			    startDate: '-10d',	//달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)
-			    endDate: '+10d',	//달력에서 선택 할 수 있는 가장 느린 날짜. 이후로 선택 불가 ( d : 일 m : 달 y : 년 w : 주)
-			    autoclose : true,	//사용자가 날짜를 클릭하면 자동 캘린더가 닫히는 옵션
-			    calendarWeeks : false, //캘린더 옆에 몇 주차인지 보여주는 옵션 기본값 false 보여주려면 true
-			    clearBtn : false, //날짜 선택한 값 초기화 해주는 버튼 보여주는 옵션 기본값 false 보여주려면 true
-			    datesDisabled : ['2019-06-24','2019-06-26'],//선택 불가능한 일 설정 하는 배열 위에 있는 format 과 형식이 같아야함.
-			    daysOfWeekDisabled : [0,6],	//선택 불가능한 요일 설정 0 : 일요일 ~ 6 : 토요일
-			    daysOfWeekHighlighted : [3], //강조 되어야 하는 요일 설정
-			    disableTouchKeyboard : false,	//모바일에서 플러그인 작동 여부 기본값 false 가 작동 true가 작동 안함.
-			    immediateUpdates: false,	//사용자가 보는 화면으로 바로바로 날짜를 변경할지 여부 기본값 :false 
-			    multidate : false, //여러 날짜 선택할 수 있게 하는 옵션 기본값 :false 
-			    multidateSeparator :",", //여러 날짜를 선택했을 때 사이에 나타나는 글짜 2019-05-01,2019-06-01
-			    templates : {
-			        leftArrow: '&laquo;',
-			        rightArrow: '&raquo;'
-			    }, //다음달 이전달로 넘어가는 화살표 모양 커스텀 마이징 
-			    showWeekDays : true ,// 위에 요일 보여주는 옵션 기본값 : true
-			    title: "테스트",	//캘린더 상단에 보여주는 타이틀
-			    todayHighlight : true ,	//오늘 날짜에 하이라이팅 기능 기본값 :false 
-			    toggleActive : true,	//이미 선택된 날짜 선택하면 기본값 : false인경우 그대로 유지 true인 경우 날짜 삭제
-			    weekStart : 0 ,//달력 시작 요일 선택하는 것 기본값은 0인 일요일 
-			    language : "ko"	//달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
-			    
-			})//datepicker end
-			.on("changeDate", function(e) {
-	            console.log(e);// 찍어보면 event 객체가 나온다.
-	            //간혹 e 객체에서 date 를 추출해야 하는 경우가 있는데 
-	            // e.date를 찍어보면 Thu Jun 27 2019 00:00:00 GMT+0900 (한국 표준시)
-	            // 위와 같은 형태로 보인다. 
-	            // 추후에 yyyy-mm-dd 형태로 변경하는 코드를 업로드 하겠습니다. 
-	       });
-		});//ready end
+		$(function() {
+			
+		    var ableDate = $("#pAbleDate").val().split(" - ");
+		    
+		    
+		    var startYear = ableDate[0].substr(0, 4);
+		    var startMonth = ableDate[0].substr(5, 2);
+		    var startDay = ableDate[0].substr(8, 2);
+		    
+		    var endYear = ableDate[1].substr(0, 4);
+		    var endMonth = ableDate[1].substr(5, 2);
+		    var endDay = ableDate[1].substr(8, 2);
+		    
+		    var fromAbleDate = new Date(startYear, startMonth - 1 , startDay);
+		    var toAbleDate = new Date(endYear, endMonth - 1 , endDay);
+		    
+		    console.log(fromAbleDate, toAbleDate);
+		    
+		    
+			// Create start date
+		    // var start = new Date(),
+		    //     prevDay,
+		    // startHours = 9;
+			
+			var start = new Date(startYear, startMonth - 1 , startDay), prevDay,
+			startHours = 9;
+			
+			var end = new Date(endYear, endMonth - 1 , endDay);
+			
 		
+
+		    // 09:00 AM
+		    start.setHours(9);
+		    start.setMinutes(0);
+
+		    // If today is Saturday or Sunday set 10:00 AM
+		    if ([6, 0].indexOf(start.getDay()) != -1) {
+		        start.setHours(10);
+		        startHours = 10
+		    }
+
+		    $("#selectDate").datepicker({
+		    	multipleDates: true,
+		        timepicker: true,
+		        language: "en",
+		        minDate: start,
+		        maxDate : end,
+		        minHours: startHours,
+		        dateFormat: "yyyy/mm/dd",
+		        // maxHours: 18,
+		        onSelect: function (fd, d, picker) {
+		            // Do nothing if selection was cleared
+		            
+		            if (!d) return;
+		           
+		            var day = d[0].getDay();
+		       
+		            // Trigger only if date is changed
+		            if (prevDay != undefined && prevDay == day) return;
+		            prevDay = day;
+
+		            // If chosen day is Saturday or Sunday when set
+		            // hour value for weekends, else restore defaults
+		            if (day == 6 || day == 0) {
+		                picker.update({
+		                    minHours: 10,
+		                    maxHours: 24
+		                })
+		            } else {
+		                picker.update({
+		                    minHours: 9,
+		                    maxHours: 24
+		                })
+		            }
+		          
+		            // console.log($("#pAbleDate").val());
+		            // return $("#pAbleDate").val();
+		        }
+		    
+		    
+		    })
+			// Access instance of plugin
+			// 이렇게하면 value 값을 넣을 수 있음
+			/$('#selecDate').data('datepicker').selectDate(new Date(new Date().getFullYear(), new Date().getMonth(), 10));
+		    // $("#pAbleDate").data('datepicker').selectDate(new Date(startYear, startMonth - 1 , startDay));
+		    
+			
+		});
+		
+		// return $("#pAbleDate").val();
+		
+	</script>
+	
+	<script>
 		
 		/*
 			상세 정보 리스트 Sticky 스크립트
@@ -417,18 +536,28 @@
 			카카오 지도 api 스크립트
 		*/
 		
+		var pAddress = $("#pAddress").val().split(", ");
+		var fullAddress = pAddress[0] + " " + pAddress[1] + " " + pAddress[2];
+		$(".full-address").text(fullAddress);
+		
+		
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	    mapOption = {
 	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
 	        level: 3 // 지도의 확대 레벨
 	    };  
+		
 	
 		// 지도를 생성합니다    
 		var map = new kakao.maps.Map(mapContainer, mapOption); 
 		// 주소-좌표 변환 객체를 생성합니다
 		var geocoder = new kakao.maps.services.Geocoder();
+		
+		var hostName = $("#mName").val();
+		var address = $("#pAddress").val().split(", ")[1];
+		
 		// 주소로 좌표를 검색합니다
-		geocoder.addressSearch('제주특별자치도 제주시 첨단로 242', function(result, status) {
+		geocoder.addressSearch(address, function(result, status) {
 		    // 정상적으로 검색이 완료됐으면 
 		     if (status === kakao.maps.services.Status.OK) {
 		        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
@@ -439,7 +568,7 @@
 		        });
 		        // 인포윈도우로 장소에 대한 설명을 표시합니다
 		        var infowindow = new kakao.maps.InfoWindow({
-		            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+		            content: '<div style="width:150px;text-align:center;padding:6px 0;">' + hostName + '</div>'
 		        });
 		        infowindow.open(map, marker);
 		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
