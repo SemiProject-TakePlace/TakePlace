@@ -217,6 +217,12 @@ a:hover { text-decoration: none; }
 
 }
 
+.product-card .col {
+	cursor: pointer;
+    padding: 0;
+    margin: 0 15px;
+}
+
 .product-card .card {
 	color: #4A5059;
 	width: 15rem;
