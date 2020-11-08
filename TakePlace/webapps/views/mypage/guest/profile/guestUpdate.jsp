@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<%	
-	Host ho = (Host)session.getAttribute("host");
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -114,17 +110,25 @@ padding-left : 30%;
         <div class="sidebar-sticky">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link active" href="http://localhost:8088/takeplace/views/mypage/host/profile/hostPageProfile.jsp">프로필</a>
+              <a class="nav-link active" href="http://localhost:8088/takeplace/views/mypage/guest/profile/guestPageProfile.jsp">프로필</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/host/products/productsList.jsp">내 상품 목록</a>
+              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/reservation/reservationList.jsp">예약 현황</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/host/reservation/reservationList.jsp">예약 현황</a>
+              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/pay/payList.jsp">결제 내역</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/host/question/questionList.jsp">문의 내역</a>
+              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/question/questionList.jsp">문의 내역</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/use/useList.jsp">이용 내역</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/review/reviewList.jsp">이용 후기</a>
+            </li>
+            
+            
           </ul>
         </div>
    	</nav>
@@ -166,42 +170,36 @@ padding-left : 30%;
 				<h2 class="content-title">프로필</h2>
 				
 				<!-- 여기서부터 자유롭게 컨텐츠 잡으면서 시작 -->
-				
+				<div class="tab-pane fade show active" id="nav-gest" role="tabpanel" aria-labelledby="nav-gest-tab">
                 
                 
                 <form action="#" method="post" id="create_gestAccount" name="gestForm">
-             		<table align="center">
-	              <div class="form-group">
-	                <label class="font-green inline-block" >아이디</label>
-	                <label class="form-control inline-block" style="width : 350px;" ><%= mem.getId() %></label>
-	              </div>
-	              <div class="form-group">
-	                <label class="font-green inline-block" >회사명</label>
-	                <label class="form-control inline-block" style="width : 350px;" ><%= mem.getId() %></label>
-	              </div>
-	              <div class="form-group">
-	                <label class="font-green inline-block" >대표명</label>
-	                <label class="form-control inline-block" style="width : 350px;" ><%= mem.getId() %></label>
-	              </div>
-	              <div class="form-group">
-	                <label class="font-green inline-block" >사업자 등록번호</label>
-	                <label class="form-control inline-block" style="width : 350px;" ><%= mem.getId() %></label>
-	              </div>
-	              <div class="form-group">
-	                <label class="font-green inline-block" >이메일</label>
-	                <label class="form-control inline-block" style="width : 350px;" ><%= mem.getEmail() %></label>
-	              </div>
-	              </table>
-	              <br>
-	              
-	              <div id="button">
-	              <button type="button" class="btn btn-tp-custom-green" 
-	              onclick="location.href='http://localhost:8088/takeplace/views/mypage/host/profile/hostPageProfileModify.jsp' ">
-	              	회원 정보 수정
-	              </button>&nbsp;&nbsp;
-	              <button type="button" class="btn btn-tp-custom-white" onclick="signUp();">회원 탈퇴</button>  
-	              </div>
+                
+             <div class="form-group">
+                <label for="userid" class="font-green inline-block" >아이디</label>
+                <input type="text" class="form-control inline-block" id="userid" aria-describedby="emailHelp" placeholder="아이디" maxlength="20">
+              </div>
+                 
+              <div class="form-group">
+                <label for="userNick" class="font-green inline-block" >닉네임</label>
+                <input type="text" class="form-control inline-block" id="userNick" aria-describedby="emailHelp" placeholder="닉네임">
+              </div>
+              
+              <div class="form-group">
+                  <label for="userEmail" class="font-green inline-block" >이메일</label>
+                <input type="text" class="form-control inline-block" id="userEmail" aria-describedby="emailHelp" placeholder="이메일">
+              </div>
+              
               </form>
+              </div>
+              <div id="button">
+              <button type="button" class="btn btn-tp-custom-green" 
+              onclick="location.href='http://localhost:8088/takeplace/views/mypage/guest/profile/guestPageProfileModify.jsp' ">
+              	회원 정보 수정
+              </button>&nbsp;&nbsp;
+              <button type="button" class="btn btn-tp-custom-white" onclick="signUp();">회원 탈퇴</button>  
+                
+              </div>
 				<!-- 여기가 컨텐츠 끝 -->
 			</div>
 		</div>

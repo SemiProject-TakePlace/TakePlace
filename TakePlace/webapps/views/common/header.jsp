@@ -3,6 +3,7 @@
 <%
 	Member mem = (Member)session.getAttribute("member");
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -105,7 +106,18 @@
 							  </a>
 							
 							  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-							    <a class="dropdown-item" href="#">마이페이지</a>
+							  
+							  
+							  <%if ( mem.getMtype() == "1") { %>
+							  
+							  <a class="dropdown-item" href="<%= request.getContextPath() %>/views/mypage/guest/profile/guestPageProfile.jsp">마이페이지</a>
+							    
+							  <% } else { %>
+							  
+							  <a class="dropdown-item" href="<%= request.getContextPath() %>/views/mypage/host/profile/hostPageProfile.jsp">마이페이지</a>
+							  
+							  <% } %>
+							    
 							    <a class="dropdown-item" onclick="logout()">로그아웃</a>
 							  </div>
 							</div>
@@ -120,7 +132,9 @@
 	</header>
 	
 	<script>
-		
+		function mypage(){
+			location.href="/takeplace/mypage.me"
+		}
 		function logout(){
 			location.href="/takeplace/logout.me";
 		}

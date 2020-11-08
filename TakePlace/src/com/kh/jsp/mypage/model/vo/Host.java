@@ -1,4 +1,4 @@
-package com.kh.jsp.member.model.vo;
+package com.kh.jsp.mypage.model.vo;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -8,7 +8,7 @@ public class Host extends Member implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 828L;
+	private static final long serialVersionUID = 111L;
 	
 	private String bsNum;		// 사업자 번호
 	private String bsName;		// 대표명
@@ -25,14 +25,14 @@ public class Host extends Member implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 	
-
+	/*
 	public Host(String id, String mName, String pwd, String mType, String email) {
 		super(id, mName, pwd, mType, email);
 		// TODO Auto-generated constructor stub
 	}
+	*/
 
 
-	
 	public Host(String id, String pwd) {
 		super(id, pwd);
 		// TODO Auto-generated constructor stub
@@ -40,14 +40,31 @@ public class Host extends Member implements Serializable{
 
 
 
-	
-
 	public Host(String email) {
 		super(email);
 		// TODO Auto-generated constructor stub
 	}
 	
+	public Host(String id, String mName, String bsName, String bsNum, String email) {
+		super();
+		this.bsName = bsName;
+		this.bsNum = bsNum;
+	}
 	
+	public Host(String id, String mName, String bsName, String bsNum, String pwd, String email) {
+		super();
+		this.bsName = bsName;
+		this.bsNum = bsNum;
+	}
+	
+	public Host(String bsNum, String bsName, double hRating, String hisok) {
+		super();
+		this.bsNum = bsNum;
+		this.bsName = bsName;
+		this.hRating = hRating;
+		this.hisok = hisok;
+	}
+
 	public Host(int mno, String id, String mName, String pwd, Date joinDate, Date chDate, String mType, String email,
 			String bsNum, String bsName, double hRating, String hisok) {
 		super(mno, id, mName, pwd, joinDate, chDate, mType, email);
@@ -57,6 +74,8 @@ public class Host extends Member implements Serializable{
 		this.hRating = hRating;
 		this.hisok = hisok;
 	}
+	
+	
 
 
 
