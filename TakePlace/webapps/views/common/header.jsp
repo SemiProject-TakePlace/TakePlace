@@ -109,7 +109,7 @@
 							  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 							  
 							  
-							  <%if ( %><%= mem.getId() %><%  == "홍길동입니다") { %>
+							  <%if ( %><%= mem.getMname() %><%  == "홍길동입니다") { %>
 							  
 							  <a class="dropdown-item" href="<%= request.getContextPath() %>/views/mypage/guest/profile/guestPageProfile.jsp">마이페이지</a>
 							  
