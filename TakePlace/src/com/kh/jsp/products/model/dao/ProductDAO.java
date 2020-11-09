@@ -299,8 +299,11 @@ public class ProductDAO {
 			while(rset.next()) {
 				p = new Product();
 				p.setPno(pno);
+				p.setBsNum(rset.getString("bsnum"));
+				p.setMno(rset.getInt("mno"));
 				p.setPtype(rset.getString("ptype"));
 				p.setPname(rset.getString("pname"));
+				p.setPcity(rset.getString("pcity"));
 				p.setPrating(rset.getInt("prating"));
 				p.setMname(rset.getString("mname"));
 				p.setPprice(rset.getInt("pprice"));
