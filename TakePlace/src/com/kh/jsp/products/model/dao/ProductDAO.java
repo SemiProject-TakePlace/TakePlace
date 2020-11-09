@@ -299,8 +299,11 @@ public class ProductDAO {
 			while(rset.next()) {
 				p = new Product();
 				p.setPno(pno);
+				p.setBsNum(rset.getString("bsnum"));
+				p.setMno(rset.getInt("mno"));
 				p.setPtype(rset.getString("ptype"));
 				p.setPname(rset.getString("pname"));
+				p.setPcity(rset.getString("pcity"));
 				p.setPrating(rset.getInt("prating"));
 				p.setMname(rset.getString("mname"));
 				p.setPprice(rset.getInt("pprice"));
@@ -337,4 +340,39 @@ public class ProductDAO {
 		return hmap;
 	}
 
+	public ArrayList<Product> productsTop(Connection con) {
+		ArrayList<Product> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("productsTop");
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				
+				p.setMno(rset.getInt("mno"));
+				p.setPno(rset.getInt("pno"));
+				p.setProductFile(rset.getString("changename"));
+				p.setPtype(rset.getString("ptype"));
+				p.setPcity(rset.getString("pcity"));
+				p.setPname(rset.getString("pname"));
+				p.setPprice(rset.getInt("pprice"));
+				p.setPrating(rset.getInt("prating"));
+				
+				list.add(p);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
 }

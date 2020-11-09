@@ -74,7 +74,7 @@
 		<div class="product-card top8-content">
 			<div class="top8">
 				<h3 class="font-bold">최고의 인기상품
-					<a href="views/products/top8.jsp" class="btn-tp-custom-green font-normal">더보기</a>
+					<a  href="<%= request.getContextPath() %>/productsTop.pr" class="btn-tp-custom-green font-normal">더보기</a>
 				</h3>
 				<div class="container">
 					<div class="row">

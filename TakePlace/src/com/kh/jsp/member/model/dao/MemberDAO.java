@@ -426,7 +426,6 @@ public class MemberDAO {
 				
 				result.setBsNum(rset.getString("bsnum"));
 				result.setMno(rset.getInt("mno"));
-				result.setMtype(rset.getString("mtype"));
 				result.setBsName(rset.getString("bsname"));
 				result.setHtating(rset.getDouble("hrating"));
 				result.setHisok(rset.getString("hisok"));

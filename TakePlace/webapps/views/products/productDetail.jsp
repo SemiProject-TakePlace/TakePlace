@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.*, com.kh.jsp.products.model.vo.*"%>
+<%@ page import="java.util.*, com.kh.jsp.products.model.vo.*,
+				com.kh.jsp.productReview.model.vo.*"%>
 <%
 	Product p = (Product)request.getAttribute("product");
 	ArrayList<ProductImages> fileList
@@ -12,6 +13,8 @@
 	ProductImages subImg3 = fileList.get(3);
 	ProductImages subImg4 = fileList.get(4);
 	
+	ArrayList<ProductReview> rlist = (ArrayList<ProductReview>)request.getAttribute("rlist");
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -19,7 +22,6 @@
 <meta charset="UTF-8">
 <title>공간 상세 페이지</title>
 <%@ include file="../../resources/css/common/common.jsp" %>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/datepicker.css" type="text/css" />
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/datepicker.min.css" type="text/css" />
 
 <%@ include file="../../resources/js/common/common.jsp" %>
@@ -119,6 +121,11 @@
 	    background: #82cbc4;
 	}
 	
+	.product-detail .details .detail-refund dd {
+		border-bottom: 1px solid #ccc;
+		padding-bottom: 10px;
+	}
+	
 	.review-content {
 		padding: 80px 0 50px 0;
 	}
@@ -152,6 +159,7 @@
 	
 	.review-content .detail-review .review-list .rlist {
 		border-bottom: 1px solid #ccc;
+   	    margin-bottom: 20px;
     	padding-bottom: 20px;
 	}
 	
@@ -160,7 +168,7 @@
 	}
 	
 	.review-content .detail-review .review-list .rlist .review-detail,
-	.review-content .detail-review .review-list .rlist .host-reply {
+	.review-content .host-reply {
 		margin: 15px 15px 0 15px;
     	padding: 15px 15px 0 15px;
 	}
@@ -169,12 +177,12 @@
 		font-size: 18px;
 	}
 	
-	textarea {
+	textarea.info {
 		background: transparent;
     	border: none;
 	}
 	
-	textarea:focus{
+	textarea.info:focus{
 		outline: none;
 	}
 	
@@ -279,13 +287,13 @@
 							    <div class="inline-block">
 							    	<input type="hidden" id="pAbleDate" value="<%= p.getPableDate() %>"/>
 							    	<input type="text" name="selectDate" id="selectDate" data-range="true" data-multiple-dates-separator=" - "
-    				data-language="en"class="form-control inlne-block" data-timepicker="true"/>
+    										data-language="en"class="form-control inlne-block"/>
 								    <small class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
 								</div>			 
 						  </div>
 						  <button type="button" class="btn btn-dark">HOST에게 예약 요청하기</button>
 					  	</form>
-					  	 <a href="#" class="btn btn-secondary active" role="button" aria-pressed="true">1:1 문의하기</a>
+					  	 <a href="#" class="btn btn-secondary" role="button" aria-pressed="true">1:1 문의하기</a>
 					</div>
 			
 				</div>
@@ -332,14 +340,12 @@
 				<div class="details col-md-7 col-sm-12">
 					<div id="info" class="detail detail-info">
 						<h4 class="font-bold font-green">시설 안내</h4>
-						<textarea cols="75" rows="8" readonly><%= p.getPguide() %></textarea>
+						<textarea class="info" cols="75" rows="8" readonly><%= p.getPguide() %></textarea>
 					</div>
 					
 					<div id="caution" class="detail detail-caution">
 						<h4 class="font-bold font-green">유의사항</h4>
-						<p>
-							<%= p.getPwarn() %>
-						</p>
+						<textarea class="info" cols="75" rows="8" readonly><%= p.getPwarn() %></textarea>
 					</div>
 					
 					<div id="location" class="detail detail-location">
@@ -352,54 +358,114 @@
 					
 					<div id="refund" class="detail detail-refund">
 						<h4 class="font-bold font-green">환불 규정</h4>
-						<p>사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-							사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-							사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-							사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-						</p>
+						<p class="text-error pb-2">자세한 환불 관련 사항은 호스트에서 직접 문의하셔야 합니다.</p>
+						<dl class="refund-info">
+							<dt>이용 8일전</dt>
+							<dd>총 금액의 100% 환불</dd>
+							<dt>이용 7일전</dt>
+							<dd>총 금액의 100% 환불</dd>
+							<dt>이용 6일전</dt>
+							<dd>총 금액의 100% 환불</dd>
+							<dt>이용 5일전</dt>
+							<dd>총 금액의 100% 환불</dd>
+							<dt>이용 4일전</dt>
+							<dd>총 금액의 100% 환불</dd>
+							<dt>이용 3일전</dt>
+							<dd>총 금액의 100% 환불</dd>
+							<dt>이용 2일전</dt>
+							<dd>총 금액의 100% 환불</dd>
+							<dt>이용 전날</dt>
+							<dd>총 금액의 50% 환불</dd>
+							<dt>이용 당일전</dt>
+							<dd>총 금액의 20% 환불</dd>
+						</dl>
 					</div>
 					
 					</div>
 					<div class="container-fluid review-content">
 						<div id="review" class="detail-review">
 							<h4 class="font-bold font-green">이용 후기
-								<!-- 이용 내역이 있는 사용자만 버튼 보이기 -->
+								<!-- 이용 내역이 있고 후기를 아직 남기지 않은 회원만 -->
 								<button class="btn btn-tp-custom-green my-2 my-sm-0" type="button" onclick="writeReview(this)">이용 후기 남기기</button>
 							</h4>
-							<div class="write-review">
-								<button type="button" class="btn btn-tp-custom-green mr-3 confirm-review"
-										onclick="confirmReview(this);" style="display:none;">이용후기 등록</button>
+							
+							
+							<div class="replyArea">
+								<div class="replyWriteArea write-review" style="display: none;">
+									<%  if(mem.getMtype() == "GUEST") { %>
+										<form action="<%= request.getContextPath()%>/insertProductReview.re" method="post">
+											<input type="text" name="mname" value="<%= mem.getMname() %>"/>
+											<input type="text" name="mno" value="<%= mem.getMno() %>"/>
+											<input type="hidden" name="pno" value="<%= p.getPno() %>" />
+											<input type="hidden" name="refrno" value="0" />
+											<input type="hidden" name="rlevel" value="1" />
+											<label for="pRating" class="font-green font-bold" style="float: left; margin: 5px 10px 20px 5px" >평점</label>
+											<input type=text id="pRating" name="pRating" class="form-control" />
+											<textarea id="reviewContent" name="reviewContent" rows="5" style='width: 100%;'></textarea>
+											<button type="submit" class="btn btn-tp-custom-green mr-3 btn-confirm-review"
+												style="display:block;">이용후기 등록</button>
+										</form>
+									<%}%>
+								</div>						
+								<div class="reveiw-area">
+									<!-- 댓글 목록 구현 영역 -->
+									<% if(rlist.size() == 0) { %>
+										<span>아직 이용후기가 없습니다!</span>
+									<% } else {
+										for(ProductReview pr : rlist)  { %>
+												<ul id="review-list"
+							      	 				style="margin-left : <%= (pr.getRlevel()-1) * 15 %>px;
+							      	 						width : <%= 800 - ((pr.getRlevel()-1) * 15)%>px;
+							      	 						margin-bottom: 30px;"
+							      	 				class="review-list-<%=pr.getRlevel()%>">
+							      	 				
+							      	 				<%if(pr.getRlevel() == 1 && ho.getBsNum().equals(p.getBsNum())) { %>
+															<!--  답변이 n 상태면 -->
+															<button class="btn btn-tp-custom-white ml-2 my-2 my-sm-0" type="button"
+																	style="float:right; padding: 5px; font-size:10px;"
+																	onclick="writeReply(this)">답글 남기기</button>
+															<div class="write-reply" style="display: none;">
+																<input type="hidden" name="mname" value="<%= ho.getMname()%>"/>
+																<input type="hidden" name="refrno" value="<%= pr.getRno() %>" />
+																<input type="hidden" name="rlevel" value="<%= pr.getRlevel() %>" />
+																<textarea id="replyContent" rows="5" style='width: 100%;'></textarea>
+																<button type="button" class="btn btn-tp-custom-green mr-3 btn-reply-review"
+																	onclick="replyReview(this)" style="display:block;">답글 등록</button>
+															</div>
+														<% } %>
+							      	 				
+							      	 				<% if( pr.getRlevel() == 1 ) { %>
+														<li class="rlist review<%=pr.getRlevel()%>">
+														<div class="guest-review">
+															<p class="guset-name font-bold"><%= pr.getMname() %></p>
+															<p class="guest-rating">평점 <span class="font-bold font-green"><%= pr.getRrating() %></span></p>
+															<p class="guest-date text-muted"><%= pr.getRdate() %></p>
+															
+														</div>
+														<p class="review-detail"><%= pr.getRcontent() %></p>
+														</li>
+							      	 				<% } else if( pr.getRlevel() == 2 ) { %>
+							      	 					<li class="rlist">
+							      	 					<div class="host-reply reply<%=pr.getRlevel()%>">
+																<p class="host-name font-green">호스트님의 답글</p> <!-- pr.getMame() -->
+																<p class="reply-detail mb-2">
+																	<%= pr.getRcontent() %> <!-- pr.getRcontent() -->
+																</p>
+																<p class="host-date text-muted"><%= pr.getRdate() %></p> <!-- pr.getRdate() -->
+															</div>
+														</li>
+							      	 				<% } %>
+												</ul>
+												
+										<%
+											}
+										}
+										%>
+								</div>
 							</div>
-							<ul class="review-list">
-								<!--  여기서부터 리뷰 for문 -->
-								<li class="rlist">
-									<div class="guest-review">
-										<p class="guset-name font-bold">게스트명</p>
-										<p class="guest-rating">평점 <span class="font-bold font-green">10.0</span></p>
-										<p class="guest-date text-muted">2020-11-04 12:38</p>
-									</div>
-									<p class="review-detail">
-										사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-										사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-										사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-										사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-									</p>
-									<button type="button" class="btn btn-tp-custom-green mr-3 confirm-review"
-										onclick="confirmReview(this);" style="display:none;">이용후기 등록</button>
-									<div class="host-reply">
-										<p class="host-name font-green">호스트님의 답글</p>
-										<p class="reply-detail mb-2">
-											감사합니다~
-										</p>
-										<p class="host-date text-muted">2020-11-04 12:38</p>
-									</div>
-								</li>
-							</ul>
 						</div>
 					</div>
-				
-			</div>
-		</div>
+				</div>
 		
 		<!-- 관리자로 로그인했을때 / 승인 리스트에 들어와있을때 보여주기 -->
 		<div class="btn-area text-center mt-5">
@@ -417,52 +483,27 @@
 			
 		    var ableDate = $("#pAbleDate").val().split(" - ");
 		    
-		    
 		    var startYear = ableDate[0].substr(0, 4);
 		    var startMonth = ableDate[0].substr(5, 2);
 		    var startDay = ableDate[0].substr(8, 2);
-		    
+		    var startTime = ableDate[0].substr(11, 2);
 		    var endYear = ableDate[1].substr(0, 4);
 		    var endMonth = ableDate[1].substr(5, 2);
 		    var endDay = ableDate[1].substr(8, 2);
 		    
 		    var fromAbleDate = new Date(startYear, startMonth - 1 , startDay);
 		    var toAbleDate = new Date(endYear, endMonth - 1 , endDay);
-		    
-		    console.log(fromAbleDate, toAbleDate);
-		    
-		    
-			// Create start date
-		    // var start = new Date(),
-		    //     prevDay,
-		    // startHours = 9;
-			
-			var start = new Date(startYear, startMonth - 1 , startDay), prevDay,
-			startHours = 9;
-			
-			var end = new Date(endYear, endMonth - 1 , endDay);
-			
-		
-
-		    // 09:00 AM
-		    start.setHours(9);
-		    start.setMinutes(0);
-
-		    // If today is Saturday or Sunday set 10:00 AM
-		    if ([6, 0].indexOf(start.getDay()) != -1) {
-		        start.setHours(10);
-		        startHours = 10
-		    }
+		   
+			var start = new Date(startYear, startMonth - 1 , startDay),
+								prevDay;		
+			var end = new Date(endYear, endMonth - 1 , endDay);			
 
 		    $("#selectDate").datepicker({
 		    	multipleDates: true,
-		        timepicker: true,
 		        language: "en",
 		        minDate: start,
 		        maxDate : end,
-		        minHours: startHours,
 		        dateFormat: "yyyy/mm/dd",
-		        // maxHours: 18,
 		        onSelect: function (fd, d, picker) {
 		            // Do nothing if selection was cleared
 		            
@@ -473,44 +514,15 @@
 		            // Trigger only if date is changed
 		            if (prevDay != undefined && prevDay == day) return;
 		            prevDay = day;
-
-		            // If chosen day is Saturday or Sunday when set
-		            // hour value for weekends, else restore defaults
-		            if (day == 6 || day == 0) {
-		                picker.update({
-		                    minHours: 10,
-		                    maxHours: 24
-		                })
-		            } else {
-		                picker.update({
-		                    minHours: 9,
-		                    maxHours: 24
-		                })
-		            }
-		          
-		            // console.log($("#pAbleDate").val());
-		            // return $("#pAbleDate").val();
 		        }
-		    
-		    
 		    })
-			// Access instance of plugin
-			// 이렇게하면 value 값을 넣을 수 있음
-			/$('#selecDate').data('datepicker').selectDate(new Date(new Date().getFullYear(), new Date().getMonth(), 10));
-		    // $("#pAbleDate").data('datepicker').selectDate(new Date(startYear, startMonth - 1 , startDay));
-		    
 			
+			$('#selectDate').data('datepicker').selectDate(new Date(startYear, startMonth - 1, startDay, 09));
 		});
-		
-		// return $("#pAbleDate").val();
 		
 	</script>
 	
 	<script>
-		
-		/*
-			상세 정보 리스트 Sticky 스크립트
-		*/
 		$(function () {
 			var div_top = $('.detail-list').offset().top;
 			
@@ -531,10 +543,9 @@
 		        $(this).addClass('active');
 		    })
 		});
-		
-		/*
-			카카오 지도 api 스크립트
-		*/
+	</script>
+	
+	<script>
 		
 		var pAddress = $("#pAddress").val().split(", ");
 		var fullAddress = pAddress[0] + " " + pAddress[1] + " " + pAddress[2];
@@ -576,34 +587,60 @@
 		    } 
 		});
 		
-		/*
-			이용후기 남기기 스크립트
-		*/
-		function writeReview(obj) {
-			$(obj).parent().siblings(".write-review").css("display", "block");
-			$(obj).parent().siblings().children(".confirm-review").css({
+	</script>
+		
+	<script>
+
+		function writeReview(btn) {
+			$(".write-review").css("display", "block");
+			$(".btn-confirm-review").css({
 				"display": "block",
 				"float" : "right"
 			});
-			$(obj).css("display", "none");
+			$(btn).css("display", "none");
 			
-			var htmlForm = 
-				"<textarea rows='5' placeholder='다른 게스트를 위한 이용 후기를 남겨주세요.' style='width: 100%;'>" + 
-				"</textarea>"
-				
-			$(obj).parent().siblings().children(".confirm-review").before(htmlForm);
 				
 			// 게스트 정보 및 후기 내용 서블릿으로 보내주기
 			
 		}
 		
+		function writeReply(btn) {
+			$(btn).siblings(".write-reply").css("display", "block");
+			$(".btn-reply-review").css({
+				"display": "block",
+				"float" : "right"
+			})
+			$(btn).css("display", "none");
+		}
+		
 		/*
 			이용후기 등록 스크립트
 		*/
-		function confirmReview() {
-			// 참조할 후기 번호 가져오기
+		function replyReview(obj) {
+			// 참조할 댓글 번호 가져오기
+			var refrno = $(obj).siblings("input[name=refrno]").val();
+			var level = $(obj).siblings("input[name=rlevel]").val();
+			
+			// console.log(refcno + " : " + level);
+			
+			level = Number(level) + 1;
+			
 			// 게시글 번호 가져오기
-			// location.href로 서블릿 연결해서 정보 보내주기
+			var pno = "<%= p.getPno() %>";
+			
+			var content = $("#replyContent").val();
+		
+			
+		
+			location.href = "<%= request.getContextPath() %>/insertProductReview.re"
+										+ "?mname=<%= mem.getMname()%>"
+										+ "&mno=<%= mem.getMno()%>"
+										+ "&reviewContent=" + content
+										+ "&pRating=" + 0 
+										+ "&pno=" + pno
+										+ "&refrno=" + refrno
+										+ "&rlevel=" + level;
+									
 		}
 	</script>
 

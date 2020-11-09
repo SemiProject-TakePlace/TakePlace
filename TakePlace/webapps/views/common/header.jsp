@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.kh.jsp.member.model.vo.*"%>
 <%
-   Member mem = (Member)session.getAttribute("member");
+	Member mem = (Member)session.getAttribute("member");
+	Host ho = (Host)session.getAttribute("host");
 %>
 
 <!DOCTYPE html>
