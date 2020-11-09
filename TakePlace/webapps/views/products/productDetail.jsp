@@ -216,10 +216,10 @@
 	  			<% } else if (p.getPtype().equals("OFFICE")) {%>
 	  				<span class="font-green">오피스</span>
 	  			<% } %>
-				<% if( mem != null && mem.getMtype().equals("HOST")) { %> 
-					<a href="views/products/updateProduct.jsp" class="btn btn-tp-custom-green active"
-						role="button" aria-pressed="true">상품 수정
-					</a>
+				<% if( mem != null && ho.getBsNum().equals(p.getBsNum())) { %> 
+					<button type="button" class="btn btn-tp-custom-green active" style="float:right;"
+						onclick="location.href='<%= request.getContextPath() %>/updateProductView.pr?pno='+<%=p.getPno()%>">상품 수정
+					</button>
 				<% } %>
 			</h2>
 		</div>
@@ -287,13 +287,15 @@
 							    <div class="inline-block">
 							    	<input type="hidden" id="pAbleDate" value="<%= p.getPableDate() %>"/>
 							    	<input type="text" name="selectDate" id="selectDate" data-range="true" data-multiple-dates-separator=" - "
-    										data-language="en"class="form-control inlne-block"/>
+    										data-language="en"class="form-control inlne-block" value="<%= p.getPableDate() %>" autocomplete="off"/>
 								    <small class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
 								</div>			 
 						  </div>
-						  <button type="button" class="btn btn-dark">HOST에게 예약 요청하기</button>
+						  <button type="button" class="btn btn-dark mt-4" 
+						  			onclick="location.href='<%= request.getContextPath()%>/ReservationHostRequest.re'">
+						  			HOST에게 예약 요청하기
+						  </button>
 					  	</form>
-					  	 <a href="#" class="btn btn-secondary" role="button" aria-pressed="true">1:1 문의하기</a>
 					</div>
 			
 				</div>
@@ -413,54 +415,52 @@
 										<span>아직 이용후기가 없습니다!</span>
 									<% } else {
 										for(ProductReview pr : rlist)  { %>
-												<ul id="review-list"
-							      	 				style="margin-left : <%= (pr.getRlevel()-1) * 15 %>px;
-							      	 						width : <%= 800 - ((pr.getRlevel()-1) * 15)%>px;
-							      	 						margin-bottom: 30px;"
-							      	 				class="review-list-<%=pr.getRlevel()%>">
-							      	 				
-							      	 				<%if(pr.getRlevel() == 1 && ho.getBsNum().equals(p.getBsNum())) { %>
-															<!--  답변이 n 상태면 -->
-															<button class="btn btn-tp-custom-white ml-2 my-2 my-sm-0" type="button"
-																	style="float:right; padding: 5px; font-size:10px;"
-																	onclick="writeReply(this)">답글 남기기</button>
-															<div class="write-reply" style="display: none;">
-																<input type="hidden" name="mname" value="<%= ho.getMname()%>"/>
-																<input type="hidden" name="refrno" value="<%= pr.getRno() %>" />
-																<input type="hidden" name="rlevel" value="<%= pr.getRlevel() %>" />
-																<textarea id="replyContent" rows="5" style='width: 100%;'></textarea>
-																<button type="button" class="btn btn-tp-custom-green mr-3 btn-reply-review"
-																	onclick="replyReview(this)" style="display:block;">답글 등록</button>
-															</div>
-														<% } %>
-							      	 				
-							      	 				<% if( pr.getRlevel() == 1 ) { %>
-														<li class="rlist review<%=pr.getRlevel()%>">
-														<div class="guest-review">
-															<p class="guset-name font-bold"><%= pr.getMname() %></p>
-															<p class="guest-rating">평점 <span class="font-bold font-green"><%= pr.getRrating() %></span></p>
-															<p class="guest-date text-muted"><%= pr.getRdate() %></p>
-															
-														</div>
-														<p class="review-detail"><%= pr.getRcontent() %></p>
-														</li>
-							      	 				<% } else if( pr.getRlevel() == 2 ) { %>
-							      	 					<li class="rlist">
-							      	 					<div class="host-reply reply<%=pr.getRlevel()%>">
-																<p class="host-name font-green">호스트님의 답글</p> <!-- pr.getMame() -->
-																<p class="reply-detail mb-2">
-																	<%= pr.getRcontent() %> <!-- pr.getRcontent() -->
-																</p>
-																<p class="host-date text-muted"><%= pr.getRdate() %></p> <!-- pr.getRdate() -->
-															</div>
-														</li>
-							      	 				<% } %>
-												</ul>
-												
-										<%
-											}
+										<ul id="review-list"
+					      	 				style="margin-left : <%= (pr.getRlevel()-1) * 15 %>px;
+					      	 						width : <%= 800 - ((pr.getRlevel()-1) * 15)%>px;
+					      	 						margin-bottom: 30px;"
+					      	 				class="review-list-<%=pr.getRlevel()%>">
+					      	 
+					      	 				
+					      	 				<% if( pr.getRlevel() == 1 ) { %>
+												<li class="rlist review<%=pr.getRlevel()%>">
+												<div class="guest-review">
+													<p class="guset-name font-bold"><%= pr.getMname() %></p>
+													<p class="guest-rating">평점 <span class="font-bold font-green"><%= pr.getRrating() %></span></p>
+													<p class="guest-date text-muted"><%= pr.getRdate() %></p>
+													
+												</div>
+												<p class="review-detail"><%= pr.getRcontent() %></p>
+												</li>
+					      	 				<% } else if( pr.getRlevel() == 2 ) { %>
+					      	 					<li class="rlist">
+					      	 					<div class="host-reply reply<%=pr.getRlevel()%>">
+														<p class="host-name font-green">호스트님의 답글</p> <!-- pr.getMame() -->
+														<p class="reply-detail mb-2">
+															<%= pr.getRcontent() %> <!-- pr.getRcontent() -->
+														</p>
+														<p class="host-date text-muted"><%= pr.getRdate() %></p> <!-- pr.getRdate() -->
+													</div>
+												</li>
+					      	 				<% } %>
+					      	 				<%if(pr.getRlevel() == 1 && ho.getBsNum().equals(p.getBsNum())) { %>
+												<button class="btn btn-tp-custom-white ml-2 my-2 my-sm-0" type="button"
+														style="float:right; padding: 5px; font-size:10px;"
+														onclick="writeReply(this)">답글 남기기</button>
+												<div class="write-reply" style="display: none; height: 200px;">
+													<input type="hidden" name="mname" value="<%= ho.getMname()%>"/>
+													<input type="hidden" name="refrno" value="<%= pr.getRno() %>" />
+													<input type="hidden" name="rlevel" value="<%= pr.getRlevel() %>" />
+													<textarea id="replyContent" rows="5" style='width: 100%;'></textarea>
+													<button type="button" class="btn btn-tp-custom-green mr-3 btn-reply-review"
+														onclick="replyReview(this)" style="display:block;">답글 등록</button>
+												</div>
+											<% } %>
+										</ul>
+									<%
 										}
-										%>
+									}
+									%>
 								</div>
 							</div>
 						</div>
@@ -517,7 +517,7 @@
 		        }
 		    })
 			
-			$('#selectDate').data('datepicker').selectDate(new Date(startYear, startMonth - 1, startDay, 09));
+			// $('#selectDate').data('datepicker').selectDate(new Date(startYear, startMonth - 1, startDay, 09));
 		});
 		
 	</script>

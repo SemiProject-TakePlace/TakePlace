@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.kh.jsp.notice.model.vo.Notice;
 import com.kh.jsp.products.model.dao.ProductDAO;
 import com.kh.jsp.products.model.vo.Product;
 import com.kh.jsp.products.model.vo.ProductImages;
@@ -115,6 +116,54 @@ public class ProductService {
 		close(con);
 		
 		return list;
+	}
+
+
+	public HashMap<String, Object> getUpdateView(int pno) {
+		con = getConnection();
+		
+		HashMap<String, Object> hmap = pDAO.selectOne(con, pno);
+		
+		close(con);
+		
+		return hmap;
+	}
+
+	public int updateProductImages(Product p, ArrayList<ProductImages> list) {
+		con = getConnection();
+		
+		int result = 0;
+		
+		int updateProduct = pDAO.updateProduct(con, p);
+		
+		if(updateProduct > 0) {
+			int pno = pDAO.getCurrentPno(con);
+			
+			for(int i = 0; i <list.size(); i++) {
+				list.get(i).setPno(pno);
+			}
+		}
+		
+		int updateImages = 0;
+		
+		for(int i = 0; i <list.size(); i++) {
+			list.get(i).setImgLevel(i == 0 ? 0 : 1);
+			updateImages = pDAO.updateProductImages(con, list.get(i));
+			
+			if(updateImages == 0)break;
+	
+		
+			if(updateProduct > 0 && updateImages > 0) {
+				commit(con);
+				result = 1;
+			} else {
+				rollback(con);
+			}
+		}
+
+		close(con);
+		
+		return result;
 	}
 
 
