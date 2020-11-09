@@ -106,7 +106,7 @@ input[type="file"] {
 			    <label for="pAbleDate" class="font-green font-bold">예약 가능 날짜</label>
 			    <div class="inline-block">
 			    	 <input type="text" name="pAbleDate" id="pAbleDate" data-range="true" data-multiple-dates-separator=" - "
-    				data-language="en"class="form-control inlne-block"/>
+    				data-language="en"class="form-control inlne-block" autocomplete="off"/>
     				<small id="infoDate" class="form-text text-muted">예약 받을 날짜의 범위를 입력해주세요.<br>
     				하루만 입력하시면 예약 마감일은 선택한 날의 23시 59분까지입니다.</small>
 				    <small id="reqDate" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>

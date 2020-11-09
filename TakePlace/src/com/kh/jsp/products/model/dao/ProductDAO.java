@@ -375,4 +375,53 @@ public class ProductDAO {
 		
 		return list;
 	}
+
+	public int updateProduct(Connection con, Product p) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateProduct");
+
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, p.getPname());
+			pstmt.setInt(2, p.getPprice());
+			pstmt.setString(3, p.getPableDate());
+			pstmt.setString(4, p.getPguide());
+			pstmt.setString(5, p.getPwarn());
+			pstmt.setInt(6, p.getPno());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateProductImages(Connection con, ProductImages productImages) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateProductImages");
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1,  productImages.getOriginName());
+			pstmt.setString(2, productImages.getChangeName());
+			pstmt.setInt(3, productImages.getPimgno());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	
+	}
+
 }
