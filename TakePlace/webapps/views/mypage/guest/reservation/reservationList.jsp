@@ -1,10 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.kh.jsp.reservation.model.vo.*,com.kh.jsp.mypage.model.vo.*, java.util.*" %>
+ <%
+	ArrayList<Reservation> list = (ArrayList<Reservation>)request.getAttribute("list");
+	
+ 	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>My Page UI</title>
+<title>Take Place : 예약 현황</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/bootstrap.min.css" type="text/css" />
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/common.css" type="text/css" />
 
@@ -172,34 +183,80 @@ padding-left : 30%;
 				<!-- 여기서부터 자유롭게 컨텐츠 잡으면서 시작 -->
 				<div class="tab-pane fade show active" id="nav-gest" role="tabpanel" aria-labelledby="nav-gest-tab">
                 
+                <nav>
+		  			<div class="nav nav-tabs" id="nav-tab" role="tablist">
+		  			<!-- 3개 탭일때는 33.3% -->
+		    		<a style="width: 33.3%" class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">승인 대기 중</a>
+		    		<a style="width: 33.3%" class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">승인 완료</a>
+		    		<a style="width: 33.3%" class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-contact" aria-selected="false">예약 취소</a>
+		  </div>
+		</nav>
+		<div class="tab-content" id="nav-tabContent">
+		  
+		  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+			<!-- 승인 대기 중 -->
+			<table align="center" id="listArea">
+				<tr>
+					<th width="300px">공간 명</th>					
+					<th width="500px">대여시간</th>					
+					<th width="500px">주소</th>					
+					<th width="100px">예약취소</th>	
+				</tr>
+				<% for(Reservation r : list) { %>
+				<tr>
+					<td><%= r.getGname() %></td>
+					<td><%= r.getResDate() %></td>
+					<td><%= r.getGdemand() %></td>
+					<td><button>취소</button></td>
+				</tr>
+				<% } %>
+			</table>
+			
+			<%-- 페이지 처리 코드 넣기 --%>
+		
+		<div class="pagingArea" align="center">
+		
+		<button onclick="location.href='<%= request.getContextPath() %>/reservationList.me?currentPage=1'"></button>
+			<%  if(currentPage <= 1){  %>
+			<button disabled></button>
+			<%  }else{ %>
+			<button onclick="location.href='<%= request.getContextPath() %>/reservationList.me?currentPage=<%=currentPage - 1 %>'"></button>
+			<%  } %>
+			
+			<% for(int p = startPage; p <= endPage; p++){
+					if(p == currentPage){	
+			%>
+				<button disabled><%= p %></button>
+			<%      }else{ %>
+				<button onclick="location.href='<%= request.getContextPath() %>/reservationList.me?currentPage=<%= p %>'"><%= p %></button>
+			<%      } %>
+			<% } %>
+				
+			<%  if(currentPage >= maxPage){  %>
+			<button disabled>></button>
+			<%  }else{ %>
+			<button onclick="location.href='<%= request.getContextPath() %>/selectList.bo?currentPage=<%=currentPage + 1 %>'"></button>
+			<%  } %>
+			<button onclick="location.href='<%= request.getContextPath() %>/selectList.bo?currentPage=<%= maxPage %>'">>></button>
+		
+		</div>
+		
+		  </div>
+		  
+		  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+		  	<!-- 승인 완료 -->
+		  	
+		  </div>
+		  
+		  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+		  	<!-- 예약 취소 -->
+		  	
+		  </div>
+		
+		</div>
                 
-                <form action="#" method="post" id="create_gestAccount" name="gestForm">
-                
-             <div class="form-group">
-                <label for="userid" class="font-green inline-block" >아이디</label>
-                <input type="text" class="form-control inline-block" id="userid" aria-describedby="emailHelp" placeholder="아이디" maxlength="20">
-              </div>
-                 
-              <div class="form-group">
-                <label for="userNick" class="font-green inline-block" >닉네임</label>
-                <input type="text" class="form-control inline-block" id="userNick" aria-describedby="emailHelp" placeholder="닉네임">
-              </div>
+        </div>
               
-              <div class="form-group">
-                  <label for="userEmail" class="font-green inline-block" >이메일</label>
-                <input type="text" class="form-control inline-block" id="userEmail" aria-describedby="emailHelp" placeholder="이메일">
-              </div>
-              
-              </form>
-              </div>
-              <div id="button">
-              <button type="button" class="btn btn-tp-custom-green" 
-              onclick="location.href='http://localhost:8088/takeplace/views/mypage/guest/profile/guestPageProfileModify.jsp' ">
-              	회원 정보 수정
-              </button>&nbsp;&nbsp;
-              <button type="button" class="btn btn-tp-custom-white" onclick="signUp();">회원 탈퇴</button>  
-                
-              </div>
 				<!-- 여기가 컨텐츠 끝 -->
 			</div>
 		</div>

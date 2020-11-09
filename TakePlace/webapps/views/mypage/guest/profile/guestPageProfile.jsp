@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -177,17 +177,17 @@ padding-left : 30%;
                 
              <div class="form-group">
                 <label for="userid" class="font-green inline-block" >아이디</label>
-                <input type="text" class="form-control inline-block" id="userid" aria-describedby="emailHelp" placeholder="아이디" maxlength="20">
+                <label class="form-control inline-block" style="width : 350px;" ><%= mem.getId() %></label>
               </div>
                  
               <div class="form-group">
                 <label for="userNick" class="font-green inline-block" >닉네임</label>
-                <input type="text" class="form-control inline-block" id="userNick" aria-describedby="emailHelp" placeholder="닉네임">
+                <label class="form-control inline-block" style="width : 350px;" ><%= mem.getMname() %></label>
               </div>
               
               <div class="form-group">
                   <label for="userEmail" class="font-green inline-block" >이메일</label>
-                <input type="text" class="form-control inline-block" id="userEmail" aria-describedby="emailHelp" placeholder="이메일">
+				  <label class="form-control inline-block" style="width : 350px;" ><%= mem.getEmail() %></label>
               </div>
               
               </form>
@@ -195,14 +195,18 @@ padding-left : 30%;
               <div id="button">
               <button type="button" class="btn btn-tp-custom-green" 
               onclick="location.href='http://localhost:8088/takeplace/views/mypage/guest/profile/guestPageProfileModify.jsp' ">
-              	회원 정보 수정
-              </button>&nbsp;&nbsp;
-              <button type="button" class="btn btn-tp-custom-white" onclick="signUp();">회원 탈퇴</button>  
+              	회원 정보 수정 </button>&nbsp;&nbsp;
+              <button type="button" class="btn btn-tp-custom-white" onclick="deleteGuest();")>회원 탈퇴</button>  
                 
               </div>
 				<!-- 여기가 컨텐츠 끝 -->
 			</div>
 		</div>
+		<script>
+		function deleteGuest() {
+					location.href = "/takeplace/deleteG.me?mid=<%=mem.getId()%>";
+				}
+		</script>
 	</section>
 	
 	<%@ include file="../../../common/footer.jsp" %>
