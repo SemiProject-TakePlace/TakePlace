@@ -69,7 +69,7 @@
        <div class="container-fluid">
          <div class="row top-footer">
            <div class="col-md-12 text-center">
-           	<a class="navbar-brand" href="<%= request.getContextPath() %>/index.jsp">
+           	<a class="navbar-brand" href="<%= request.getContextPath() %>/index">
 	   			<img src="<%= request.getContextPath() %>/resources/images/common/logo-horizontal.png" alt="Take Place" width="160" height="66"/>
 	   		</a>
 	   		<ul class="link-info">
@@ -77,7 +77,7 @@
 	   				<a href="<%= request.getContextPath() %>/views/intro/intro.jsp">사이트 소개</a>
 	   			</li>
 	   			<li>
-	   				<a href="<%= request.getContextPath() %>/views/howto/howto.jsp">이용방법</a>
+	   				<a href="<%= request.getContextPath() %>/views/manual/guestManual.jsp">이용방법</a>
 	   			</li>
 	   			<li>
 	   				<a href="<%= request.getContextPath() %>/views/inquire/inquire.jsp">1:1 문의</a>

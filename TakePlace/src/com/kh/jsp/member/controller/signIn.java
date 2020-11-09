@@ -66,7 +66,7 @@ public class signIn extends HttpServlet {
           session.setAttribute("member", m);
           session.setAttribute("host", h);
           
-          response.sendRedirect("index.jsp");
+          response.sendRedirect("index");
 
        } else {
           response.getWriter().write("fail");

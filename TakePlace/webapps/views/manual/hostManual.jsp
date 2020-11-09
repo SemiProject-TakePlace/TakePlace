@@ -10,7 +10,7 @@
 <%@ include file="../../resources/js/common/common.jsp" %>
 
 <style>
-.top8 h2 {
+h2 {
 	margin-bottom: 30px;
 }
 
@@ -33,9 +33,9 @@
 
 	<%@ include file="../common/header.jsp"%>
 
-	<section id="wrap-contents" class="footer-bottom">
-		<div class="container top8">
-			<h2 class="font-bold">이용 방법</h2>
+	<section id="wrap-contents">
+		<div class="container">
+			<h2 class="font-bold content-title">이용 방법</h2>
 		</div>
 
 		<div style="border: 1px solid #82cbc4">

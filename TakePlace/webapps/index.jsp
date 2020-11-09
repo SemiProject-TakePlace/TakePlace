@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.*, com.kh.jsp.products.model.vo.*" %>
+<%
+	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
+ %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +32,7 @@
 			<div class="product-menu">
 				<ul>
 					<li>
-					<a href="views/products/room/study.jsp">
+					<a href="<%=request.getContextPath()%>/selectProductList.pr?type=study">
 						<span>
 							<i class="fas fa-pencil-alt"></i>
 						</span>
@@ -36,7 +40,7 @@
 					</a>
 					</li>
 					<li>
-					<a href="views/products/room/studio.jsp">
+					<a href="<%=request.getContextPath()%>/selectProductList.pr?type=studio">
 						<span>
 							<i class="fas fa-camera-retro"></i>
 						</span>
@@ -44,7 +48,7 @@
 					</a>
 					</li>
 					<li>
-					<a href="views/products/room/seminar.jsp">
+					<a href="<%=request.getContextPath()%>/selectProductList.pr?type=seminar">
 						<span>
 							<i class="fas fa-briefcase"></i>
 						</span>
@@ -52,7 +56,7 @@
 					</a>
 					</li>
 					<li>
-					<a href="views/products/room/party.jsp">
+					<a href="<%=request.getContextPath()%>/selectProductList.pr?type=party">
 						<span>
 							<i class="fas fa-birthday-cake"></i>
 						</span>
@@ -60,7 +64,7 @@
 					</a>
 					</li>
 					<li>
-					<a href="views/products/room/office.jsp" style="">
+					<a href="<%=request.getContextPath()%>/selectProductList.pr?type=office">
 						<span>
 							<i class="far fa-building"></i>
 						</span>
@@ -105,24 +109,39 @@
 		
 		<div class="product-card recommend8-content">
 			<div>
-				<h3 class="font-bold">금주의 추천상품</h3>
+				<h3 class="font-bold">최신 등록 상품</h3>
 				<div class="container">
 					<div class="row">
+						<% for(Product p : list) { %>
 						<div class="col">
-							<!-- 여기서부터 for문 사용하여 8개 상품 돌리기 -->
-							<a href="#">
+							<input type="hidden" name="pno" id="pno" value="<%= p.getPno() %>" />
+							
 								<div class="card">
-								  <img src="resources/images/main-sample.jpg" class="card-img-top" alt="대표이미지">
+								  <img src="<%=request.getContextPath() %>/resources/images/product/<%= p.getMno()%>/<%= p.getProductFile() %>"
+								  	class="card-img-top" alt="대표이미지" width="238" height="158">
 									  <div class="card-body">
-									  		<small class="font-green"><span class="product">스터디룸</span>/<span class="location">서울시</span></small>
-										    <h5 class="card-title font-bold">강남 일등 스터디룸</h5>
-										    <p class="card-text">10000원</p>
-										    <small class="rating">평점 <span class="font-green text-bold">10.0</span></small>
+									  		<small class="font-green">
+									  			<% if(p.getPtype().equals("STUDY")) {%>
+									  				<span class="product">스터티룸</span> /
+									  			<% } else if (p.getPtype().equals("STUDIO")) {%>
+									  				<span class="product">스튜디오</span> /
+									  			<% } else if (p.getPtype().equals("SEMINAR")) {%>
+									  				<span class="product">세미나룸</span> /
+									  			<% } else if (p.getPtype().equals("PARTY")) {%>
+									  				<span class="product">파티룸</span> /
+									  			<% } else if (p.getPtype().equals("OFFICE")) {%>
+									  				<span class="product">오피스</span> /
+									  			<% } %>
+									  			
+									  			<span class="location"><%= p.getPcity() %></span>
+									  		</small>
+										    <h5 class="card-title font-bold"><%= p.getPname() %></h5>
+										    <p class="card-text"><%= p.getPprice() %>원</p>
+										    <small class="rating">평점 <span class="font-green"><%= p.getPrating() %></span></small>
 									  </div>
 								</div>
-							</a>
-							
 						</div>
+						<% } %>
 					</div>
 				</div>
 			</div>

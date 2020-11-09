@@ -49,7 +49,7 @@ public class insertGuest extends HttpServlet {
 			ms.insertGuest(m);
 			
 			System.out.println("회원 가입 성공!");
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("index");
 			
 		} catch (MemberException e) {
 			System.out.println("회원 가입 실패!");

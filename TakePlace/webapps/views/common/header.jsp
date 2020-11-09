@@ -63,7 +63,7 @@
    <header id="tp-header">
       <div class="container-fluid">
          <nav class="navbar navbar-expand-md navbar-light tp-custom-navbar">
-               <a class="navbar-brand" href="<%= request.getContextPath() %>/index.jsp">
+               <a class="navbar-brand" href="<%= request.getContextPath() %>/index">
                   <img src="<%= request.getContextPath() %>/resources/images/common/logo-horizontal.png" alt="Take Place" width="160" height="66"/>
                </a>
              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
@@ -84,11 +84,11 @@
                          <a class="nav-link" href="<%= request.getContextPath() %>/productsList.pr">공간 유형</a>
                      </li>
                      <li class="nav-item">
-                         <a class="nav-link" href="<%= request.getContextPath() %>/noticeList">공지사항</a>
+                         <a class="nav-link" href="<%= request.getContextPath() %>/noticeList.no">공지사항</a>
 
                      </li>
                      <li class="nav-item">
-                         <a class="nav-link" href="<%= request.getContextPath() %>/views/howto/howto.jsp">이용방법</a>
+                         <a class="nav-link" href="<%= request.getContextPath() %>/views/manual/guestManual.jsp">이용방법</a>
                      </li>
                      
                      <%if ( mem == null ) { %>
