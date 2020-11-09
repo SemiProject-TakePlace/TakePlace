@@ -175,11 +175,11 @@ padding-left : 30%;
                     </div>
                     <div class="form-group">
                       <label class="font-green inline-block" >대표명</label>
-                      <label class="form-control inline-block" style="width : 350px;" ><%= h.getBsName() %></label>
+                      <label class="form-control inline-block" style="width : 350px;" ><%= ho.getBsName() %></label>
                    </div>
                     <div class="form-group">
                       <label class="font-green inline-block" >사업자 등록번호</label>
-                      <label class="form-control inline-block" style="width : 350px;" ><%= h.getBsNum() %></label>
+                      <label class="form-control inline-block" style="width : 350px;" ><%= ho.getBsNum() %></label>
                     </div>
               
                     <div class="form-group">

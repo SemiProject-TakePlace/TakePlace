@@ -1,21 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.kh.jsp.reservation.model.vo.*,com.kh.jsp.mypage.model.vo.*, java.util.*" %>
- <%
-	ArrayList<Reservation> list = (ArrayList<Reservation>)request.getAttribute("list");
-	
- 	PageInfo pi = (PageInfo)request.getAttribute("pi");
-	int listCount = pi.getListCount();
-	int currentPage = pi.getCurrentPage();
-	int maxPage = pi.getMaxPage();
-	int startPage = pi.getStartPage();
-	int endPage = pi.getEndPage();
-	
-%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Take Place : 예약 현황</title>
+<title>My Page UI</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/bootstrap.min.css" type="text/css" />
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/common.css" type="text/css" />
 
@@ -98,16 +87,107 @@
 .mypage-content {
 	margin-left: 225px; /*마이페이지에서만 sidebar 때문에  margin-left*/
 	width : 1250px;
-	height : 1000px;
+	height : 850px;
 }
 
 #tp-footer {
 	margin-left: 225px; /*마이페이지에서만 sidebar 때문에  margin-left*/
 }
 
-#button {
-width : 1200px;
-padding-left : 30%;
+
+
+.outer{
+		width:auto;
+		height:600px;
+		margin-left:auto;
+		margin-right:auto;
+		margin-top:50px;
+	}
+	
+	
+	
+ 
+
+    #mainWrapper{
+        width: 100%;
+        margin: 0 auto; /*가운데 정렬*/
+    }
+
+    #mainWrapper > ul > li:first-child {
+        text-align: center;
+        
+        
+        
+        vertical-align:middle;
+        line-height:30px;
+}
+
+    #ulTable {margin-top:10px;}
+    
+
+    #ulTable > li:first-child > ul > li {
+        background-color:#D5DAE0;
+        height : 50px;
+        font-weight:bold;
+        text-align:center;
+        align : center;
+        padding : 15px;
+}
+
+    #ulTable > li > ul {
+        clear:both;
+        padding:0px auto;
+        position:relative;
+        min-width:40px;
+}
+    #ulTable > li > ul > li { 
+        float:left;
+        padding : 10px;
+        height : 50px;
+        border-bottom:1px solid silver;
+        vertical-align:baseline;
+}    
+
+    #ulTable > li > ul > li:first-child               	{width: 5%;} /*No  크기*/
+    #ulTable > li > ul > li:first-child +li           	{width:20%;} /*공간명 크기*/
+    #ulTable > li > ul > li:first-child +li+li        	{width:25%;} /*대여일 크기*/
+    #ulTable > li > ul > li:first-child +li+li+li     	{width:20%;} /*예약자 크기*/
+    #ulTable > li > ul > li:first-child +li+li+li+li  	{width:20%;} /*연락처 크기*/
+    #ulTable > li > ul > li:first-child +li+li+li+li+li {width:10%;} /*승인   크기*/
+
+    #divPaging {
+        clear:both; 
+        margin:0 auto; 
+        width:365px; 
+        height:100px;
+        padding :40px;
+      
+}
+
+    #divPaging > div {
+        float:left;
+        width: 30px;
+        margin:10px;
+        text-align:center;
+       
+}
+
+    #liSearchOption {
+    	clear:both;
+    	
+    	align : center;
+    	width : auto;
+    	height : 300px;
+    	
+    	padding : 50px 50px 50px 325px;
+    }
+    #liSearchOption > div {
+        margin:0 auto; 
+        margin-top: 30px; 
+        width:auto; 
+        height:100px;
+        align : center;
+
 }
 
 </style>
@@ -115,9 +195,9 @@ padding-left : 30%;
 </head>
 <body>
 
-	<%@ include file="../../../common/header.jsp" %>
-	
-	<nav class="d-none d-md-block bg-light sidebar">
+   <%@ include file="../../../common/header.jsp" %>
+   
+   <nav class="d-none d-md-block bg-light sidebar">
         <div class="sidebar-sticky">
           <ul class="nav flex-column">
             <li class="nav-item">
@@ -142,31 +222,31 @@ padding-left : 30%;
             
           </ul>
         </div>
-   	</nav>
-   	
-   	<script>
-   		var dropdown = document.getElementsByClassName("dropdown-btn");
-		var i;
-		
-		for (i = 0; i < dropdown.length; i++) {
-		  dropdown[i].addEventListener("click", function() {
-			  console.log(this);
-			  this.classList.toggle("active");
-			  var dropdownContent = this.children;
-			  var icon = dropdownContent[0].firstElementChild;
-			  console.log(dropdownContent);
-			  if (dropdownContent[1].style.display === "block") {
-			 	dropdownContent[1].style.display = "none";
-				icon.classList.add("fa-chevron-down");
-				icon.style.color = "#6C7994";
-			  } else {
-			  	dropdownContent[1].style.display = "block";
-			  	icon.classList.add("fa-chevron-up");
-			  	icon.style.color = "#82cbc4";
-			  }
-		  });
-		}
-	</script>
+      </nav>
+      
+      <script>
+         var dropdown = document.getElementsByClassName("dropdown-btn");
+      var i;
+      
+      for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function() {
+           console.log(this);
+           this.classList.toggle("active");
+           var dropdownContent = this.children;
+           var icon = dropdownContent[0].firstElementChild;
+           console.log(dropdownContent);
+           if (dropdownContent[1].style.display === "block") {
+             dropdownContent[1].style.display = "none";
+            icon.classList.add("fa-chevron-down");
+            icon.style.color = "#6C7994";
+           } else {
+              dropdownContent[1].style.display = "block";
+              icon.classList.add("fa-chevron-up");
+              icon.style.color = "#82cbc4";
+           }
+        });
+      }
+   </script>
 	
 	<section id="wrap-contents">
 		<div class="mypage-content">
@@ -181,82 +261,393 @@ padding-left : 30%;
 				<h2 class="content-title">예약 현황</h2>
 				
 				<!-- 여기서부터 자유롭게 컨텐츠 잡으면서 시작 -->
-				<div class="tab-pane fade show active" id="nav-gest" role="tabpanel" aria-labelledby="nav-gest-tab">
-                
-                <nav>
-		  			<div class="nav nav-tabs" id="nav-tab" role="tablist">
-		  			<!-- 3개 탭일때는 33.3% -->
-		    		<a style="width: 33.3%" class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">승인 대기 중</a>
-		    		<a style="width: 33.3%" class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">승인 완료</a>
-		    		<a style="width: 33.3%" class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-contact" aria-selected="false">예약 취소</a>
-		  </div>
-		</nav>
-		<div class="tab-content" id="nav-tabContent">
-		  
-		  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-			<!-- 승인 대기 중 -->
-			<table align="center" id="listArea">
-				<tr>
-					<th width="300px">공간 명</th>					
-					<th width="500px">대여시간</th>					
-					<th width="500px">주소</th>					
-					<th width="100px">예약취소</th>	
-				</tr>
-				<% for(Reservation r : list) { %>
-				<tr>
-					<td><%= r.getGname() %></td>
-					<td><%= r.getResDate() %></td>
-					<td><%= r.getGdemand() %></td>
-					<td><button>취소</button></td>
-				</tr>
-				<% } %>
-			</table>
-			
-			<%-- 페이지 처리 코드 넣기 --%>
-		
-		<div class="pagingArea" align="center">
-		
-		<button onclick="location.href='<%= request.getContextPath() %>/reservationList.me?currentPage=1'"></button>
-			<%  if(currentPage <= 1){  %>
-			<button disabled></button>
-			<%  }else{ %>
-			<button onclick="location.href='<%= request.getContextPath() %>/reservationList.me?currentPage=<%=currentPage - 1 %>'"></button>
-			<%  } %>
-			
-			<% for(int p = startPage; p <= endPage; p++){
-					if(p == currentPage){	
-			%>
-				<button disabled><%= p %></button>
-			<%      }else{ %>
-				<button onclick="location.href='<%= request.getContextPath() %>/reservationList.me?currentPage=<%= p %>'"><%= p %></button>
-			<%      } %>
-			<% } %>
 				
-			<%  if(currentPage >= maxPage){  %>
-			<button disabled>></button>
-			<%  }else{ %>
-			<button onclick="location.href='<%= request.getContextPath() %>/selectList.bo?currentPage=<%=currentPage + 1 %>'"></button>
-			<%  } %>
-			<button onclick="location.href='<%= request.getContextPath() %>/selectList.bo?currentPage=<%= maxPage %>'">>></button>
-		
-		</div>
-		
-		  </div>
-		  
-		  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-		  	<!-- 승인 완료 -->
-		  	
-		  </div>
-		  
-		  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-		  	<!-- 예약 취소 -->
-		  	
-		  </div>
-		
-		</div>
+				<nav>
+		  			<div class="nav nav-tabs" id="nav-tab" role="tablist">
+		  				<!-- 3개 탭일때는 33.3% -->
+		    			<a style="width: 33.3%" class="nav-link active" id="nav-waiting-tab" data-toggle="tab" href="#nav-waiting" role="tab" aria-controls="nav-waiting" aria-selected="true">승인 대기 중</a>
+		    			<a style="width: 33.3%" class="nav-link" id="nav-complete-tab" data-toggle="tab" href="#nav-complete" role="tab" aria-controls="nav-complete" aria-selected="false">승인 완료</a>
+		  				<a style="width: 33.3%" class="nav-link" id="nav-cancel-tab" data-toggle="tab" href="#nav-cancel" role="tab" aria-controls="nav-cancel" aria-selected="false">취소된 예약</a>
+		 			 </div>
+				</nav>
+				<div class="tab-content" id="nav-tabContent">
+		  			<div class="tab-pane fade show active" id="nav-waiting" role="tabpanel" aria-labelledby="nav-waiting-tab">
+						
+						<div class="outer">
+						<form action="#" method="post" id="create_waitingAccount" name="waitingForm">
+							 <div id="mainWrapper">
+						        <ul>
+						            <li>
+						                <ul id ="ulTable">
+						                    <li>
+						                        <ul>
+						                            <li>No</li>
+						                            <li>공간명</li>
+						                            <li>대여일</li>
+						                            <li>예약자</li>
+						                            <li>연락처</li>
+						                            <li>승인 / 취소</li>
+						                        </ul>
+						                    </li>
+						                    <!-- 게시물이 출력될 영역 -->
+						                    <li>
+						                        <ul>
+						                            <li>20</li>
+						                            <li class="left">강남 일등 스터디룸</li>
+						                            <li>10/31/15:30 ~ 10/31/19:00</li>
+						                            <li>홍길동</li>
+						                            <li>010-1234-5678</li>
+						                            <li>승인 / 취소</li>
+						                        </ul>
+						                    </li>
+						                    <li>
+						                        <ul>
+						                            <li>19</li>
+						                            <li class="left">강남 일등 스터디룸강남 일등 </li>
+						                            <li>10/31/15:30 ~ 10/31/19:00</li>
+						                            <li>홍길동</li>
+						                            <li>010-1234-5678</li>
+						                            <li>승인 / 취소</li>
+						                        </ul>
+						                    </li>
+						                    <li>
+						                        <ul>
+						                            <li>18</li>
+						                            <li class="left">강남 룸</li>
+						                            <li>10/31/15:30 ~ 10/31/19:00</li>
+						                            <li>홍길동</li>
+						                            <li>010-1234-5678</li>
+						                            <li>승인 / 취소</li>
+						                        </ul>
+						                    </li>
+						                    <li>
+						                        <ul>
+						                            <li>17</li>
+						                            <li class="left">강남 일등 스터디룸</li>
+						                            <li>10/31/15:30 ~ 10/31/19:00</li>
+						                            <li>홍길동</li>
+						                            <li>010-1234-5678</li>
+						                            <li>승인 / 취소</li>
+						                        </ul>
+						                        <ul>
+						                            <li>16</li>
+						                            <li class="left">강남 일등 스터디룸</li>
+						                            <li>10/31/15:30 ~ 10/31/19:00</li>
+						                            <li>홍길동</li>
+						                            <li>010-1234-5678</li>
+						                            <li>승인 / 취소</li>
+						                        </ul>
+						                        <ul>
+						                            <li>15</li>
+						                            <li class="left">강남 일등 스터디룸</li>
+						                            <li>10/31/15:30 ~ 10/31/19:00</li>
+						                            <li>홍길동</li>
+						                            <li>010-1234-5678</li>
+						                            <li>승인 / 취소</li>
+						                        </ul>
+						                        <ul>
+						                            <li>14</li>
+						                            <li class="left">강남 일등 스터디룸</li>
+						                            <li>10/31/15:30 ~ 10/31/19:00</li>
+						                            <li>홍길동</li>
+						                            <li>010-1234-5678</li>
+						                            <li>승인 / 취소</li>
+						                        </ul>
+						                        <ul>
+						                            <li>13</li>
+						                            <li class="left">강남 일등 스터디룸</li>
+						                            <li>10/31/15:30 ~ 10/31/19:00</li>
+						                            <li>홍길동</li>
+						                            <li>010-1234-5678</li>
+						                            <li>승인 / 취소</li>
+						                        </ul>
+						                    <li>                                        
+						                </ul>
+						            </li>
+						            </ul>
+						            <!-- 게시판 페이징 영역 -->
+						            <br>
+						                <div id="divPaging">
+						                    
+						                    <button class="btn btn-tp-custom-white">◀</button>
+						                    <button class="btn btn-tp-custom-white">1</button>
+						                    <button class="btn btn-tp-custom-white">2</button>
+						                    <button class="btn btn-tp-custom-white">3</button>
+						                    <button class="btn btn-tp-custom-white">4</button>
+						                    <button class="btn btn-tp-custom-white">5</button>
+						                    <button class="btn btn-tp-custom-white">▶</button>
+						                    
+											
+						                </div>
+						            
+						
+						            <!-- 검색 폼 영역 -->
+						         
+						                <div id='liSearchOption'>
+						                    <select id='selSearchOption' >
+						                        <option value='A'>제목+내용</option>
+						                        <option value='T'>제목</option>
+						                        <option value='C'>내용</option>
+						                    </select>
+						                    <input type="text" class="form-control inline-block" id="exampleInputId1" aria-describedby="emailHelp">
+						                    <button class="btn btn-tp-custom-green">검색</button>
+						                </div>
+						          
+						
+						        	
+		  			
+		  			</div>
+		  			</form>
+		  			</div>
+		  			</div>
+		  			
+		 			<div class="tab-pane fade" id="nav-complete" role="tabpanel" aria-labelledby="nav-complete-tab">
                 
-        </div>
-              
+                 <div style="border: 1px solid #82cbc4">
+                 <form action="#" method="post" id="create_completeAccount">
+                 <div class="outer">
+							 <div id="mainWrapper">
+						        <ul>
+						            <li>
+						                <ul id ="ulTable">
+						                    <li>
+						                        <ul>
+						                            <li>No</li>
+						                            <li>공간명</li>
+						                            <li>문의자</li>
+						                            <li>문의 제목</li>
+						                            <li>문의 날짜</li>
+						                            <li>답변</li>
+						                        </ul>
+						                    </li>
+						                    <!-- 게시물이 출력될 영역 -->
+						                    <li>
+						                        <ul>
+						                            <li>20</li>
+						                            <li class="left">강남 일등 스터디룸</li>
+						                            <li>guest01</li>
+						                            <li>기본 인원에 대해 ...</li>
+						                            <li>2020-10-29</li>
+						                            <li>답변완료</li>
+						                        </ul>
+						                    </li>
+						                    <li>
+						                        <ul>
+						                            <li>19</li>
+						                            <li class="left">강남 일등 스터디룸</li>
+						                            <li>guest02</li>
+						                            <li>내일도 예약 가능한가요?</li>
+						                            <li>2020-10-29</li>
+						                            <li>답변완료</li>
+						                        </ul>
+						                    </li>
+						                    <li>
+						                        <ul>
+						                            <li>18</li>
+						                            <li class="left">강남 일등 스터디룸</li>
+						                            <li>guest03</li>
+						                            <li>예약했는데 시간 변경 가능한가요?</li>
+						                            <li>2020-10-29</li>
+						                            <li>답변완료</li>
+						                        </ul>
+						                    </li>
+						                    <li>
+						                        <ul>
+						                            <li>17</li>
+						                            <li class="left">강북 세미 파티룸</li>
+						                            <li>guest04</li>
+						                            <li>방 몇개인가요?</li>
+						                            <li>2020-10-29</li>
+						                            <li>답변완료</li>
+						                        </ul>
+						                        <ul>
+						                            <li>16</li>
+						                            <li class="left">강북 세미 파티룸</li>
+						                            <li>guest05</li>
+						                            <li>고기 구워먹어도 되나요...</li>
+						                            <li>2020-10-29</li>
+						                            <li>답변완료</li>
+						                        </ul>
+						                        <ul>
+						                            <li>15</li>
+						                            <li class="left">역삼 KH 스터디룸</li>
+						                            <li>guest06</li>
+						                            <li>화장실 깨끗한가요?</li>
+						                            <li>2020-10-29</li>
+						                            <li>답변완료</li>
+						                        </ul>
+						                        <ul>
+						                            <li>14</li>
+						                            <li class="left">강남 일등 스터디룸</li>
+						                            <li>guest07</li>
+						                            <li>최대인원 몇명인가요?</li>
+						                            <li>2020-10-29</li>
+						                            <li>답변완료</li>
+						                        </ul>
+						                        <ul>
+						                            <li>13</li>
+						                            <li class="left">강남 일등 스터디룸</li>
+						                            <li>guest08</li>
+						                            <li>시간변경 가능한가요?</li>
+						                            <li>2020-10-29</li>
+						                            <li>답변완료</li>
+						                        </ul>
+						                    <li>                                        
+						                </ul>
+						            </li>
+						            </ul>
+						            <!-- 게시판 페이징 영역 -->
+						            <br>
+						                <div id="divPaging">
+						                    <button class="btn btn-tp-custom-white">◀</button>
+						                    <button class="btn btn-tp-custom-white">1</button>
+						                    <button class="btn btn-tp-custom-white">2</button>
+						                    <button class="btn btn-tp-custom-white">3</button>
+						                    <button class="btn btn-tp-custom-white">4</button>
+						                    <button class="btn btn-tp-custom-white">5</button>
+						                    <button class="btn btn-tp-custom-white">▶</button>
+						                    
+						                </div> 
+						                <div id='liSearchOption'>
+						                    <select id='selSearchOption' >
+						                        <option value='A'>제목+내용</option>
+						                        <option value='T'>제목</option>
+						                        <option value='C'>내용</option>
+						                    </select>
+						                    <input type="text" class="form-control inline-block" id="exampleInputId1" aria-describedby="emailHelp">
+						                    <button class="btn btn-tp-custom-green">검색</button>
+						                </div>
+						                </div>
+						                </div>
+                
+                </form>
+                </div>
+                </div>
+		  			<div class="tab-pane fade" id="nav-cancel" role="tabpanel" aria-labelledby="nav-cancel-tab">
+                
+                 <div style="border: 1px solid #82cbc4">
+                 <form action="#" method="post" id="create_cancelAccount">
+                 <div class="outer">
+							 <div id="mainWrapper">
+						        <ul>
+						            <li>
+						                <ul id ="ulTable">
+						                    <li>
+						                        <ul>
+						                            <li>No</li>
+						                            <li>공간명</li>
+						                            <li>문의자</li>
+						                            <li>문의 제목</li>
+						                            <li>문의 날짜</li>
+						                            <li>답변</li>
+						                        </ul>
+						                    </li>
+						                    <!-- 게시물이 출력될 영역 -->
+						                    <li>
+						                        <ul>
+						                            <li>20</li>
+						                            <li class="left">강남 일등 스터디룸</li>
+						                            <li>guest01</li>
+						                            <li>기본 인원에 대해 ...</li>
+						                            <li>2020-10-29</li>
+						                            <li>취소</li>
+						                        </ul>
+						                    </li>
+						                    <li>
+						                        <ul>
+						                            <li>19</li>
+						                            <li class="left">강남 일등 스터디룸</li>
+						                            <li>guest02</li>
+						                            <li>내일도 예약 가능한가요?</li>
+						                            <li>2020-10-29</li>
+						                            <li>취소</li>
+						                        </ul>
+						                    </li>
+						                    <li>
+						                        <ul>
+						                            <li>18</li>
+						                            <li class="left">강남 일등 스터디룸</li>
+						                            <li>guest03</li>
+						                            <li>예약했는데 시간 변경 가능한가요?</li>
+						                            <li>2020-10-29</li>
+						                            <li>취소</li>
+						                        </ul>
+						                    </li>
+						                    <li>
+						                        <ul>
+						                            <li>17</li>
+						                            <li class="left">강북 세미 파티룸</li>
+						                            <li>guest04</li>
+						                            <li>방 몇개인가요?</li>
+						                            <li>2020-10-29</li>
+						                            <li>취소</li>
+						                        </ul>
+						                        <ul>
+						                            <li>16</li>
+						                            <li class="left">강북 세미 파티룸</li>
+						                            <li>guest05</li>
+						                            <li>고기 구워먹어도 되나요...</li>
+						                            <li>2020-10-29</li>
+						                            <li>취소</li>
+						                        </ul>
+						                        <ul>
+						                            <li>15</li>
+						                            <li class="left">역삼 KH 스터디룸</li>
+						                            <li>guest06</li>
+						                            <li>화장실 깨끗한가요?</li>
+						                            <li>2020-10-29</li>
+						                            <li>취소</li>
+						                        </ul>
+						                        <ul>
+						                            <li>14</li>
+						                            <li class="left">강남 일등 스터디룸</li>
+						                            <li>guest07</li>
+						                            <li>최대인원 몇명인가요?</li>
+						                            <li>2020-10-29</li>
+						                            <li>취소</li>
+						                        </ul>
+						                        <ul>
+						                            <li>13</li>
+						                            <li class="left">강남 일등 스터디룸</li>
+						                            <li>guest08</li>
+						                            <li>시간변경 가능한가요?</li>
+						                            <li>2020-10-29</li>
+						                            <li>취소</li>
+						                        </ul>
+						                    <li>                                        
+						                </ul>
+						            </li>
+						            </ul>
+						            <!-- 게시판 페이징 영역 -->
+						            <br>
+						                <div id="divPaging">
+						                    <button class="btn btn-tp-custom-white">◀</button>
+						                    <button class="btn btn-tp-custom-white">1</button>
+						                    <button class="btn btn-tp-custom-white">2</button>
+						                    <button class="btn btn-tp-custom-white">3</button>
+						                    <button class="btn btn-tp-custom-white">4</button>
+						                    <button class="btn btn-tp-custom-white">5</button>
+						                    <button class="btn btn-tp-custom-white">▶</button>
+						                    
+						                </div> 
+						                <div id='liSearchOption'>
+						                    <select id='selSearchOption' >
+						                        <option value='A'>제목+내용</option>
+						                        <option value='T'>제목</option>
+						                        <option value='C'>내용</option>
+						                    </select>
+						                    <input type="text" class="form-control inline-block" id="exampleInputId1" aria-describedby="emailHelp">
+						                    <button class="btn btn-tp-custom-green">검색</button>
+						                </div>
+						                </div>
+						                </div>
+                
+                </form>
+                </div>
+                </div>
+				</div>
+				
+				
 				<!-- 여기가 컨텐츠 끝 -->
 			</div>
 		</div>
