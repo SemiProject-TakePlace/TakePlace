@@ -102,7 +102,7 @@
             // dataType
             success : function(data) {
                if(data != "fail"){
-                  window.location.href="<%= request.getContextPath() %>/index.jsp";
+                  window.location.href="<%= request.getContextPath() %>/index";
                } else {
             	   $("#message").html("<small class='form-text text-error'>아이디 또는 비밀번호가 잘못되었습니다.</span>");
                }

@@ -166,5 +166,15 @@ public class ProductService {
 		return result;
 	}
 
+	public ArrayList<Product> selectRecent8() {
+		con = getConnection();
+		
+		ArrayList<Product> list = pDAO.selectRecent8(con);
+		
+		close(con);
+		
+		return list;
+	}
+
 
 }
