@@ -9,7 +9,6 @@ public class Notice implements Serializable {
 	
 	// 1. 필드변수
 	private int nno;           // 공지 번호
-	private int mno;     // 회원번호
 	private String ntitle;   // 공지 제목
 	private String nwriter;    // 공지 작성자
 	private String ncontent;        // 공지 내용
@@ -19,10 +18,9 @@ public class Notice implements Serializable {
 		super();
 	}
 
-	public Notice(int nno, int mno, String ntitle, String nwriter, String ncontent, Date credate) {
+	public Notice(int nno, String ntitle, String nwriter, String ncontent, Date credate) {
 		super();
 		this.nno = nno;
-		this.mno = mno;
 		this.ntitle = ntitle;
 		this.nwriter = nwriter;
 		this.ncontent = ncontent;
@@ -31,7 +29,7 @@ public class Notice implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Notice [nno=" + nno + ", mno=" + mno + ", ntitle=" + ntitle + ", nwriter=" + nwriter + ", ncontent="
+		return "Notice [nno=" + nno +  ", ntitle=" + ntitle + ", nwriter=" + nwriter + ", ncontent="
 				+ ncontent + ", credate=" + credate + "]";
 	}
 
@@ -43,13 +41,6 @@ public class Notice implements Serializable {
 		this.nno = nno;
 	}
 
-	public int getMno() {
-		return mno;
-	}
-
-	public void setMno(int mno) {
-		this.mno = mno;
-	}
 
 	public String getNtitle() {
 		return ntitle;
