@@ -52,10 +52,11 @@ public class NoticeDAO {
 				
 				Notice n = new Notice();
 				
-				n.setNtitle(      rset.getString(1)    );
-				n.setNcontent(   rset.getString(2) );
+				n.setNno(rset.getInt(1));
+				n.setNtitle(      rset.getString(2)    );
+				n.setNcontent(   rset.getString(3) );
 				//n.setNcontent( rset.getString(3) );
-				n.setCredate(  rset.getDate(3) );
+				n.setCredate(  rset.getDate(4) );
 			//	n.setNcount(   rset.getInt(5)    );
 				//n.setNdate(    rset.getDate(6)   );
 				
@@ -84,10 +85,9 @@ public class NoticeDAO {
 		try {
 			pstmt = con.prepareStatement(sql);
 			
+			
 			pstmt.setString(1, n.getNtitle());
-		//	pstmt.setString(2, n.getNcontent());
-			pstmt.setString(3, n.getNwriter());
-		//	pstmt.setDate(  4, n.getNdate());
+			pstmt.setString(2, n.getNcontent());
 			
 			result = pstmt.executeUpdate();
 						
