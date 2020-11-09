@@ -53,12 +53,10 @@ public class NoticeDAO {
 				Notice n = new Notice();
 				
 				n.setNno(rset.getInt(1));
-				n.setNtitle(      rset.getString(2)    );
+				n.setNtitle(  rset.getString(2)  );
 				n.setNcontent(   rset.getString(3) );
-				//n.setNcontent( rset.getString(3) );
 				n.setCredate(  rset.getDate(4) );
-			//	n.setNcount(   rset.getInt(5)    );
-				//n.setNdate(    rset.getDate(6)   );
+			
 				
 				list.add(n);
 				
@@ -100,72 +98,6 @@ public class NoticeDAO {
 		
 		return result;
 	}
-
-	public Notice selectOne(Connection con, int nno) throws NoticeException {
-		Notice result = null;
-		PreparedStatement pstmt =null;
-		ResultSet rset = null;
-		
-		String sql = prop.getProperty("selectOne");
-		
-		try {
-			
-			pstmt = con.prepareStatement(sql);
-			
-			pstmt.setInt(1, nno);
-			
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()) {
-				result = new Notice();
-				
-				result.setNno( nno );
-				result.setNtitle( rset.getString("ntitle"));
-			//	result.setNcontent( rset.getString("ncontent"));
-				result.setNwriter( rset.getString("nwriter"));
-			//	result.setNcount( rset.getInt("ncount"));
-			//	result.setNdate( rset.getDate("ndate"));
-				
-			}
-			
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			throw new NoticeException("[DAO] :" + e.getMessage());
-			
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		return result;
-	}
-
-	public int updateReadCount(Connection con, int nno) throws NoticeException {
-		int result = 0;
-		PreparedStatement pstmt = null;
-		
-		String sql = prop.getProperty("updateReadCount");
-		
-		try {
-			pstmt = con.prepareStatement(sql);
-			
-			pstmt.setInt(1, nno);
-			
-			result = pstmt.executeUpdate();
-			
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			
-			throw new NoticeException("[DAO] : " + e.getMessage());
-		} finally {
-			close(pstmt);
-		}
-				
-		return result;
-	}
-
 	public int updateNotice(Connection con, Notice n) throws NoticeException {
 		int result = 0;
 		

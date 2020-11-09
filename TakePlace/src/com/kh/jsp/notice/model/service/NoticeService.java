@@ -37,38 +37,7 @@ public class NoticeService {
 		return result;
 	}
 
-	public Notice selectOne(int nno) throws NoticeException {
-		con = getConnection();
-		
-		Notice n = nDAO.selectOne(con, nno);
-		
-		if( n != null ) {
-			// 조회수 1 증가
-			int result = nDAO.updateReadCount(con, nno);
-			
-			if( result > 0) commit(con);
-			else rollback(con);
-			
-		}
-		
-		close(con);
-		
-		return n;
-	}
-
-	public Notice updateView(int nno) throws NoticeException {
-		con = getConnection();
-		
-		// 수정하는 페이지에 해당 공지사항의 내용을
-		// 보여주기 위한 화면이기 때문에, 상세 조회하던 SQL을
-		// 그대로 재사용할 수 있다.
-		
-		Notice n = nDAO.selectOne(con, nno);
-		
-		close(con);
-		
-		return n;
-	}
+	
 
 	public int updateNotice(Notice n) throws NoticeException {
 		
