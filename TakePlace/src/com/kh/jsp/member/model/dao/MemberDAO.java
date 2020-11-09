@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import com.kh.jsp.common.exception.MemberException;
 import com.kh.jsp.member.model.vo.Host;
 import com.kh.jsp.member.model.vo.Member;
 
@@ -60,12 +61,14 @@ public class MemberDAO {
 				
 				result = new Member();
 				
-				result.setMtype(rset.getString("mtype"));
 				result.setMno(rset.getInt("mno"));
 				result.setId(m.getId());
 				result.setPwd(m.getPwd());
+				result.setMtype(rset.getString("mtype"));
 				result.setMname(rset.getString("mname"));
 				result.setEmail(rset.getString("email"));
+				result.setJoinDate(rset.getDate("joindate"));
+				result.setChdate(rset.getDate("chdate"));
 			
 			}
 			
@@ -107,7 +110,6 @@ public class MemberDAO {
 			
 			
 		} finally {
-			
 			close(pstmt);
 		}
 		
@@ -116,48 +118,49 @@ public class MemberDAO {
 	}
 
 
-	public Member findId(Connection con, Member m) {
-		Member result = null;     
-		PreparedStatement pstmt = null; 
-		ResultSet rset = null;  
-		
-		String sql = prop.getProperty("findId");
-		
-		// 쿼리 확인용
-		// System.out.println(sql);
-		
-		try {
-			pstmt = con.prepareStatement(sql);
-			
-			pstmt.setString(1, m.getEmail());
-			
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()) { 
-				
-				result = new Member();
-				
-				result.setId(m.getId());
-				result.setPwd(m.getPwd());
-				result.setMname(rset.getString("mname"));
+	 public Member findId(Connection con, Member m) {
+	      Member result = null;     
+	      PreparedStatement pstmt = null; 
+	      ResultSet rset = null;  
+	      
+	      String sql = prop.getProperty("findId");
+	      
+	      // 쿼리 확인용
+	      System.out.println(sql);
+	      
+	      try {
+	         pstmt = con.prepareStatement(sql);
+	         
+	         pstmt.setString(1, m.getEmail());
+	      
+	         rset = pstmt.executeQuery();
+	         
+	         if(rset.next()) { 	
+	        	 
+	            result = new Member();
+	            
+				result.setId(rset.getString("id"));
 				result.setEmail(rset.getString("email"));
-			
-			}
-			
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		return result;
-	}
+				result.setMtype(rset.getString("mtype"));
+				result.setJoinDate(rset.getDate("joindate"));
+	            
+	            System.out.println(result);
+	            
+	         }
+	         
+	         
+	      } catch (SQLException e) {
+	      
+	         e.printStackTrace();
+	         
+	      } finally {
+	         close(rset);
+	         close(pstmt);
+	      }
+	      
+	      return result;
+	   }
 
-	
 	   public String duplicationId(Connection con, String id) {
 		      // TODO Auto-generated method stub
 		      String result = null;     
@@ -227,6 +230,39 @@ public class MemberDAO {
 	   }
 
 
+	public String duplicationEmail(Connection con, String email) {
+		  String result = null;     
+	      PreparedStatement pstmt = null; 
+	      ResultSet rset = null;  
+	      
+	      String sql = prop.getProperty("duplicationEmail");
+	      
+	      try {
+	         pstmt = con.prepareStatement(sql);
+	         
+	         pstmt.setString(1, email);
+	         
+	         rset = pstmt.executeQuery();
+	            
+	         if(rset.next()){
+	            
+	            result = rset.getString(1);
+	            
+	         }
+	         
+	         // System.out.println("조회 결과 확인 : " + result);
+
+	      } catch (SQLException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      } finally{
+	         close(rset);
+	         close(pstmt);
+	      }
+	 
+	      return result;
+	   }
+
 	public int insertMember(Connection con, Member m) {
 		int result = 0;
 		
@@ -277,7 +313,7 @@ public class MemberDAO {
 			pstmt.setString(3, h.getBsName());
 			
 			result = pstmt.executeUpdate();
-			
+	
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
@@ -352,6 +388,9 @@ public class MemberDAO {
 			
 			result = pstmt.executeUpdate();
 			
+			System.out.println("호스트 조회 결과 확인 : " + result);
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -389,6 +428,8 @@ public class MemberDAO {
 				result.setBsName(rset.getString("bsname"));
 				result.setHtating(rset.getDouble("hrating"));
 				result.setHisok(rset.getString("hisok"));
+				
+				System.out.println("select : " + result);
 			}
 			
 		} catch (SQLException e) {
@@ -403,5 +444,125 @@ public class MemberDAO {
 		return result;
 	}
 
+
+	public int updateMember(Connection con, Member m) throws MemberException {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		// 닉네임 비번 이메일
+		String sql = prop.getProperty("updateGuest");
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, m.getMname());
+			pstmt.setString(2, m.getPwd());
+			pstmt.setString(3, m.getEmail());
+			pstmt.setString(4, m.getId());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			throw new MemberException("[DAO] : " + e.getMessage());
+			
+		} finally {
+			
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+	public int updateHost(Connection con, Member m) throws MemberException {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		// 닉네임 비번 이메일
+		String sql = prop.getProperty("updateHost");
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, m.getPwd());
+			pstmt.setString(2, m.getEmail());
+			pstmt.setString(3, m.getId());
+			
+			result = pstmt.executeUpdate();
+			
+			System.out.println(result);
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			throw new MemberException("[DAO] : " + e.getMessage());
+			
+		} finally {
+			
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+	public int deleteMember(Connection con, String id) throws MemberException {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("deleteMember");
+		
+		try {
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, id);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			throw new MemberException("[DAO] : " + e.getMessage());
+			
+		} finally {
+			
+			close(pstmt);
+		}
+				
+		return result;
+	}
+
+
+	public int deleteHost(Connection con, String id) throws MemberException {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("deleteHost");
+		
+		try {
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, id);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			throw new MemberException("[DAO] : " + e.getMessage());
+			
+		} finally {
+			
+			close(pstmt);
+		}
+				
+		return result;
+	}
 
 }

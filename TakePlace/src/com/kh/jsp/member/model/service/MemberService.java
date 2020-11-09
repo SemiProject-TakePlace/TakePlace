@@ -70,8 +70,19 @@ public class MemberService {
 	      close(con);
 	      
 	      return res;
-	}
+	   }
 
+	   public String duplicationEmail(String email) {
+		   con = getConnection();
+		      
+		   String res = mDAO.duplicationEmail(con, email);
+		      
+		   close(con);
+		      
+		  return res;
+		}
+
+	   
 	public int insertMember(Member m) {
 		con = getConnection();
 		int result = mDAO.insertMember(con, m);
@@ -140,7 +151,71 @@ public class MemberService {
 		
 		return result;
 	}
-		
-	
 
+	public int updateMember(Member m) throws MemberException {
+		
+		con = getConnection(); 
+		
+		int result = mDAO.updateMember(con, m); 
+		
+		if(result > 0) { 
+			commit(con);
+		} else {
+			rollback(con);
+		} 
+		
+		close(con);
+		
+		return result;
+		
+	}
+
+	public int updateHost(Member m) throws MemberException {
+		con = getConnection(); 
+		
+		int result = mDAO.updateHost(con, m); 
+		
+		if(result > 0) { 
+			commit(con);
+		} else {
+			rollback(con);
+		} 
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int deleteMember(String id) throws MemberException {
+
+		con = getConnection();
+		
+		int result = mDAO.deleteMember(con, id);
+		
+		if( result > 0 ) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int deleteHost(String id) throws MemberException {
+		con = getConnection();
+		
+		int result = mDAO.deleteHost(con, id);
+		
+		if( result > 0 ) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
 }

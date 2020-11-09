@@ -52,6 +52,10 @@
                nickChk(request, response);
             }
            
+            if(command.equals("emailChk")){
+            	emailChk(request, response);
+             }
+            
            return;
    
          
@@ -120,5 +124,41 @@
           return;
          
       }
+      
+      private void emailChk(HttpServletRequest request, HttpServletResponse response){
+          // TODO Auto-generated method stub
+          // 이메일 중복 검사 메소드
+
+          String email = request.getParameter("userEmail");
+          // System.out.println(id);
+           
+            MemberService ms = new MemberService();
+            
+            String result = ms.duplicationEmail(email);
+           
+            if(email.equals(result)){
+               System.out.println("중복 이메일 있음" + result);
+               try {
+				response.getWriter().write("duplication");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+               
+          
+            } else {
+               System.out.println("중복 이메일 없음" + result);
+               
+               try {
+				response.getWriter().write("success");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            }
+            
+           return;
+          
+       }
    
    }

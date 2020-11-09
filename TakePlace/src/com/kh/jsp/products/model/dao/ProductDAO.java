@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 
 import com.kh.jsp.products.model.vo.Product;
@@ -280,4 +281,98 @@ public class ProductDAO {
 		return list;
 	}
 
+	public HashMap<String, Object> selectOne(Connection con, int pno) {
+		HashMap<String, Object> hmap = new HashMap<>();
+		ArrayList<ProductImages> list = new ArrayList<>();
+		Product p = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectOne");
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, pno);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				p = new Product();
+				p.setPno(pno);
+				p.setBsNum(rset.getString("bsnum"));
+				p.setMno(rset.getInt("mno"));
+				p.setPtype(rset.getString("ptype"));
+				p.setPname(rset.getString("pname"));
+				p.setPcity(rset.getString("pcity"));
+				p.setPrating(rset.getInt("prating"));
+				p.setMname(rset.getString("mname"));
+				p.setPprice(rset.getInt("pprice"));
+				p.setPableDate(rset.getString("pabledate"));
+				p.setPaddress(rset.getString("paddress"));
+				p.setPguide(rset.getString("pguide"));
+				p.setPwarn(rset.getString("pwarn"));
+				
+				ProductImages pi = new ProductImages();
+				
+				pi.setPimgno(rset.getInt("pimgno"));
+				pi.setPno(pno);
+				pi.setOriginName(rset.getString("originname"));
+				pi.setChangeName(rset.getString("changename"));
+				pi.setImgPath(rset.getString("imgpath"));
+				pi.setUploadDate(rset.getDate("uploaddate"));
+				pi.setImgLevel(rset.getInt("imglevel"));
+				
+				list.add(pi);
+
+			}
+			
+			hmap.put("product", p);
+			hmap.put("productImages", list);
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return hmap;
+	}
+
+	public ArrayList<Product> productsTop(Connection con) {
+		ArrayList<Product> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("productsTop");
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				
+				p.setMno(rset.getInt("mno"));
+				p.setPno(rset.getInt("pno"));
+				p.setProductFile(rset.getString("changename"));
+				p.setPtype(rset.getString("ptype"));
+				p.setPcity(rset.getString("pcity"));
+				p.setPname(rset.getString("pname"));
+				p.setPprice(rset.getInt("pprice"));
+				p.setPrating(rset.getInt("prating"));
+				
+				list.add(p);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
 }

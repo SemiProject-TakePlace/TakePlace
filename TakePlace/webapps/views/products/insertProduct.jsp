@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"  import="com.kh.jsp.member.model.vo.*"%>
- <%
- 	Host ho = (Host)session.getAttribute("host");
- %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,13 +61,13 @@ input[type="file"] {
 			  <div class="form-group">
 			    <label for="pCity" class="font-green font-bold">지역</label>
 			    <select name="pCity" id="pCity" class="form-control inline-block">
-			    	<option value="seo" selected>서울</option>
-			    	<option value="gyg">경기</option>
-			    	<option value="gan">강원</option>
-			    	<option value="chu">충청</option>
-			    	<option value="jnl">전라</option>
-			    	<option value="gys">경상</option>
-			    	<option value="jej">제주</option>
+			    	<option value="서울" selected>서울</option>
+			    	<option value="경기">경기</option>
+			    	<option value="강원">강원</option>
+			    	<option value="충청">충청</option>
+			    	<option value="전라">전라</option>
+			    	<option value="경상">경상</option>
+			    	<option value="제주">제주</option>
 			    </select>
 			  </div>
 			  
@@ -100,6 +97,7 @@ input[type="file"] {
 			    <label for="pPrice" class="font-green font-bold">가격</label>
 			    <div class="inline-block">
 			    	<input type="text" name="pPrice" id="pPrice" class="form-control inline-block"/>
+			    	<small id="infoPrice" class="form-text text-muted">하루 기준의 금액을 입력해주세요.</small>
 			    	<small id="reqPrice" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
 			  	</div>
 			  </div>
@@ -108,8 +106,8 @@ input[type="file"] {
 			    <label for="pAbleDate" class="font-green font-bold">예약 가능 날짜</label>
 			    <div class="inline-block">
 			    	 <input type="text" name="pAbleDate" id="pAbleDate" data-range="true" data-multiple-dates-separator=" - "
-    				data-language="en"class="form-control inlne-block" data-timepicker="true"/>
-    				<small id="infoDate" class="form-text text-muted">예약 받을 날짜 및 시간의 범위를 입력해주세요.<br>
+    				data-language="en"class="form-control inlne-block"/>
+    				<small id="infoDate" class="form-text text-muted">예약 받을 날짜의 범위를 입력해주세요.<br>
     				하루만 입력하시면 예약 마감일은 선택한 날의 23시 59분까지입니다.</small>
 				    <small id="reqDate" class="form-text text-error" style="display:none;">필수 입력 사항 입니다.</small>
 				</div>			 
@@ -151,10 +149,9 @@ input[type="file"] {
                        <img id="subImg3" width="120" height="100"/>
                        <img id="subImg4" width="120" height="100"/>
                     </div>
+                    <small id="infoSubImg" class="form-text text-muted">사진은 4장 모두 추가해야합니다.</small>
 				</div>			 
 			  </div>
-			  
-			  
 			  
 			  <div class="fileArea" id="fileArea">
 	    			<input type="file" name="subImgInput1" id="subImgInput1" onchange="loadImg(this,1);" />
@@ -275,29 +272,14 @@ input[type="file"] {
 			<script>
 				$(function() {
 					// Create start date
-				    var start = new Date(),
-				        prevDay,
-				        startHours = 9;
-
-				    // 09:00 AM
-				    start.setHours(9);
-				    start.setMinutes(0);
-
-				    // If today is Saturday or Sunday set 10:00 AM
-				    if ([6, 0].indexOf(start.getDay()) != -1) {
-				        start.setHours(10);
-				        startHours = 10
-				    }
-
+				    var start = new Date(), prevDay;
+			
 				    $("#pAbleDate").datepicker({
 				    	multipleDates: true,
-				        timepicker: true,
 				        language: "en",
 				        minDate: start,
 				        startDate: start,
-				        minHours: startHours,
 				        dateFormat: "yyyy/mm/dd",
-				        // maxHours: 18,
 				        onSelect: function (fd, d, picker) {
 				            // Do nothing if selection was cleared
 				            
@@ -308,37 +290,10 @@ input[type="file"] {
 				            // Trigger only if date is changed
 				            if (prevDay != undefined && prevDay == day) return;
 				            prevDay = day;
-
-				            // If chosen day is Saturday or Sunday when set
-				            // hour value for weekends, else restore defaults
-				            if (day == 6 || day == 0) {
-				                picker.update({
-				                    minHours: 10,
-				                    maxHours: 24
-				                })
-				            } else {
-				                picker.update({
-				                    minHours: 9,
-				                    maxHours: 24
-				                })
-				            }
-				          
-				            // console.log($("#pAbleDate").val());
-				            // return $("#pAbleDate").val();
 				        }
 				    
-				    
 				    })
-					// Access instance of plugin
-					
-					// 이렇게하면 value 값을 넣을 수 있음
-					// $('#test').data('datepicker').selectDate(new Date(new Date().getFullYear(), new Date().getMonth(), 10));
-				    $("#pAbleDate").data('datepicker')
-				    
-					
 				});
-				
-				// return $("#pAbleDate").val();
 				
 			</script>
 				

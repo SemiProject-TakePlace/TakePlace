@@ -4,6 +4,7 @@ import static com.kh.jsp.common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.jsp.products.model.dao.ProductDAO;
 import com.kh.jsp.products.model.vo.Product;
@@ -94,6 +95,26 @@ public class ProductService {
 		close(con);
 		
 		return result;
+	}
+
+	public HashMap<String, Object> selectOne(int pno) {
+		con = getConnection();
+		
+		HashMap<String, Object> hmap = pDAO.selectOne(con, pno);
+		
+		close(con);
+		
+		return hmap;
+	}
+
+	public ArrayList<Product> productsTop() {
+		con = getConnection();
+		
+		ArrayList<Product> list = pDAO.productsTop(con);
+		
+		close(con);
+		
+		return list;
 	}
 
 

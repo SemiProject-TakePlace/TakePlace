@@ -43,6 +43,15 @@ public class Member implements Serializable{
 		this.email = email;
 	}
 	
+	
+	public Member(String id, Date joinDate, String mType, String email) {
+		super();
+		this.id = id;
+		this.joinDate = joinDate;
+		this.mType = mType;
+		this.email = email;
+	}
+
 	public Member(String id, String pwd) {
 		super();
 		this.id = id;

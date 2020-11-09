@@ -32,13 +32,15 @@ public class Host extends Member implements Serializable{
 	}
 
 
-
+	
 	public Host(String id, String pwd) {
 		super(id, pwd);
 		// TODO Auto-generated constructor stub
 	}
 
 
+
+	
 
 	public Host(String email) {
 		super(email);

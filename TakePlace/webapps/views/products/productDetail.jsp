@@ -1,16 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.*, com.kh.jsp.products.model.vo.*,
+				com.kh.jsp.productReview.model.vo.*"%>
+<%
+	Product p = (Product)request.getAttribute("product");
+	ArrayList<ProductImages> fileList
+	 	= (ArrayList<ProductImages>)request.getAttribute("fileList");
+	 
+	ProductImages titleImg = fileList.get(0);
+	ProductImages subImg1 = fileList.get(1);
+	ProductImages subImg2= fileList.get(2);
+	ProductImages subImg3 = fileList.get(3);
+	ProductImages subImg4 = fileList.get(4);
+	
+	ArrayList<ProductReview> rlist = (ArrayList<ProductReview>)request.getAttribute("rlist");
+	
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>공간 상세 페이지</title>
 <%@ include file="../../resources/css/common/common.jsp" %>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/datepicker.css" type="text/css" />
+<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/datepicker.min.css" type="text/css" />
 
 <%@ include file="../../resources/js/common/common.jsp" %>
-<script src="<%= request.getContextPath() %>/resources/js/common/bootstrap-datepicker.js"></script>
-<script src="<%= request.getContextPath() %>/resources/js/common/bootstrap-datepicker.kr.js"></script>
+<script src="<%= request.getContextPath() %>/resources/js/common/datepicker.min.js"></script>
+<script src="<%= request.getContextPath() %>/resources/js/common/datepicker.en.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2e78244e6d0a409b391542fb720051d2&libraries=services"></script>
 
 <style>
@@ -105,6 +121,11 @@
 	    background: #82cbc4;
 	}
 	
+	.product-detail .details .detail-refund dd {
+		border-bottom: 1px solid #ccc;
+		padding-bottom: 10px;
+	}
+	
 	.review-content {
 		padding: 80px 0 50px 0;
 	}
@@ -138,6 +159,7 @@
 	
 	.review-content .detail-review .review-list .rlist {
 		border-bottom: 1px solid #ccc;
+   	    margin-bottom: 20px;
     	padding-bottom: 20px;
 	}
 	
@@ -146,13 +168,22 @@
 	}
 	
 	.review-content .detail-review .review-list .rlist .review-detail,
-	.review-content .detail-review .review-list .rlist .host-reply {
+	.review-content .host-reply {
 		margin: 15px 15px 0 15px;
     	padding: 15px 15px 0 15px;
 	}
 	
 	.review-content .detail-review .review-list .rlist .host-name {
 		font-size: 18px;
+	}
+	
+	textarea.info {
+		background: transparent;
+    	border: none;
+	}
+	
+	textarea.info:focus{
+		outline: none;
 	}
 	
 	.sticky {
@@ -173,11 +204,23 @@
 		<div class="container">
 			<h2 class="font-bold content-title">공간 유형 
 				<!-- 유형에 따라 다른 유형 이름 보여주기 -->
-				<span class="font-green">스터디룸</span>
-				<!-- 유저가 호스트일때만 버튼 보이기 -->
-				<a href="views/products/updateProduct.jsp" class="btn btn-tp-custom-green active"
-					role="button" aria-pressed="true">상품 수정
-				</a>
+				
+				<% if(p.getPtype().equals("STUDY")) {%>
+	  				<span class="font-green">스터티룸</span> 
+	  			<% } else if (p.getPtype().equals("STUDIO")) {%>
+	  				<span class="font-green">스튜디오</span>
+	  			<% } else if (p.getPtype().equals("SEMINAR")) {%>
+	  				<span class="font-green">세미나룸</span>
+	  			<% } else if (p.getPtype().equals("PARTY")) {%>
+	  				<span class="font-green">파티룸</span>
+	  			<% } else if (p.getPtype().equals("OFFICE")) {%>
+	  				<span class="font-green">오피스</span>
+	  			<% } %>
+				<% if( mem != null && mem.getMtype().equals("HOST")) { %> 
+					<a href="views/products/updateProduct.jsp" class="btn btn-tp-custom-green active"
+						role="button" aria-pressed="true">상품 수정
+					</a>
+				<% } %>
 			</h2>
 		</div>
 		<div class="product-detail">
@@ -186,24 +229,43 @@
 					<div class="col-md-7 col-sm-12">
 					
 						<div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
-							<!-- 호스트가 올린 사진 수 만큼 for문 -->
 							<ol class="carousel-indicators">
+							<% for(ProductImages pi : fileList) { %>
 							    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-							    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-							    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+						  	<% } %>
 						  	</ol>
 						  	
 							 <div class="carousel-inner">
+							 <% if(titleImg.getChangeName() != null) { %>
 							   <div class="carousel-item active" data-interval="3000">
-							     <img src="<%= request.getContextPath() %>/resources/images/main-sample.jpg" class="d-block w-100" alt="공간 사진">
+							     <img src="<%=request.getContextPath() %>/resources/images/product/<%= p.getMno()%>/<%= titleImg.getChangeName() %>"
+							     class="d-block w-100" alt="공간 사진" width="635" height="360">
 							    </div>
+							 <% } %>
+							  <% if(subImg1.getChangeName() != null) { %>
 							    <div class="carousel-item" data-interval="2000">
-							      <img src="<%= request.getContextPath() %>/resources/images/main-sample.jpg" class="d-block w-100" alt="공간 사진">
+							      <img src="<%=request.getContextPath() %>/resources/images/product/<%= p.getMno()%>/<%= subImg1.getChangeName() %>"
+							      class="d-block w-100" alt="공간 사진" width="635" height="360">
 							    </div>
+							  <% } %>
+							  <% if(subImg2.getChangeName() != null) { %>
 							    <div class="carousel-item">
-							      <img src="<%= request.getContextPath() %>/resources/images/main-sample.jpg" class="d-block w-100" alt="공간 사진">
+							      <img src="<%=request.getContextPath() %>/resources/images/product/<%= p.getMno()%>/<%= subImg2.getChangeName() %>"
+							      class="d-block w-100" alt="공간 사진" width="635" height="360">
 							    </div>
-							  </div>
+							  <% } %>
+							  <% if(subImg3.getChangeName() != null) { %>
+							    <div class="carousel-item">
+							      <img src="<%=request.getContextPath() %>/resources/images/product/<%= p.getMno()%>/<%= subImg3.getChangeName() %>"
+							      class="d-block w-100" alt="공간 사진" width="635" height="360">
+							    </div>
+							  <% } %>
+							  <% if(subImg4.getChangeName() != null) { %>
+							    <div class="carousel-item">
+							      <img src="<%=request.getContextPath() %>/resources/images/product/<%= p.getMno()%>/<%= subImg4.getChangeName() %>"
+							      class="d-block w-100" alt="공간 사진" width="635" height="360">
+							    </div>
+							  <% } %>
 							  <a class="carousel-control-prev" href="#carouselExampleInterval" role="button" data-slide="prev">
 							    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 							    <span class="sr-only">Previous</span>
@@ -212,6 +274,7 @@
 							    <span class="carousel-control-next-icon" aria-hidden="true"></span>
 							    <span class="sr-only">Next</span>
 							  </a>
+							  </div>
 						</div>
 					
 					</div>
@@ -222,32 +285,45 @@
 							<div class="form-group">
 							    <label for="pAbleDate" class="font-green font-bold">예약 날짜 선택</label>
 							    <div class="inline-block">
-							    	<input type="text" id="pAbleDate" class="form-control inlne-block"/>
+							    	<input type="hidden" id="pAbleDate" value="<%= p.getPableDate() %>"/>
+							    	<input type="text" name="selectDate" id="selectDate" data-range="true" data-multiple-dates-separator=" - "
+    										data-language="en"class="form-control inlne-block"/>
 								    <small class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
 								</div>			 
 						  </div>
 						  <button type="button" class="btn btn-dark">HOST에게 예약 요청하기</button>
 					  	</form>
-					  	 <a href="#" class="btn btn-secondary active" role="button" aria-pressed="true">1:1 문의하기</a>
+					  	 <a href="#" class="btn btn-secondary" role="button" aria-pressed="true">1:1 문의하기</a>
 					</div>
 			
 				</div>
 				
 				<div class="mb-5">
 					<p class="font-bold font-green">
-						<span class="product">스터디룸</span>/<span class="location">서울시</span>
+						<% if(p.getPtype().equals("STUDY")) {%>
+			  				<span class="product">스터티룸</span> /
+			  			<% } else if (p.getPtype().equals("STUDIO")) {%>
+			  				<span class="product">스튜디오</span> /
+			  			<% } else if (p.getPtype().equals("SEMINAR")) {%>
+			  				<span class="product">세미나룸</span> /
+			  			<% } else if (p.getPtype().equals("PARTY")) {%>
+			  				<span class="product">파티룸</span> /
+			  			<% } else if (p.getPtype().equals("OFFICE")) {%>
+			  				<span class="product">오피스</span> /
+			  			<% } %>
+						<span class="location"><%= p.getPcity() %></span>
 					<p>
-					<h3 class="font-bold">강남 일등 스터디룸 공간 대여</h3>
+					<h3 class="font-bold"><%= p.getPname() %></h3>
 					
 					<dl>
 						<dt class="font-bold font-green">HOST</dt>
-						<dd>HOST의 회사명</dd>
+						<dd><%= p.getMname() %></dd>
 						<dt class="font-bold font-green">가격</dt>
-						<dd>10,000원</dd>
+						<dd><%= p.getPprice() %></dd>
 						<dt class="font-bold font-green">HOST 평점</dt>
-						<dd>10.0</dd>
+						<dd>10.0</dd> <!-- 호스트의 시설평점 / 시설 개수 -->
 						<dt class="font-bold font-green">시설 평점</dt>
-						<dd>10.0</dd>
+						<dd><%= p.getPrating() %></dd>
 					</dl>
 				</div>
 				
@@ -264,77 +340,132 @@
 				<div class="details col-md-7 col-sm-12">
 					<div id="info" class="detail detail-info">
 						<h4 class="font-bold font-green">시설 안내</h4>
-						<p>사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-							사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-							사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-							사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-						</p>
+						<textarea class="info" cols="75" rows="8" readonly><%= p.getPguide() %></textarea>
 					</div>
 					
 					<div id="caution" class="detail detail-caution">
 						<h4 class="font-bold font-green">유의사항</h4>
-						<p>사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-							사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-							사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-							사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-						</p>
+						<textarea class="info" cols="75" rows="8" readonly><%= p.getPwarn() %></textarea>
 					</div>
 					
 					<div id="location" class="detail detail-location">
 						<h4 class="font-bold font-green">위치</h4>
+						<input type="hidden" name="mName" id="mName" value="<%= p.getMname() %>">
+						<input type="hidden" name="pAddress" id="pAddress" value="<%= p.getPaddress() %>">
+						<p class="full-address mb-3"></p>
 						<div id="map" style="width:100%;height:400px;"></div>
 					</div>
 					
 					<div id="refund" class="detail detail-refund">
 						<h4 class="font-bold font-green">환불 규정</h4>
-						<p>사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-							사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-							사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-							사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-						</p>
+						<p class="text-error pb-2">자세한 환불 관련 사항은 호스트에서 직접 문의하셔야 합니다.</p>
+						<dl class="refund-info">
+							<dt>이용 8일전</dt>
+							<dd>총 금액의 100% 환불</dd>
+							<dt>이용 7일전</dt>
+							<dd>총 금액의 100% 환불</dd>
+							<dt>이용 6일전</dt>
+							<dd>총 금액의 100% 환불</dd>
+							<dt>이용 5일전</dt>
+							<dd>총 금액의 100% 환불</dd>
+							<dt>이용 4일전</dt>
+							<dd>총 금액의 100% 환불</dd>
+							<dt>이용 3일전</dt>
+							<dd>총 금액의 100% 환불</dd>
+							<dt>이용 2일전</dt>
+							<dd>총 금액의 100% 환불</dd>
+							<dt>이용 전날</dt>
+							<dd>총 금액의 50% 환불</dd>
+							<dt>이용 당일전</dt>
+							<dd>총 금액의 20% 환불</dd>
+						</dl>
 					</div>
 					
 					</div>
 					<div class="container-fluid review-content">
 						<div id="review" class="detail-review">
 							<h4 class="font-bold font-green">이용 후기
-								<!-- 이용 내역이 있는 사용자만 버튼 보이기 -->
+								<!-- 이용 내역이 있고 후기를 아직 남기지 않은 회원만 -->
 								<button class="btn btn-tp-custom-green my-2 my-sm-0" type="button" onclick="writeReview(this)">이용 후기 남기기</button>
 							</h4>
-							<div class="write-review">
-								<button type="button" class="btn btn-tp-custom-green mr-3 confirm-review"
-										onclick="confirmReview(this);" style="display:none;">이용후기 등록</button>
+							
+							
+							<div class="replyArea">
+								<div class="replyWriteArea write-review" style="display: none;">
+									<%  if(mem.getMtype() == "GUEST") { %>
+										<form action="<%= request.getContextPath()%>/insertProductReview.re" method="post">
+											<input type="text" name="mname" value="<%= mem.getMname() %>"/>
+											<input type="text" name="mno" value="<%= mem.getMno() %>"/>
+											<input type="hidden" name="pno" value="<%= p.getPno() %>" />
+											<input type="hidden" name="refrno" value="0" />
+											<input type="hidden" name="rlevel" value="1" />
+											<label for="pRating" class="font-green font-bold" style="float: left; margin: 5px 10px 20px 5px" >평점</label>
+											<input type=text id="pRating" name="pRating" class="form-control" />
+											<textarea id="reviewContent" name="reviewContent" rows="5" style='width: 100%;'></textarea>
+											<button type="submit" class="btn btn-tp-custom-green mr-3 btn-confirm-review"
+												style="display:block;">이용후기 등록</button>
+										</form>
+									<%}%>
+								</div>						
+								<div class="reveiw-area">
+									<!-- 댓글 목록 구현 영역 -->
+									<% if(rlist.size() == 0) { %>
+										<span>아직 이용후기가 없습니다!</span>
+									<% } else {
+										for(ProductReview pr : rlist)  { %>
+												<ul id="review-list"
+							      	 				style="margin-left : <%= (pr.getRlevel()-1) * 15 %>px;
+							      	 						width : <%= 800 - ((pr.getRlevel()-1) * 15)%>px;
+							      	 						margin-bottom: 30px;"
+							      	 				class="review-list-<%=pr.getRlevel()%>">
+							      	 				
+							      	 				<%if(pr.getRlevel() == 1 && ho.getBsNum().equals(p.getBsNum())) { %>
+															<!--  답변이 n 상태면 -->
+															<button class="btn btn-tp-custom-white ml-2 my-2 my-sm-0" type="button"
+																	style="float:right; padding: 5px; font-size:10px;"
+																	onclick="writeReply(this)">답글 남기기</button>
+															<div class="write-reply" style="display: none;">
+																<input type="hidden" name="mname" value="<%= ho.getMname()%>"/>
+																<input type="hidden" name="refrno" value="<%= pr.getRno() %>" />
+																<input type="hidden" name="rlevel" value="<%= pr.getRlevel() %>" />
+																<textarea id="replyContent" rows="5" style='width: 100%;'></textarea>
+																<button type="button" class="btn btn-tp-custom-green mr-3 btn-reply-review"
+																	onclick="replyReview(this)" style="display:block;">답글 등록</button>
+															</div>
+														<% } %>
+							      	 				
+							      	 				<% if( pr.getRlevel() == 1 ) { %>
+														<li class="rlist review<%=pr.getRlevel()%>">
+														<div class="guest-review">
+															<p class="guset-name font-bold"><%= pr.getMname() %></p>
+															<p class="guest-rating">평점 <span class="font-bold font-green"><%= pr.getRrating() %></span></p>
+															<p class="guest-date text-muted"><%= pr.getRdate() %></p>
+															
+														</div>
+														<p class="review-detail"><%= pr.getRcontent() %></p>
+														</li>
+							      	 				<% } else if( pr.getRlevel() == 2 ) { %>
+							      	 					<li class="rlist">
+							      	 					<div class="host-reply reply<%=pr.getRlevel()%>">
+																<p class="host-name font-green">호스트님의 답글</p> <!-- pr.getMame() -->
+																<p class="reply-detail mb-2">
+																	<%= pr.getRcontent() %> <!-- pr.getRcontent() -->
+																</p>
+																<p class="host-date text-muted"><%= pr.getRdate() %></p> <!-- pr.getRdate() -->
+															</div>
+														</li>
+							      	 				<% } %>
+												</ul>
+												
+										<%
+											}
+										}
+										%>
+								</div>
 							</div>
-							<ul class="review-list">
-								<!--  여기서부터 리뷰 for문 -->
-								<li class="rlist">
-									<div class="guest-review">
-										<p class="guset-name font-bold">게스트명</p>
-										<p class="guest-rating">평점 <span class="font-bold font-green">10.0</span></p>
-										<p class="guest-date text-muted">2020-11-04 12:38</p>
-									</div>
-									<p class="review-detail">
-										사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-										사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-										사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-										사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도
-									</p>
-									<button type="button" class="btn btn-tp-custom-green mr-3 confirm-review"
-										onclick="confirmReview(this);" style="display:none;">이용후기 등록</button>
-									<div class="host-reply">
-										<p class="host-name font-green">호스트님의 답글</p>
-										<p class="reply-detail mb-2">
-											감사합니다~
-										</p>
-										<p class="host-date text-muted">2020-11-04 12:38</p>
-									</div>
-								</li>
-							</ul>
 						</div>
 					</div>
-				
-			</div>
-		</div>
+				</div>
 		
 		<!-- 관리자로 로그인했을때 / 승인 리스트에 들어와있을때 보여주기 -->
 		<div class="btn-area text-center mt-5">
@@ -348,50 +479,50 @@
 	<%@ include file="../common/footer.jsp" %>
 	
 	<script>
+		$(function() {
+			
+		    var ableDate = $("#pAbleDate").val().split(" - ");
+		    
+		    var startYear = ableDate[0].substr(0, 4);
+		    var startMonth = ableDate[0].substr(5, 2);
+		    var startDay = ableDate[0].substr(8, 2);
+		    var startTime = ableDate[0].substr(11, 2);
+		    var endYear = ableDate[1].substr(0, 4);
+		    var endMonth = ableDate[1].substr(5, 2);
+		    var endDay = ableDate[1].substr(8, 2);
+		    
+		    var fromAbleDate = new Date(startYear, startMonth - 1 , startDay);
+		    var toAbleDate = new Date(endYear, endMonth - 1 , endDay);
+		   
+			var start = new Date(startYear, startMonth - 1 , startDay),
+								prevDay;		
+			var end = new Date(endYear, endMonth - 1 , endDay);			
+
+		    $("#selectDate").datepicker({
+		    	multipleDates: true,
+		        language: "en",
+		        minDate: start,
+		        maxDate : end,
+		        dateFormat: "yyyy/mm/dd",
+		        onSelect: function (fd, d, picker) {
+		            // Do nothing if selection was cleared
+		            
+		            if (!d) return;
+		           
+		            var day = d[0].getDay();
+		       
+		            // Trigger only if date is changed
+		            if (prevDay != undefined && prevDay == day) return;
+		            prevDay = day;
+		        }
+		    })
+			
+			$('#selectDate').data('datepicker').selectDate(new Date(startYear, startMonth - 1, startDay, 09));
+		});
+		
+	</script>
 	
-		/*
-			date-picker 스크립트
-		*/
-		$(function() {	
-			$('#pAbleDate').datepicker({
-			    format: "yyyy-mm-dd",	//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
-			    startDate: '-10d',	//달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)
-			    endDate: '+10d',	//달력에서 선택 할 수 있는 가장 느린 날짜. 이후로 선택 불가 ( d : 일 m : 달 y : 년 w : 주)
-			    autoclose : true,	//사용자가 날짜를 클릭하면 자동 캘린더가 닫히는 옵션
-			    calendarWeeks : false, //캘린더 옆에 몇 주차인지 보여주는 옵션 기본값 false 보여주려면 true
-			    clearBtn : false, //날짜 선택한 값 초기화 해주는 버튼 보여주는 옵션 기본값 false 보여주려면 true
-			    datesDisabled : ['2019-06-24','2019-06-26'],//선택 불가능한 일 설정 하는 배열 위에 있는 format 과 형식이 같아야함.
-			    daysOfWeekDisabled : [0,6],	//선택 불가능한 요일 설정 0 : 일요일 ~ 6 : 토요일
-			    daysOfWeekHighlighted : [3], //강조 되어야 하는 요일 설정
-			    disableTouchKeyboard : false,	//모바일에서 플러그인 작동 여부 기본값 false 가 작동 true가 작동 안함.
-			    immediateUpdates: false,	//사용자가 보는 화면으로 바로바로 날짜를 변경할지 여부 기본값 :false 
-			    multidate : false, //여러 날짜 선택할 수 있게 하는 옵션 기본값 :false 
-			    multidateSeparator :",", //여러 날짜를 선택했을 때 사이에 나타나는 글짜 2019-05-01,2019-06-01
-			    templates : {
-			        leftArrow: '&laquo;',
-			        rightArrow: '&raquo;'
-			    }, //다음달 이전달로 넘어가는 화살표 모양 커스텀 마이징 
-			    showWeekDays : true ,// 위에 요일 보여주는 옵션 기본값 : true
-			    title: "테스트",	//캘린더 상단에 보여주는 타이틀
-			    todayHighlight : true ,	//오늘 날짜에 하이라이팅 기능 기본값 :false 
-			    toggleActive : true,	//이미 선택된 날짜 선택하면 기본값 : false인경우 그대로 유지 true인 경우 날짜 삭제
-			    weekStart : 0 ,//달력 시작 요일 선택하는 것 기본값은 0인 일요일 
-			    language : "ko"	//달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
-			    
-			})//datepicker end
-			.on("changeDate", function(e) {
-	            console.log(e);// 찍어보면 event 객체가 나온다.
-	            //간혹 e 객체에서 date 를 추출해야 하는 경우가 있는데 
-	            // e.date를 찍어보면 Thu Jun 27 2019 00:00:00 GMT+0900 (한국 표준시)
-	            // 위와 같은 형태로 보인다. 
-	            // 추후에 yyyy-mm-dd 형태로 변경하는 코드를 업로드 하겠습니다. 
-	       });
-		});//ready end
-		
-		
-		/*
-			상세 정보 리스트 Sticky 스크립트
-		*/
+	<script>
 		$(function () {
 			var div_top = $('.detail-list').offset().top;
 			
@@ -412,23 +543,32 @@
 		        $(this).addClass('active');
 		    })
 		});
+	</script>
+	
+	<script>
 		
-		/*
-			카카오 지도 api 스크립트
-		*/
+		var pAddress = $("#pAddress").val().split(", ");
+		var fullAddress = pAddress[0] + " " + pAddress[1] + " " + pAddress[2];
+		$(".full-address").text(fullAddress);
+		
 		
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	    mapOption = {
 	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
 	        level: 3 // 지도의 확대 레벨
 	    };  
+		
 	
 		// 지도를 생성합니다    
 		var map = new kakao.maps.Map(mapContainer, mapOption); 
 		// 주소-좌표 변환 객체를 생성합니다
 		var geocoder = new kakao.maps.services.Geocoder();
+		
+		var hostName = $("#mName").val();
+		var address = $("#pAddress").val().split(", ")[1];
+		
 		// 주소로 좌표를 검색합니다
-		geocoder.addressSearch('제주특별자치도 제주시 첨단로 242', function(result, status) {
+		geocoder.addressSearch(address, function(result, status) {
 		    // 정상적으로 검색이 완료됐으면 
 		     if (status === kakao.maps.services.Status.OK) {
 		        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
@@ -439,7 +579,7 @@
 		        });
 		        // 인포윈도우로 장소에 대한 설명을 표시합니다
 		        var infowindow = new kakao.maps.InfoWindow({
-		            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+		            content: '<div style="width:150px;text-align:center;padding:6px 0;">' + hostName + '</div>'
 		        });
 		        infowindow.open(map, marker);
 		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
@@ -447,34 +587,60 @@
 		    } 
 		});
 		
-		/*
-			이용후기 남기기 스크립트
-		*/
-		function writeReview(obj) {
-			$(obj).parent().siblings(".write-review").css("display", "block");
-			$(obj).parent().siblings().children(".confirm-review").css({
+	</script>
+		
+	<script>
+
+		function writeReview(btn) {
+			$(".write-review").css("display", "block");
+			$(".btn-confirm-review").css({
 				"display": "block",
 				"float" : "right"
 			});
-			$(obj).css("display", "none");
+			$(btn).css("display", "none");
 			
-			var htmlForm = 
-				"<textarea rows='5' placeholder='다른 게스트를 위한 이용 후기를 남겨주세요.' style='width: 100%;'>" + 
-				"</textarea>"
-				
-			$(obj).parent().siblings().children(".confirm-review").before(htmlForm);
 				
 			// 게스트 정보 및 후기 내용 서블릿으로 보내주기
 			
 		}
 		
+		function writeReply(btn) {
+			$(btn).siblings(".write-reply").css("display", "block");
+			$(".btn-reply-review").css({
+				"display": "block",
+				"float" : "right"
+			})
+			$(btn).css("display", "none");
+		}
+		
 		/*
 			이용후기 등록 스크립트
 		*/
-		function confirmReview() {
-			// 참조할 후기 번호 가져오기
+		function replyReview(obj) {
+			// 참조할 댓글 번호 가져오기
+			var refrno = $(obj).siblings("input[name=refrno]").val();
+			var level = $(obj).siblings("input[name=rlevel]").val();
+			
+			// console.log(refcno + " : " + level);
+			
+			level = Number(level) + 1;
+			
 			// 게시글 번호 가져오기
-			// location.href로 서블릿 연결해서 정보 보내주기
+			var pno = "<%= p.getPno() %>";
+			
+			var content = $("#replyContent").val();
+		
+			
+		
+			location.href = "<%= request.getContextPath() %>/insertProductReview.re"
+										+ "?mname=<%= mem.getMname()%>"
+										+ "&mno=<%= mem.getMno()%>"
+										+ "&reviewContent=" + content
+										+ "&pRating=" + 0 
+										+ "&pno=" + pno
+										+ "&refrno=" + refrno
+										+ "&rlevel=" + level;
+									
 		}
 	</script>
 
