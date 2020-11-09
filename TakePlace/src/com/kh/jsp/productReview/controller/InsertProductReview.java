@@ -1,8 +1,6 @@
-package com.kh.jsp.products.controller;
+package com.kh.jsp.productReview.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,19 +10,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kh.jsp.productReview.model.service.ProductReviewService;
 import com.kh.jsp.productReview.model.vo.ProductReview;
-import com.kh.jsp.products.model.service.ProductService;
 
 /**
- * Servlet implementation class SelectOneProduct
+ * Servlet implementation class InsertProductReview
  */
-@WebServlet("/selectOneProduct.pr")
-public class SelectOneProduct extends HttpServlet {
+@WebServlet("/insertProductReview.re")
+public class InsertProductReview extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectOneProduct() {
+    public InsertProductReview() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,34 +30,26 @@ public class SelectOneProduct extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		String mname = request.getParameter("mname");
+		int mno = Integer.parseInt(request.getParameter("mno"));
 		int pno = Integer.parseInt(request.getParameter("pno"));
+		String rcontent = request.getParameter("reviewContent");
+		int rrating = Integer.parseInt(request.getParameter("pRating"));
+		int refrno = Integer.parseInt(request.getParameter("refrno"));
+		int rlevel = Integer.parseInt(  request.getParameter("rlevel"));
 		
-		HashMap<String, Object> product = new ProductService().selectOne(pno);
-		
-		// 이용후기
-		 ArrayList<ProductReview> rlist
-        						= new ProductReviewService().selectList(pno);
-		
-		String page = "";
-		
-
-		if(product != null && product.get("product") != null) {
-			request.setAttribute("product", product.get("product"));
-			request.setAttribute("fileList", product.get("productImages"));
-			request.setAttribute("rlist", rlist);
 			
-			page = "views/products/productDetail.jsp";
-			
+		ProductReview review = new ProductReview(pno, mno, mname, rcontent, refrno, rrating, rlevel);
+		
+		int result = new ProductReviewService().insertReview(review);
+		
+		if(result > 0) {
+			response.sendRedirect("selectOneProduct.pr?pno="+ pno);
 		} else {
-			request.setAttribute("exception", new Exception("공간 상세 조회 실패"));
-			request.setAttribute("error-msg", "공간상세 조회 실패");
-			
-			page ="views/common/errorPage.jsp";
+			request.setAttribute("error-msg", "후기 등록 실패");
+			 request.getRequestDispatcher("views/common/errorPage.jsp")
+             .forward(request, response);
 		}
-		
-		request.getRequestDispatcher(page).forward(request, response);
-		
 	}
 
 	/**
@@ -72,4 +61,3 @@ public class SelectOneProduct extends HttpServlet {
 	}
 
 }
-
