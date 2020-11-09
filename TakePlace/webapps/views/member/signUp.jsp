@@ -113,8 +113,9 @@
                      <div class="inline-block">
 	                   <input type="text" class="form-control inline-block" id="userEmail" name="guestEmail"
 	                   			placeholder="이메일 입력" required="required">
-	                   
 	                   <button type="button" class="btn btn-tp-custom-white">이메일 인증</button>
+	                   <small id="emailErr" class="form-text text-error" style="display:none;">중복된 이메일 입니다.</small>
+	                   <input id="duplicationEmail" type="hidden" value="EmailUncheck"> <!-- 닉네임 중복체크용 -->              
 	                  </div>
 	              </div>
 	              
@@ -205,8 +206,10 @@
 			                     <div class="inline-block">
 				                   <input type="text" class="form-control inline-block" id="hostEmail" name="hostEmail"
 				                   			placeholder="이메일 입력" required="required">
-				                  
 				                   <button class="btn btn-tp-custom-white">이메일 인증</button>
+				                   
+				                   <small id="hostemailErr" class="form-text text-error" style="display:none;">중복된 이메일 입니다.</small>
+	                  			   <input id="hostduplicationEmail" type="hidden" value="EmailUncheck"> <!-- 닉네임 중복체크용 -->              
 			                   </div>
 			              </div>
 			              
@@ -252,7 +255,8 @@
 	   var checkedId = "";
 	   var checkedNick = "";
 	   var checkedPwd = "";
-
+	   var checkedEmail = "";
+	   	
 	    // 모든 칸 제대로 입력시에만 가입 가능 (게스트)
 	   function guestSignUp() {
 			$("#create_gestAccount").submit();
@@ -267,7 +271,9 @@
 			} else if(checkedNick != "true"){
 				alert("닉네임을 입력하지 않으셨거나 잘못입력하셨습니다.");
 			} else if($("#userEmail").val() == ""){
-					alert("이메일 미입력");
+				alert("이메일 미입력");
+			} else if(checkedEmail != "true"){
+				alert("이메일 중복");
 			} else if($("#pwdchk").val() == ""){
 				alert("비밀번호 확인 칸을 입력하지 않으셨거나 잘못입력하셨습니다.");
 			} else if ($('#pwdchk').val() != $('#userpwd').val()){
@@ -291,6 +297,8 @@
 				alert("비밀번호를 입력하지 않으셨거나 잘못입력하셨습니다.");
 			} else if($("#hostEmail").val() == ""){
 					alert("이메일 미입력");
+			} else if(checkedEmail != "true"){
+				alert("이메일 중복");
 			} else if($("#pwdchk2").val() == ""){
 				alert("비밀번호 확인 칸을 입력하지않으셨습니다.");
 			} else if($('#pwdchk2').val() != $('#hostpwd').val()){
@@ -322,7 +330,7 @@
               }      
               
               if(userId == "" || userId == null){
-                 // id를 입력하지 않았으면 info메세지를 지우고 require 메세지를 띄운다
+              // id를 입력하지 않았으면 info메세지를 지우고 require 메세지를 띄운다
                $("#infoId").css("display", "none");
                $("#requiredId").css("display", "block");
                $("#validationId").css("display", "none");
@@ -366,7 +374,7 @@
                                   $("#validationId").css("display", "none");
                                   $("#chkId").css("display", "none");
                                   $("#idErr").css("display", "block");
-
+                                  checkedId = "";
                               }
                                       
                      
@@ -399,10 +407,10 @@
               var NickReg = /^[a-z0-9가-힣]{5,20}$/
               var duplicationChk = document.getElementById("duplicationNick").value; 
               
-              // 중복검사된 아이디 인지 확인
+              // 중복검사된 닉네임 인지 확인
               if(duplicationChk != "NickUncheck"){
                  $("#duplicationNick").val("NickUncheck");
-               // 중복체크 후 다시 아이디 창이 새로운 아이디를 입력했을 때
+               // 중복체크 후 다시 닉네임 창이 새로운 아이디를 입력했을 때
                // 다시 중복체크를 하도록 한다.
               }      
               
@@ -452,7 +460,7 @@
                                      $("#validationNick").css("display", "none");
                                      $("#chkNick").css("display", "none");
                                      $("#nickErr").css("display", "block");
-
+                                     checkedNick = "";
                                  }
                                          
                         
@@ -529,7 +537,7 @@
               }             
        
       });
-        
+         
          $("#pwdchk").on("blur", function() {
               var pwdchk = document.getElementById("pwdchk").value;
            
@@ -546,6 +554,47 @@
               }
          }
     });  
+         
+         $("#userEmail").on("blur", function() {
+             var userEmail = document.getElementById("userEmail").value;
+             var duplicationChk = document.getElementById("duplicationEmail").value; 
+             
+             // 중복검사된 이메일 인지 확인
+             if(duplicationChk != "EmailUncheck"){
+                $("#duplicationEmail").val("EmailUncheck");
+              // 중복체크 후 다시 닉네임 창이 새로운 아이디를 입력했을 때
+              // 다시 중복체크를 하도록 한다.
+             }      
+             
+             // 이메일 중복검사 ajax
+             $.ajax({
+                  url : "/takeplace/duplicationId.me?command=emailChk",
+                  type : "post" ,
+                  data : {
+                          userEmail : $("#userEmail").val()
+                  		},
+                  success : function(data) {
+                               
+                  		if(data == "success"){                                                                 
+
+                           // 중복체크 통과
+                           $("#duplicationEmail").val("EmailCheck");
+                           $("#emailErr").css("display", "none");
+                           checkedEmail = "true";
+                                    
+                           } else {
+                                 // 중복체크 미 통과
+                                 $("#emailErr").css("display", "block");
+                                 checkedEmail = "";
+                           }
+                    	},
+                      error : function(status, error) {
+                      alert("오류 입니다. 관리자에게 문의 하세요 ;ㅁ;");
+                    }
+                    
+                 });
+                // ajax 종료
+           });   
          
          ///////////////////////  호스트 유효성 검사 ////////////////////////////
       
@@ -606,7 +655,7 @@
                                      $("#hostvalidationId").css("display", "none");
                                      $("#hostchkId").css("display", "none");
                                      $("#hostidErr").css("display", "block");
-
+                                     checkedId = "";
                                  }
                                          
                         
@@ -702,6 +751,47 @@
                  }
             }
        });  
+          
+          $("#hostEmail").on("blur", function() {
+              var hostEmail = document.getElementById("hostEmail").value;
+              var duplicationChk = document.getElementById("duplicationEmail").value; 
+              
+              // 중복검사된 이메일 인지 확인
+              if(duplicationChk != "EmailUncheck"){
+                 $("#duplicationEmail").val("EmailUncheck");
+               // 중복체크 후 다시 닉네임 창이 새로운 아이디를 입력했을 때
+               // 다시 중복체크를 하도록 한다.
+              }      
+              
+              // 이메일 중복검사 ajax
+              $.ajax({
+                   url : "/takeplace/duplicationId.me?command=emailChk",
+                   type : "post" ,
+                   data : {
+                           userEmail : $("#hostEmail").val()
+                   		},
+                   success : function(data) {
+                                
+                   		if(data == "success"){                                                                 
+
+                            // 중복체크 통과
+                            $("#duplicationEmail").val("EmailCheck");
+                            $("#hostemailErr").css("display", "none");
+                            checkedEmail = "true";
+                                     
+                            } else {
+                                  // 중복체크 미 통과
+                                  $("#hostemailErr").css("display", "block");
+                                  checkedEmail = "";
+                            }
+                     	},
+                       error : function(status, error) {
+                       alert("오류 입니다. 관리자에게 문의 하세요 ;ㅁ;");
+                     }
+                     
+                  });
+                 // ajax 종료
+            });   
        
 });
      

@@ -57,9 +57,10 @@ public class signIn extends HttpServlet {
 
        m = ms.selectMember(m);
        
-       h = ms.selectHost(h, m);
-
        if (m != null) {
+    	 
+          h = ms.selectHost(h, m);
+    	   
           HttpSession session = request.getSession();
           
           session.setAttribute("member", m);

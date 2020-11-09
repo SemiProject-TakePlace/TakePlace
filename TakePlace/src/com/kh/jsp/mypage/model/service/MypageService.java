@@ -58,5 +58,6 @@ public class MypageService {
 	public ArrayList<mypage> selectList() {
 		return null;
 	}
+	
 }
 
