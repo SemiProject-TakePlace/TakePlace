@@ -37,7 +37,7 @@ public class NoticeInsert extends HttpServlet {
 		// 공지사항의 제목, 작성자, 내용
 		String page = null; // 이동할 페이지 정보				
 		String ntitle = request.getParameter("title");
-		
+	     
 		String ncontent = request.getParameter("content");
 				
 				// 날짜의 경우 화면에서 문자열로 온다.
