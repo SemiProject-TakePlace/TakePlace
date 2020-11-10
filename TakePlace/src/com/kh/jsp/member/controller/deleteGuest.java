@@ -36,6 +36,7 @@ public class deleteGuest extends HttpServlet {
 				HttpSession session = request.getSession(false);
 				
 				String id = ((AllMember)session.getAttribute("member")).getId();
+				int mno = ((AllMember)session.getAttribute("member")).getMno();
 				// String userId = request.getParameter("mid");
 				
 				System.out.println("회원 기존 아이디  : " + id);
@@ -43,13 +44,14 @@ public class deleteGuest extends HttpServlet {
 				MemberService ms = new MemberService();
 				
 				try {
+					ms.deleteHostT(mno);
 					ms.deleteGuest(id);
 					
 					System.out.println("회원 탈퇴 성공!");
 					
 					session.invalidate();
 					
-					response.sendRedirect("index.jsp");
+					response.sendRedirect("index");
 					
 				} catch(MemberException e) {
 					request.setAttribute("error-msg", "회원 탈퇴 수행 중 에러 발생!");

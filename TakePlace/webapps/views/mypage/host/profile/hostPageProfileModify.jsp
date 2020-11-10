@@ -119,7 +119,7 @@ padding-left : 30%;
               <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/host/reservation/reservationList.jsp">예약 현황</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/host/question/questionList.jsp">문의 내역</a>
+              <a class="nav-link" href="<%= request.getContextPath()%>/selectQlist.me">문의 내역</a>
             </li>
           </ul>
         </div>
@@ -175,11 +175,11 @@ padding-left : 30%;
                     </div>
                     <div class="form-group">
                       <label class="font-green inline-block" >대표명</label>
-                      <label class="form-control inline-block" style="width : 350px;" ><%= ho.getBsName() %></label>
+                      <label class="form-control inline-block" style="width : 350px;" ><%= mem.getBsname() %></label>
                    </div>
                     <div class="form-group">
                       <label class="font-green inline-block" >사업자 등록번호</label>
-                      <label class="form-control inline-block" style="width : 350px;" ><%= ho.getBsNum() %></label>
+                      <label class="form-control inline-block" style="width : 350px;" ><%= mem.getBsnum() %></label>
                     </div>
               
                     <div class="form-group">
@@ -194,9 +194,9 @@ padding-left : 30%;
                     </div>
               
                     <div class="form-group">
-                        <label class="font-green inline-block" >이메일</label>
+                      <label class="font-green inline-block" >이메일</label>
                       <input type="text" name="hostemail" class="form-control inline-block" aria-describedby="emailHelp" value="<%= mem.getEmail() %>">
-                       <button class="btn btn-tp-custom-green">이메일 인증</button>
+                  
                     </div>
               </form>
               

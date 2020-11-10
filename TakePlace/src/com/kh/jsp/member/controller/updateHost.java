@@ -54,7 +54,7 @@ public class updateHost extends HttpServlet {
 			
 			session.invalidate();
 			
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("index");
 						
 		} catch(MemberException e) {
 			

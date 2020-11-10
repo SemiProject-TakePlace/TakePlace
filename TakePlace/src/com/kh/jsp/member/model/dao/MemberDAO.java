@@ -127,6 +127,79 @@ public class MemberDAO {
 	      
 	      return result;
 	   }
+	
+
+	   public Member selectPwd(Connection con, String id, String email) {
+	      // 비밀번호 찾기위해 아이디, 이메일 조회
+	      Member result = null;
+	      Member m = new Member();
+	      PreparedStatement pstmt = null; 
+	      ResultSet rset = null;  
+	      
+	      String sql = prop.getProperty("selectPwd");
+	      
+	      System.out.println("sql : " + sql);
+	      
+	      try {
+	         pstmt = con.prepareStatement(sql);
+	         
+	         pstmt.setString(1, id);
+	         pstmt.setString(2, email);
+	         
+	         rset = pstmt.executeQuery();
+	         
+	         rset.next();
+	         
+	         result = new Member();
+
+	         result.setId(rset.getString("id"));
+	         result.setEmail(rset.getString("email"));
+
+	         System.out.println(result.toString());
+
+	         
+	      } catch (SQLException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }  finally {
+	         close(rset);
+	         close(pstmt);
+	      }
+	      
+	      return result;
+	   }
+
+		   public int updatePwd(Connection con, String newPwd, String id) {
+		      // TODO Auto-generated method stub
+		      int res = 0;
+		      PreparedStatement pstmt = null;
+		      int rset = 0;
+		      
+		      String sql = prop.getProperty("updatePwd");
+		      
+		      System.out.println(sql);
+		      
+		      try {
+		         pstmt = con.prepareStatement(sql);
+		         
+		         pstmt.setString(1, newPwd);
+		         pstmt.setString(2, id);
+		         
+		         rset = pstmt.executeUpdate();
+		         
+		         if(rset > 0 ){
+		            System.out.println("업데이트 성공");
+		            res = rset;
+		         } 
+		         
+		         
+		      } catch (SQLException e) {
+		         // TODO Auto-generated catch block
+		         e.printStackTrace();
+		      }
+
+		      return res;
+		   }
 
 	public String duplicationId(Connection con, String id) {
 	      // TODO Auto-generated method stub
@@ -441,6 +514,36 @@ public class MemberDAO {
 		}
 				
 		return result;
+	}
+	
+
+	public int deleteHostT(Connection con, int mno) throws MemberException {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("deleteHostT");
+		
+		try {
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, mno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			throw new MemberException("[DAO] : " + e.getMessage());
+			
+		} finally {
+			
+			close(pstmt);
+		}
+				
+		return result;
+	
 	}
 
 	public int deleteHost(Connection con, String id) throws MemberException {

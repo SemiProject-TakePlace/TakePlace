@@ -113,7 +113,7 @@
                      <div class="inline-block">
 	                   <input type="text" class="form-control inline-block" id="userEmail" name="guestEmail"
 	                   			placeholder="이메일 입력" required="required">
-	                   <button type="button" class="btn btn-tp-custom-white">이메일 인증</button>
+	                   			
 	                   <small id="emailErr" class="form-text text-error" style="display:none;">중복된 이메일 입니다.</small>
 	                   <input id="duplicationEmail" type="hidden" value="EmailUncheck"> <!-- 닉네임 중복체크용 -->              
 	                  </div>
@@ -206,7 +206,6 @@
 			                     <div class="inline-block">
 				                   <input type="text" class="form-control inline-block" id="hostEmail" name="hostEmail"
 				                   			placeholder="이메일 입력" required="required">
-				                   <button class="btn btn-tp-custom-white">이메일 인증</button>
 				                   
 				                   <small id="hostemailErr" class="form-text text-error" style="display:none;">중복된 이메일 입니다.</small>
 	                  			   <input id="hostduplicationEmail" type="hidden" value="EmailUncheck"> <!-- 닉네임 중복체크용 -->              
@@ -798,7 +797,5 @@
 
    </script>
    
-   
-   <%@ include file="../common/footer.jsp" %>
 </body>
 </html>
