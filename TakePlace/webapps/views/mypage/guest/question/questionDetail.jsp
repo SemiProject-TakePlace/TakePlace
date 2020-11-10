@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.kh.jsp.payrecord.model.vo.*, java.util.*" %>
+    pageEncoding="UTF-8" import="com.kh.jsp.mypage.model.vo.*, java.util.*" %>
 <%
-   ArrayList<PayRecord> list = (ArrayList<PayRecord>)request.getAttribute("Plist");
+   Question q = (Question)request.getAttribute("question");
 %>
 <!DOCTYPE html>
 <html>
@@ -151,11 +151,10 @@
         vertical-align:baseline;
 }    
 
-    #ulTable > li > ul > li:first-child                  {width:10%;}
-    #ulTable > li > ul > li:first-child +li              {width:20%;} 
-    #ulTable > li > ul > li:first-child +li+li           {width:30%;} 
-    #ulTable > li > ul > li:first-child +li+li+li        {width:20%;} 
-    #ulTable > li > ul > li:first-child +li+li+li+li     {width:20%;} 
+    #ulTable > li > ul > li:first-child                  {width: 10%;} /*No  크기*/
+    #ulTable > li > ul > li:first-child +li              {width:20%;} /*문의 유형*/
+    #ulTable > li > ul > li:first-child +li+li           {width:50%;} /*문의 제목*/
+    #ulTable > li > ul > li:first-child +li+li+li        {width:20%;} /*답변 여부*/
    
 
     #divPaging {
@@ -194,13 +193,25 @@
 }
 
 
-/*
-.liContext:hover {
-   background: rgba(0, 0, 0, 0.1);
+.content-content{
+   margin-top:-30px;
+   border-bottom : 1px solid grey;
+   width : 1110px;
+   height : 200px;
 }
-*/
 
-   
+.content-answer{
+   background : #d8f2f1;
+   padding : 10px;
+   width : 1110px;
+   height : 300px;
+   color: #6C7994;
+}
+
+.btn {
+   width: 170px;
+   margin: 20px;
+}
 
 </style>
 
@@ -212,17 +223,18 @@
   <nav class="d-none d-md-block bg-light sidebar">
         <div class="sidebar-sticky">
           <ul class="nav flex-column">
+            <% if( mem.getMtype().equals("GUEST")){ %>
             <li class="nav-item">
               <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/profile/guestPageProfile.jsp">프로필</a>
             </li>
             <li class="nav-item">
-             <a class="nav-link" href="<%= request.getContextPath()%>/selectRlist.me">예약 현황</a>
+              <a class="nav-link" href="<%= request.getContextPath()%>/selectRlist.me">예약 현황</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="<%= request.getContextPath()%>/selectPlist.me">결제 내역</a>
+              <a class="nav-link" href="<%= request.getContextPath()%>/selectPlist.me">결제 내역</a>
             </li>
             <li class="nav-item">
-               <a class="nav-link" href="<%= request.getContextPath()%>/selectQlist.me">문의 내역</a>
+               <a class="nav-link active" href="<%= request.getContextPath()%>/selectQlist.me">문의 내역</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/use/useList.jsp">이용 내역</a>
@@ -230,6 +242,20 @@
             <li class="nav-item">
               <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/review/reviewList.jsp">이용 후기</a>
             </li>
+            <%  } else { %>
+            <li class="nav-item">
+              <a class="nav-link active" href="http://localhost:8088/takeplace/views/mypage/host/profile/hostPageProfile.jsp">프로필</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/host/products/productsList.jsp">내 상품 목록</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/host/reservation/reservationList.jsp">예약 현황</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="<%= request.getContextPath()%>/selectQlist.me">문의 내역</a>
+            </li>
+            <% } %>
             
             
           </ul>
@@ -262,82 +288,74 @@
    
    <section id="wrap-contents">
       <div class="mypage-content">
+
          <div class="container" >
+
             <nav aria-label="breadcrumb">
+
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">마이페이지</a></li>
-                <li class="breadcrumb-item active" aria-current="page">결제 내역</li>
+                <li class="breadcrumb-item active" aria-current="page">문의 내역</li>
               </ol>
             </nav>
-            <h2 class="content-title">결제 내역</h2>
+            <br>
+            <h3 class="content-title">제목 : <%= q.getInqTitle() %></h3>
+            <div class="content-content"><%= q.getInqContent() %></div>
+            <%if ( q.getInqIsdone().equals("Y")) { %>
+            
+            <div class="content-answer">
+               <p>
+                  안녕하세요. 호스트입니다.<br>
+               해당 질문에 답해드리겠습니다.<br>
+               평일과 주말 가격차이는 없습니다.<br>
+               감사합니다.<br>
+                                 <br>                  
+               질문 해결에 도움이 되셨으면 좋겠습니다.<br>
+               자세한 안내을 원하실 경우 번거로우시더라도<br>
+               상담센터로 문의전화 주시면 도움 드리겠습니다.<br>
+               상담센터 : 1800-0000 (평일 09:00 ~ 18:00)
+            </p>
+         </div>
+         <%} %>
             
             <!-- 여기서부터 자유롭게 컨텐츠 잡으면서 시작 -->
             
             <div class="tab-content" id="nav-tabContent" >
-         
-              
                 <div class ="outer">
+                   
+                  
+            
+            <div align="center">
+               
+               
+               <button class="btn btn-tp-custom-green" onclick="location.href='selectQlist.me'">목록으로 돌아가기</button>
+               
+               <button  class="btn btn-tp-custom-white" onclick="location.href='<%=request.getContextPath() %>/deleteQ.me?inqno='+<%= q.getInqNo()%>">삭제하기</button>
+
+            </div>
+            
                 
-                <form action="#" method="post" id="create_waitingAccount" name="waitingForm">
+                
              
                 <div class="outer">
                       <div id="mainWrapper">
-                          <ul>
-                              <li>
-                                  <ul id ="ulTable">
-                                      <li>                                 
-                                          <ul>
-                                              <li>No</li>
-                                              <li>공간 명</li>
-                                              <li>예약 확정 날짜</li>
-                                              <li>주소</li>
-                                              <li>취소</li>
-                                       </ul>                                        
-                                      </li>
-                                      <!-- 게시물이 출력될 영역 -->                                 
-                                      <% for(PayRecord p : list) { %>
-                                     <% if(p.getMno() == mem.getMno()) { %>
-                                      <li id="liContext">
-                                          <ul>
-                                              <li><%= p.getPayno() %></li>
-                                              <li><%= p.getPayDate() %></li>
-                                              <li><%= p.getPayDate() %></li>
-                                     		  <li><%= p.getPayMethod() %></li>
-                                          	  <li><%= p.getPayStatus() %></li>
-                                          </ul>
-                                      </li>
-                                      <% } %>    
-                                    <% } %>                              
-                                  </ul>
-                              </li>
-                              </ul>
+                          
                              
-                                  </div> 
+                      </div> 
                                  
-                               </div>
+               </div>
                          
-                </form>
+                
+                
+                      
+                         
                 
                 
                 </div>   
               
          </div>
-         
-               <script>
-               $(function(){
-                  $('#liContext ul li').mouseenter(function(){
-                     $(this).parent().css({"background" : "silver", "cursor" : "pointer"});
-                  }).mouseout(function(){
-                     $(this).parent().css({"background" : "black"});
-                  }).click(function(){
-                     var inqno = $(this).parent().children().eq(0).text();
-                     console.log(inqno);
-                     location.href = "<%= request.getContextPath() %>/selectQone.me?inqno=" + inqno; 
-                     
-                  });
-               });
-            </script>
+               
             
             <!-- 여기가 컨텐츠 끝 -->
          </div>

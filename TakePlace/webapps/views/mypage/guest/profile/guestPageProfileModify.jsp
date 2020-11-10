@@ -211,8 +211,7 @@ padding-left : 30%;
               <div class="form-group">
                  <label for="userEmail" class="font-green inline-block" >이메일</label>
                  <input type="text" class="form-control inline-block" id="userEmail" name="userEmail" aria-describedby="emailHelp" value="<%= mem.getEmail()%>">
-                 &nbsp;&nbsp; <button class="btn btn-tp-custom-green">이메일 인증</button>
-                 
+               
                  <small id="emailErr" class="form-text text-error" style="display:none;">중복된 이메일 입니다.</small>
 	             <input id="duplicationEmail" type="hidden" value="EmailUncheck"> <!-- 이메일 중복체크용 -->             
               </div>

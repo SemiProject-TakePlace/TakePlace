@@ -34,6 +34,30 @@ public class MemberService {
 		
 		return result;
 	}
+	
+	public Member findPwd(String id, String email) {
+	      // 비밀번호를 찾기위해 Email, Id 조회
+	      con = getConnection();
+	      
+	      Member result = mDAO.selectPwd(con, id, email);
+	      
+	      close(con);
+	      
+	      return result;
+	   }
+	
+	  public int updatePwd(String id, String newPwd) {
+	      // TODO Auto-generated method stub
+	      
+	      con = getConnection();
+	      
+	      int res = mDAO.updatePwd(con, newPwd, id);
+	      
+	      close(con);
+	      
+	      return res;
+	      
+	   }
 
 	public String duplicationId(String id) {
 	      // TODO Auto-generated method stub
@@ -177,6 +201,25 @@ public class MemberService {
 		return result;	
 	}
 	
+
+	public int deleteHostT(int mno) throws MemberException { 
+		// 호스트삭제를 위한 호스트테이블 삭제가 먼저 이뤄져야함
+		con = getConnection();
+		
+		int result = mDAO.deleteHostT(con, mno);
+		
+		if( result > 0 ) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	
+	}
+	
 	public int deleteHost(String id) throws MemberException {
 		con = getConnection();
 		
@@ -192,6 +235,7 @@ public class MemberService {
 		
 		return result;
 	}
+
 
 }
 	

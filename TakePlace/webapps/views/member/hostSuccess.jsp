@@ -35,7 +35,7 @@
 			
 			<img src="<%= request.getContextPath() %>/resources/images/hostJoin.png" alt="호스트 가입  승인요청(3일이내 처리)" id="hostJoin"/>
 		   	<div id="mainbtn">
-		   		<button class="btn btn-tp-custom-green" onclick="location.href='<%= request.getContextPath() %>/index.jsp'">메인으로 돌아가기</button>
+		   		<button class="btn btn-tp-custom-green" onclick="location.href='<%= request.getContextPath() %>/index'">메인으로 돌아가기</button>
 		   	</div>
 		</div>
 	</section>

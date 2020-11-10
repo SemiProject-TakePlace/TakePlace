@@ -1,7 +1,6 @@
-package com.kh.jsp.member.controller;
+package com.kh.jsp.mypage.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,21 +8,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.kh.jsp.common.exception.MemberException;
-import com.kh.jsp.member.model.service.MemberService;
 import com.kh.jsp.member.model.vo.AllMember;
+import com.kh.jsp.mypage.model.service.MypageService;
+import com.kh.jsp.mypage.model.vo.Question;
 
 /**
- * Servlet implementation class deleteHost
+ * Servlet implementation class InsertQuestion
  */
-@WebServlet("/deleteH.me")
-public class deleteHost extends HttpServlet {
+@WebServlet("/insertQ.me")
+public class InsertQuestion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public deleteHost() {
+    public InsertQuestion() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,35 +31,34 @@ public class deleteHost extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 회원 아이디 가져오기
-		HttpSession session = request.getSession(false);
+		String inqType = request.getParameter("inqType");
+		String inqTitle = request.getParameter("inqName");
+		String inqContent = request.getParameter("inqContent");
+		String inqEmail = request.getParameter("inqEmail");
+		String inqTel = request.getParameter("inqPhone");
 		
-		String id = ((AllMember)session.getAttribute("member")).getId();
+		HttpSession session = request.getSession(false);
 		int mno = ((AllMember)session.getAttribute("member")).getMno();
 		
-		System.out.println("회원 기존 아이디  : " + id + " mno : " + mno);
+		Question q = new Question(inqType, inqTitle, inqTitle, inqEmail, inqTel);
 		
-		MemberService ms = new MemberService();
+		q.setmNo(mno);
+		q.setInqType(inqType);
+		q.setInqTitle(inqTitle);
+		q.setInqContent(inqContent);
+		q.setInqEmail(inqEmail);
+		q.setInqTel(inqTel);
 		
-		try {
-			ms.deleteHostT(mno);
-			ms.deleteHost(id);
-			
-			System.out.println("회원 탈퇴 성공!");
-			
-			session.invalidate();
-			
-			response.sendRedirect("index");
-			
-		} catch(MemberException e) {
-			request.setAttribute("error-msg", "회원 탈퇴 수행 중 에러 발생!");
-			request.setAttribute("exception", e);
-			
-			request
-			.getRequestDispatcher("views/common/errorPage.jsp")
-			.forward(request, response);
-		}
-}
+		MypageService ms = new MypageService();
+		
+		ms.insertInq(q, mno);
+		
+		System.out.println("insert q: " + q);
+		
+		response.sendRedirect("selectQlist.me");
+		
+	}
+
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

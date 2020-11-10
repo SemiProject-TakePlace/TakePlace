@@ -1,6 +1,7 @@
 package com.kh.jsp.member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -58,7 +59,7 @@ public class updateGuest extends HttpServlet {
 			
 			session.invalidate();
 			
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("index");
 						
 		} catch(MemberException e) {
 			

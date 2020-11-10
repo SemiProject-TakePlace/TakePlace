@@ -15,7 +15,6 @@
 
 <style>
 
-   
    .container>div {
       display: flex;
       text-align: center;
@@ -42,9 +41,12 @@
    }
    
    .btn {
-      margin-top: 20px;
+      margin-top: 30px;;
    }
    
+   #btn {
+   		text-align: center;
+   }
 </style>
 
 </head>
@@ -78,8 +80,16 @@
             </form>
          </div>
       </div>
-      
+     
       </div>
+      
+       
+      <div id="btn">
+         <button class="btn btn-tp-custom-green" onclick="location.href='signIn.jsp'">로그인 하기</button>
+         &nbsp;&nbsp;
+         <button class="btn btn-tp-custom-white" onclick="location.href='signUp.jsp'">회원가입 하기</button>
+      </div>
+      
    </section>
    
    <%@ include file="../common/footer.jsp" %>
@@ -134,6 +144,7 @@
             success : function(data) {
                if(data != 'fail'){
                      $("#msgPwd").html("");
+                     alert("임시 비밀번호가 발급되었습니다. 메일함을 확인해 주세요")
                   
                } else { 
                      $("#msgPwd").html("<small class='form-text text-error'>일치하는 정보가 없습니다. 입력하신 정보를 다시 확인해 주세요.</span>");
