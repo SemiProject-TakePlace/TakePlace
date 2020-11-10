@@ -63,7 +63,6 @@ public class InsertProduct extends HttpServlet {
 			folder.mkdir();
 		}
 		
-
 	      MultipartRequest mre = new MultipartRequest(request, savePath, maxSize, "UTF-8",
 	                           new MyRenamePolicy());
 	      
@@ -116,8 +115,8 @@ public class InsertProduct extends HttpServlet {
 			response.sendRedirect("index");
 			// 승인 기다려달라는 페이지 만들어서 거기로 보내야함
 		} else {
-			request.setAttribute("exception", new Exception("사진 추가 에러!"));
-	        request.setAttribute("error-msg", "사진 추가에 실패하였습니다. 관리자에게 문의하세요.");
+			request.setAttribute("exception", new Exception("공간 등록 에러!"));
+	        request.setAttribute("error-msg", "공간 등록에 실패하였습니다.");
 	        request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
 		

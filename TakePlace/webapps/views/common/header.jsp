@@ -124,7 +124,7 @@
                        
                        <% } else { %>
                        
-                        <a class="dropdown-item" href="<%= request.getContextPath() %>/views/mypage/manager/member/memberList.jsp">마이페이지</a>
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/memberList.ml?type=guest">관리자 페이지</a>
                        
                        <% } %>
                       
