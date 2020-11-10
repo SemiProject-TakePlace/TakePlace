@@ -1,9 +1,6 @@
 package com.kh.jsp.reservation.controller;
 
 import java.io.IOException;
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,9 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.jsp.products.model.vo.Product;
 import com.kh.jsp.reservation.model.service.ReservationService;
-import com.kh.jsp.reservation.model.vo.Reservation;
-
 /**
  * Servlet implementation class rentHostRequest
  */
@@ -36,58 +32,32 @@ public class ReservationHostRequest extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		int preqno = Integer.parseInt(request.getParameter("preqno"));
-
-		int pno = Integer.parseInt(request.getParameter("pno")); // 공간 고유 번호
-		String rentName = request.getParameter("rentName"); // 예약자 이름
-		String rentTel = request.getParameter("rentTel"); // 예약자 전화번호
-		int payAmount = Integer.parseInt(request.getParameter("payAmount")); // 총 결제 금액 
-		
-		// 예약 날짜 및 시간 (수정하기)
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date resDate = null;
-		try {
-			resDate = new Date(sdf.parse(request.getParameter("date")).getTime());
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		
-		
-		String requirements = request.getParameter("requirements"); // 예약자 요구사항
-
-		Reservation r = new Reservation();
-
-		r.setPno(pno);
-		r.setGname(rentName);
-		r.setGtel(rentTel);
-		//r.setResDate(resDate);
-		r.setGdemand(requirements);
-		r.setPayAmount(payAmount);
-
+		int pno = Integer.parseInt(request.getParameter("pno"));
+		// 예약 테이블에 넣을 자료 다른 vo, dao 등에서 받아오기
 		ReservationService rs = new ReservationService();
 
-		String page = "views/reservation/reservationWait.jsp";
-
+		String page = null;
+		
 		try {
-
-			// Reservation r = rs.selectOne(preqno);
-			// request.setAttribute("reservation", r);
-
-			rs.insertReservation(r);
-			response.sendRedirect("ReservationWait.re");
-
+			
+			Product p = rs.selectOneReservation(pno);
+			request.setAttribute("product", p);
+			
+			//System.out.println(pno);
+			
+			page = "views/reservation/reservationHostRequest.jsp";
+			
 		} catch (Exception e) {
-
+			
 			request.setAttribute("exception", e);
-			request.setAttribute("error-msg", "예약 요청 페이지 조회 실패!");
-
+			request.setAttribute("error-msg", "예약 요청 실패!");
+			
 			page = "views/common/errorPage.jsp";
-
+			
 			e.printStackTrace();
+		} finally {
+			request.getRequestDispatcher(page).forward(request, response);
 		}
-		/*
-		 * finally { request.getRequestDispatcher(page).forward(request, response); }
-		 */
 
 	}
 
