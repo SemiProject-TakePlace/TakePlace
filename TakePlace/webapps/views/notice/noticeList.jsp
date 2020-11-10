@@ -39,7 +39,7 @@
     }
   }  
 }
-.contwrap{
+#wrap-contents container{
     margin-top: 150px;
     margin-bottom: 30px;
     margin-right: 15px;
@@ -54,7 +54,8 @@ justify-content: center;}
 <body>
 	<%@ include file="../common/header.jsp" %>
 	
-	<div class="contwrap">
+	<div id="#wrap-contents container" style="
+    margin-top: 150px;">
 	<h2 class="font-bold content-title" style="text-align:center;">공지사항</h2>
 	<table cellpadding="0" cellspacing="0" class="tbl-accordion">
   <thead>
@@ -70,18 +71,22 @@ justify-content: center;}
         <table cellpadding="0" cellspacing="0" class="tbl-accordion-nested">
           <thead>
          
-            <tr>
-              <td class="tbl-accordion-section" style="font-weight:bold;"><%=n.getNtitle() %></td>
+            <tr >
+              <td class="tbl-accordion-section dele" style="font-weight:bold;"><%=n.getNtitle() %><% if(mem != null && mem.getMtype().equals("ADMIN")) { %>
+              <button id="debu">삭제</button>
+              <%} %>
+             
+              </td>
             </tr>
           <thead>
           <tbody>
-            <tr>
-              <td><%= n.getNcontent() %></td>
+            <tr >
+              <td class="dele"><%= n.getNcontent() %> </td>
             </tr>
           </tbody>
         </table>
       </td>
-      <td><%= n.getCredate() %><td>	
+      <td class="dele" style="text-align:center;"><%= n.getCredate() %><td>	
     </tr>			 		
           <% } %>
   </tbody>
@@ -89,7 +94,7 @@ justify-content: center;}
    <div class="search">
 	<input type="search" id="keyword" placeholder="키워드를 입력하세요!" style="height:24px; padding-bottom:6px; padding-top:6px; border-top-width: 1px; margin-top: 16px;"> 
 			<button type="button" onclick="search();" class="btn btn-tp-custom-green mt-3">검색하기</button>
-					<% if(mem != null && mem.getMtype().equals("ADMIN")) {/*널포 방지용 !=NULL*/ %>
+					<% if(mem != null && mem.getMtype().equals("ADMIN")) { %>
 				<a class="nav-link btn btn-tp-custom-lightgreen mt-3" href="views/notice/noticeInsertForm.jsp">작성하기</a>
 				<%} %>
 	</div>
@@ -106,6 +111,10 @@ justify-content: center;}
 		    tbody. slideToggle();
 		  })
 		});
+	
+	$('#debu').click(function(){
+		$('.dele').remove();
+	})
 	//검색창
 		function search(){
 			location.href="<%=request.getContextPath()%>/searchNotice.no?con="+$('#searchCondition').val()+"&keyword="+$('#keyword').val();
