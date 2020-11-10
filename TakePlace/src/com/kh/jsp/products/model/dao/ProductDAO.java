@@ -181,8 +181,6 @@ public class ProductDAO {
 		return result;
 	}
 	
-	
-
 	public int getCurrentPno(Connection con) {
 		int result = 0;
 		PreparedStatement pstmt = null;

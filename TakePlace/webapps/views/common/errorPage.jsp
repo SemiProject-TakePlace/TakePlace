@@ -22,11 +22,21 @@
 			<span class="font-green" style="font-size: 100px;">
 				<i class="fas fa-exclamation-triangle"></i>
 			</span>
-			<h3 class="font-green font-bold mb-5">서비스 에러 발생</h3>
+			<h3 class="font-green font-bold mb-5">에러 발생</h3>
+			<% if(msg != null) { %>
+			<p class="mb-5">
+				<span class="font-green"> ERROR </span> &nbsp;&nbsp; <%= msg %>
+			</p>
+			<% } else if(e != null) { %>
 			<p class="mb-5">
 				<span class="font-green"> ERROR </span> &nbsp;&nbsp;  <%= e.getMessage() %>
 			</p>
+			<% } %>
 			<p>관리자에게 문의 또는 연락해주세요.</p>
+			
+			<button type="button" class="btn btn-tp-custom-green mt-5" onclick="history.back()">
+				이전으로 돌아가기
+			</button>
 		</div>
 	</section>
 

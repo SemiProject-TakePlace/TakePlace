@@ -1,6 +1,7 @@
 package com.kh.jsp.member.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import com.kh.jsp.common.exception.MemberException;
 import com.kh.jsp.member.model.service.MemberService;
-import com.kh.jsp.member.model.vo.Member;
+import com.kh.jsp.member.model.vo.AllMember;
 
 /**
  * Servlet implementation class updateGuest
@@ -40,7 +41,7 @@ public class updateGuest extends HttpServlet {
 		// 해당 회원을 구분짓는 ID 받아오기
 		HttpSession session = request.getSession(false);
 				
-		Member m = (Member)session.getAttribute("member");
+		AllMember m = (AllMember)session.getAttribute("member");
 		
 		m.setMname(mname);
 		m.setPwd(pwd);
@@ -51,7 +52,7 @@ public class updateGuest extends HttpServlet {
 		MemberService ms = new MemberService();
 		
 		try {
-			ms.updateMember(m);
+			ms.updateGuest(m);
 	
 			System.out.println("회원 정보 수정 완료!");
 			

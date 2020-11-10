@@ -11,8 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.kh.jsp.member.model.service.MemberService;
-import com.kh.jsp.member.model.vo.Host;
-import com.kh.jsp.member.model.vo.Member;
+import com.kh.jsp.member.model.vo.AllMember;
 
 /**
  * Servlet implementation class signIn
@@ -50,8 +49,10 @@ public class signIn extends HttpServlet {
        String id = request.getParameter("userId");
        String pwd = request.getParameter("userPwd");
 
-       Member m = new Member(id, pwd);
-       Host h = new Host(id, pwd);
+//       Member m = new Member(id, pwd);
+//       Host h = new Host(id, pwd);
+       
+       AllMember m = new AllMember(id, pwd);
 
        MemberService ms = new MemberService();
 
@@ -59,12 +60,14 @@ public class signIn extends HttpServlet {
        
        if (m != null) {
     	 
-          h = ms.selectHost(h, m);
+          // h = ms.selectHost(h, m);
     	   
           HttpSession session = request.getSession();
           
+//          session.setAttribute("member", m);
+//          session.setAttribute("host", h);
+          
           session.setAttribute("member", m);
-          session.setAttribute("host", h);
           
           response.sendRedirect("index");
 

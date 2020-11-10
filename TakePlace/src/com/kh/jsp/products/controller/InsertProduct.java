@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.kh.jsp.common.MyRenamePolicy;
+import com.kh.jsp.member.model.vo.AllMember;
 import com.kh.jsp.member.model.vo.Host;
 import com.kh.jsp.products.model.service.ProductService;
 import com.kh.jsp.products.model.vo.Product;
@@ -43,7 +44,7 @@ public class InsertProduct extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		
-		Host ho = (Host)session.getAttribute("host");
+		AllMember mem = (AllMember)session.getAttribute("member");
 
 	      int maxSize = 1024 * 1024 * 10; // 10MB
 	
@@ -55,7 +56,7 @@ public class InsertProduct extends HttpServlet {
 		
 		String root = request.getServletContext().getRealPath("/resources/images");
 		
-		String savePath = root + "/product/" + ho.getMno() + "/";
+		String savePath = root + "/product/" + mem.getMno() + "/";
 		
 		File folder = new File(savePath);
 		if(!folder.exists()) {
@@ -112,7 +113,7 @@ public class InsertProduct extends HttpServlet {
 		int result = ps.insertProduct(p, list);
 		
 		if(result > 0) {
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("index");
 			// 승인 기다려달라는 페이지 만들어서 거기로 보내야함
 		} else {
 			request.setAttribute("exception", new Exception("사진 추가 에러!"));

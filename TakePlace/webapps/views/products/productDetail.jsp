@@ -199,12 +199,11 @@
 <body>
 
 	<%@ include file="../common/header.jsp" %>
-	
+	<% if(mem != null) { %>
 	<section id="wrap-contents">
 		<div class="container">
 			<h2 class="font-bold content-title">공간 유형 
-				<!-- 유형에 따라 다른 유형 이름 보여주기 -->
-				
+
 				<% if(p.getPtype().equals("STUDY")) {%>
 	  				<span class="font-green">스터티룸</span> 
 	  			<% } else if (p.getPtype().equals("STUDIO")) {%>
@@ -216,11 +215,11 @@
 	  			<% } else if (p.getPtype().equals("OFFICE")) {%>
 	  				<span class="font-green">오피스</span>
 	  			<% } %>
-				<% if( mem != null && ho.getBsNum().equals(p.getBsNum())) { %> 
+
 					<button type="button" class="btn btn-tp-custom-green active" style="float:right;"
 						onclick="location.href='<%= request.getContextPath() %>/updateProductView.pr?pno='+<%=p.getPno()%>">상품 수정
 					</button>
-				<% } %>
+					
 			</h2>
 		</div>
 		<div class="product-detail">
@@ -280,23 +279,23 @@
 					</div>
 					
 					<div class="col-md-5 col-sm-12 date-pick text-center">
-						<p>예약을 하시려면 호스트의 승인이 필요합니다. <br>승인 후에 결제가 가능합니다!</p>
-						<form id="datePick" method="post" action="/">
-							<div class="form-group">
-							    <label for="pAbleDate" class="font-green font-bold">예약 날짜 선택</label>
-							    <div class="inline-block">
-							    	<input type="hidden" id="pAbleDate" value="<%= p.getPableDate() %>"/>
-							    	<input type="text" name="selectDate" id="selectDate" data-range="true" data-multiple-dates-separator=" - "
-    										data-language="en"class="form-control inlne-block" value="<%= p.getPableDate() %>" autocomplete="off"/>
-								    <small class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
-								</div>			 
-						  </div>
-						  <button type="button" class="btn btn-dark mt-4" 
-						  			onclick="location.href='<%= request.getContextPath()%>/ReservationHostRequest.re'">
-						  			HOST에게 예약 요청하기
-						  </button>
-					  	</form>
-					</div>
+	                  <p>예약을 하시려면 호스트의 승인이 필요합니다. <br>승인 후에 결제가 가능합니다!</p>
+	                  <form id="datePick" method="post" action="<%= request.getContextPath()%>/ReservationHostRequest.re">
+	                     <div class="form-group">
+	                         <label for="pAbleDate" class="font-green font-bold">예약 날짜 선택</label>
+	                         <div class="inline-block">
+	                            <input type="hidden" id="pAbleDate" value="<%= p.getPableDate() %>"/>
+	                            <input type="hidden" name="pno" value="<%= p.getPno() %>"/>
+	                            <input type="text" name="selectDate" id="selectDate" data-range="true" data-multiple-dates-separator=" - "
+	                                  data-language="en"class="form-control inlne-block" value="<%= p.getPableDate() %>" autocomplete="off"/>
+	                            <small class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
+	                        </div>          
+	                    </div>
+	                    <button type="submit" class="btn btn-dark mt-4">
+	                             HOST에게 예약 요청하기
+	                    </button>
+	                    </form>
+	               </div>
 			
 				</div>
 				
@@ -394,7 +393,7 @@
 							
 							<div class="replyArea">
 								<div class="replyWriteArea write-review" style="display: none;">
-									<%  if(mem.getMtype() == "GUEST") { %>
+									
 										<form action="<%= request.getContextPath()%>/insertProductReview.re" method="post">
 											<input type="text" name="mname" value="<%= mem.getMname() %>"/>
 											<input type="text" name="mno" value="<%= mem.getMno() %>"/>
@@ -407,7 +406,7 @@
 											<button type="submit" class="btn btn-tp-custom-green mr-3 btn-confirm-review"
 												style="display:block;">이용후기 등록</button>
 										</form>
-									<%}%>
+									
 								</div>						
 								<div class="reveiw-area">
 									<!-- 댓글 목록 구현 영역 -->
@@ -443,12 +442,12 @@
 													</div>
 												</li>
 					      	 				<% } %>
-					      	 				<%if(pr.getRlevel() == 1 && ho.getBsNum().equals(p.getBsNum())) { %>
+					      	 				<%if(pr.getRlevel() == 1 && mem.getBsnum().equals(p.getBsNum())) { %>
 												<button class="btn btn-tp-custom-white ml-2 my-2 my-sm-0" type="button"
 														style="float:right; padding: 5px; font-size:10px;"
 														onclick="writeReply(this)">답글 남기기</button>
 												<div class="write-reply" style="display: none; height: 200px;">
-													<input type="hidden" name="mname" value="<%= ho.getMname()%>"/>
+													<input type="hidden" name="mname" value="<%= mem.getMname()%>"/>
 													<input type="hidden" name="refrno" value="<%= pr.getRno() %>" />
 													<input type="hidden" name="rlevel" value="<%= pr.getRlevel() %>" />
 													<textarea id="replyContent" rows="5" style='width: 100%;'></textarea>
@@ -475,6 +474,10 @@
 			<button class="btn btn-tp-custom-white ml-3" onclick="">비승인</button>
 		</div>
 	</section>
+	<% } else {
+		request.setAttribute("error-msg", "회원 가입 후 이용 가능합니다.");
+		request.getRequestDispatcher("../common/errorPage.jsp").forward(request, response);
+	} %>
 	
 	<%@ include file="../common/footer.jsp" %>
 	

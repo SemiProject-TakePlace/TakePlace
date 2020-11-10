@@ -49,6 +49,7 @@ input[type="file"] {
 
 	<%@ include file="../common/header.jsp" %>
 	
+	<% if(mem != null && mem.getMtype().equals("HOST")) { %>
 	<section id="wrap-contents">
 		<div class="container">
 			<h2 class="content-title">공간 등록</h2>
@@ -56,7 +57,7 @@ input[type="file"] {
 					action="<%=request.getContextPath()%>/insertProduct.pr"
 					enctype="multipart/form-data">
 					
-				<input type="hidden" name="bsNum" id="bsNum" value="<%=ho.getBsNum()%>"/>
+				<input type="hidden" name="bsNum" id="bsNum" value="<%=mem.getBsnum()%>"/>
 				
 			  <div class="form-group">
 			    <label for="pCity" class="font-green font-bold">지역</label>
@@ -181,6 +182,7 @@ input[type="file"] {
 			  	<button type="button" class="btn btn-tp-custom-green" onclick="submitProduct()">등록 요청 하기</button>
 			  </div>
 			</form>
+			
 			
 			<script>
 				function submitProduct() {
@@ -360,7 +362,7 @@ input[type="file"] {
 		   				reader.onload = function(e) {
 		   					switch(num) {
 		   					case 1: $("#subImg1").attr("src", e.target.result);
-   									break;
+		 									break;
 		   					case 2: $("#subImg2").attr("src", e.target.result);
 									break;
 		   					case 3: $("#subImg3").attr("src", e.target.result);
@@ -373,7 +375,7 @@ input[type="file"] {
 		   				reader.readAsDataURL(img.files[0]);
 		   			}
 		   		};
-
+		
 			</script>
 			
 			<script>
@@ -382,20 +384,20 @@ input[type="file"] {
 			        new daum.Postcode({
 			            oncomplete: function(data) {
 			                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-	
+		
 			                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
 			                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
 			                var fullAddr = ''; // 최종 주소 변수
 			                var extraAddr = ''; // 조합형 주소 변수
-	
+		
 			                // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
 			                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
 			                    fullAddr = data.roadAddress;
-	
+		
 			                } else { // 사용자가 지번 주소를 선택했을 경우(J)
 			                    fullAddr = data.jibunAddress;
 			                }
-	
+		
 			                // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
 			                if(data.userSelectedType === 'R'){
 			                    //법정동명이 있을 경우 추가한다.
@@ -409,12 +411,12 @@ input[type="file"] {
 			                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
 			                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
 			                }
-	
+		
 			                // 우편번호와 주소 정보를 해당 필드에 넣는다.
 			                $("#pZipCode").val(data.zonecode); //5자리 새우편번호 사용
 			                
 			                $("#pAddress1").val(fullAddr);
-	
+		
 			                // 커서를 상세주소 필드로 이동한다.
 			                $("#pAddress2").focus();
 			            }
@@ -423,10 +425,19 @@ input[type="file"] {
 			    
 			</script>
 			
+			
+			
+			
+	
 		</div>
-	
 	</section>
-	
+	<% } else {
+		request.setAttribute("error-msg", "호스트 외에 접근이 불가능한 페이지입니다.");
+		request.getRequestDispatcher("../common/errorPage.jsp").forward(request, response);
+	} %>
 	<%@ include file="../common/footer.jsp" %>
+	
+	
+	
 </body>
 </html>

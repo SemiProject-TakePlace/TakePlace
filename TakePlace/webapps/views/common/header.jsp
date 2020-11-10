@@ -1,8 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.kh.jsp.member.model.vo.*"%>
+<%-- 
 <%
 	Member mem = (Member)session.getAttribute("member");
 	Host ho = (Host)session.getAttribute("host");
+%>
+--%>
+<%
+	AllMember mem = (AllMember)session.getAttribute("member");
 %>
 
 <!DOCTYPE html>
@@ -113,15 +118,19 @@
                        
                        <a class="dropdown-item" href="<%= request.getContextPath() %>/views/mypage/host/profile/hostPageProfile.jsp">마이페이지</a>
                        
-                       <% } else { %>
+                       <% } else if(mem.getMtype().equals("GUEST")) { %>
                        
                        <a class="dropdown-item" href="<%= request.getContextPath() %>/views/mypage/guest/profile/guestPageProfile.jsp">마이페이지</a>
                        
+                       <% } else { %>
+                       
+                        <a class="dropdown-item" href="<%= request.getContextPath() %>/views/mypage/manager/member/memberList.jsp">마이페이지</a>
+                       
                        <% } %>
                       
-                      <!--   
-                       <a class="dropdown-item" href="<%= request.getContextPath() %>/views/mypage/host/profile/hostPageProfile.jsp">마이페이지</a>
-                       -->
+                      <%-- 
+                      <a class="dropdown-item" href="<%= request.getContextPath() %>/views/mypage/host/profile/hostPageProfile.jsp">마이페이지</a>
+                      --%>
                          <a class="dropdown-item" onclick="logout()">로그아웃</a>
                        </div>
                      </div>

@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import com.kh.jsp.common.exception.MemberException;
+import com.kh.jsp.member.model.vo.AllMember;
 import com.kh.jsp.member.model.vo.Host;
 import com.kh.jsp.member.model.vo.Member;
 
@@ -38,16 +39,12 @@ public class MemberDAO {
 		
 	}
 	
-
-	public Member selectMember(Connection con, Member m) {
-		Member result = null;     
+	public AllMember selectMember(Connection con, AllMember m) {
+		AllMember result = null;     
 		PreparedStatement pstmt = null; 
 		ResultSet rset = null;  
 		
 		String sql = prop.getProperty("selectMember");
-		
-		// 쿼리 확인용
-		// System.out.println(sql);
 		
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -59,7 +56,7 @@ public class MemberDAO {
 			
 			if(rset.next()) { 
 				
-				result = new Member();
+				result = new AllMember();
 				
 				result.setMno(rset.getInt("mno"));
 				result.setId(m.getId());
@@ -67,17 +64,19 @@ public class MemberDAO {
 				result.setMtype(rset.getString("mtype"));
 				result.setMname(rset.getString("mname"));
 				result.setEmail(rset.getString("email"));
-				result.setJoinDate(rset.getDate("joindate"));
+				result.setJoindate(rset.getDate("joindate"));
 				result.setChdate(rset.getDate("chdate"));
-			
+				result.setEmail(rset.getString("email"));
+				result.setBsnum(rset.getString("bsnum"));
+				result.setBsname(rset.getString("bsname"));
+				result.setHrating(rset.getDouble("hrating"));
+				result.setHisok(rset.getString("hisok"));
 			}
 			
-			System.out.println("조회 결과 확인 : " + result);
+			System.out.println("Login 조회 결과 확인 : " + result);
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -86,39 +85,7 @@ public class MemberDAO {
 		return result;
 	}
 	
-
-	public int insertGuest(Connection con, Member joinMember) {
-		int result = 0;
-		
-		PreparedStatement pstmt = null;
-		
-		String sql = prop.getProperty("insertGuest");
-		
-		try {
-			pstmt = con.prepareStatement(sql);
-			
-			pstmt.setString(1, joinMember.getId());
-			pstmt.setString(2, joinMember.getMname());
-			pstmt.setString(3, joinMember.getPwd());
-			pstmt.setString(4, joinMember.getEmail());
-			
-			result = pstmt.executeUpdate();
-			
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			
-			
-		} finally {
-			close(pstmt);
-		}
-		
-		return result;
-	
-	}
-
-
-	 public Member findId(Connection con, Member m) {
+	public Member findId(Connection con, Member m) {
 	      Member result = null;     
 	      PreparedStatement pstmt = null; 
 	      ResultSet rset = null;  
@@ -161,40 +128,39 @@ public class MemberDAO {
 	      return result;
 	   }
 
-	   public String duplicationId(Connection con, String id) {
-		      // TODO Auto-generated method stub
-		      String result = null;     
-		      PreparedStatement pstmt = null; 
-		      ResultSet rset = null;  
-		      
-		      String sql = prop.getProperty("duplicationId");
-		      
-		      try {
-		         pstmt = con.prepareStatement(sql);
-		         
-		         pstmt.setString(1,  id);
-		         
-		         rset = pstmt.executeQuery();
-		            
-		         if(rset.next()){
-		            
-		            result = rset.getString(1);
-		            
-		         }
-		         
-		         System.out.println("조회 결과 확인 : " + result);
+	public String duplicationId(Connection con, String id) {
+	      // TODO Auto-generated method stub
+	      String result = null;     
+	      PreparedStatement pstmt = null; 
+	      ResultSet rset = null;  
+	      
+	      String sql = prop.getProperty("duplicationId");
+	      
+	      try {
+	         pstmt = con.prepareStatement(sql);
+	         
+	         pstmt.setString(1,  id);
+	         
+	         rset = pstmt.executeQuery();
+	            
+	         if(rset.next()){
+	            
+	            result = rset.getString(1);
+	            
+	         }
+	         
+	         System.out.println("조회 결과 확인 : " + result);
 
-		      } catch (SQLException e) {
-		         // TODO Auto-generated catch block
-		         e.printStackTrace();
-		      } finally{
-		         close(rset);
-		         close(pstmt);
-		      }
-		 
-		      return result;
-		   }
-
+	      } catch (SQLException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      } finally{
+	         close(rset);
+	         close(pstmt);
+	      }
+	 
+	      return result;
+	   }
 
 	public String duplicationNick(Connection con, String userNick) {
 		  String result = null;     
@@ -229,7 +195,6 @@ public class MemberDAO {
 	      return result;
 	   }
 
-
 	public String duplicationEmail(Connection con, String email) {
 		  String result = null;     
 	      PreparedStatement pstmt = null; 
@@ -263,12 +228,43 @@ public class MemberDAO {
 	      return result;
 	   }
 
-	public int insertMember(Connection con, Member m) {
+	public int insertGuest(Connection con, AllMember joinMember) {
 		int result = 0;
 		
 		PreparedStatement pstmt = null;
 		
-		String sql = prop.getProperty("insertMember");
+		String sql = prop.getProperty("insertGuest");
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, joinMember.getId());
+			pstmt.setString(2, joinMember.getMname());
+			pstmt.setString(3, joinMember.getPwd());
+			pstmt.setString(4, joinMember.getEmail());
+			
+			result = pstmt.executeUpdate();
+			
+			System.out.println("Guest 회원가입 결과 확인 : " + result);
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			
+			
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int insertHost(Connection con, AllMember m) {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertHost");
 		
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -280,63 +276,23 @@ public class MemberDAO {
 			
 			result = pstmt.executeUpdate();
 			
-			// System.out.println(sql);
+			System.out.println("Host 회원가입 결과 확인 : " + result);
 			
 		} catch (SQLException e) {
-			
 			e.printStackTrace();
-			
-			
 		} finally {
-			
-			close(pstmt);
-		}
-		
-		return result;
-	
-	
-	}
-
-
-	public int insertHost(Connection con, Host h) {
-		int result = 0;
-		
-		PreparedStatement pstmt = null;
-		
-		String sql = prop.getProperty("insertHost");
-		
-		try {
-			pstmt = con.prepareStatement(sql);
-			
-			pstmt.setString(1, h.getBsNum());
-			pstmt.setInt(2, h.getMno());
-			pstmt.setString(3, h.getBsName());
-			
-			result = pstmt.executeUpdate();
-	
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			
-			
-		} finally {
-			
 			close(pstmt);
 		}
 		
 		return result;
 	}
 
-
-	public Member selectOneHost(Connection con, Member m) {
-		Member result = null;     
+	public AllMember selectOneHost(Connection con, AllMember m) {
+		AllMember result = null;     
 		PreparedStatement pstmt = null; 
 		ResultSet rset = null;  
 		
 		String sql = prop.getProperty("selectOneHost");
-		
-		// 쿼리 확인용
-		// System.out.println(sql);
 		
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -347,18 +303,22 @@ public class MemberDAO {
 			
 			if(rset.next()) { 
 				
-				result = new Member();
+				result = new AllMember();
+				
 				result.setMno(rset.getInt("mno"));
 				result.setId(rset.getString("id"));
 				result.setMname(rset.getString("pwd"));
-				result.setJoinDate(rset.getDate("joindate"));
-				result.setJoinDate(rset.getDate("chdate"));
+				result.setJoindate(rset.getDate("joindate"));
+				result.setJoindate(rset.getDate("chdate"));
 				result.setMtype(rset.getString("mtype"));
-				result.setEmail((rset.getString("email")));
+				result.setEmail(rset.getString("email"));
+				// result.setBsnum(rset.getString("bsnum"));
+				// result.setBsname(rset.getString("bsname"));
+				// result.setHrating(rset.getDouble("hrating"));
+				// result.setHisok(rset.getString("hisok"));
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
 		} finally {
@@ -369,28 +329,22 @@ public class MemberDAO {
 		return result;
 	}
 
-
-
-
-	public int insertHost(Connection con, Member m, Host h) {
+	public int insertHostInfo(Connection con, AllMember m, AllMember hostInfo) {
 		int result = 0;
 		
 		PreparedStatement pstmt = null;
 		
-		String sql = prop.getProperty("insertHost");
+		String sql = prop.getProperty("insertHostInfo");
 		
 		try {
 			pstmt = con.prepareStatement(sql);
 			
-			pstmt.setString(1, h.getBsNum());
-			pstmt.setInt(2, m.getMno());
-			pstmt.setString(3, h.getBsName());
+			pstmt.setString(1, hostInfo.getBsnum());
+			pstmt.setInt(2, hostInfo.getMno());
+			pstmt.setString(3, hostInfo.getBsname());
 			
 			result = pstmt.executeUpdate();
-			
-			System.out.println("호스트 조회 결과 확인 : " + result);
-			
-			
+	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -400,52 +354,7 @@ public class MemberDAO {
 		return result;
 	}
 
-
-	public Host selectHost(Connection con, Host h, Member m) {
-		Host result = null;     
-		PreparedStatement pstmt = null; 
-		ResultSet rset = null;  
-		
-		String sql = prop.getProperty("selectHost");
-		
-		// 쿼리 확인용
-		// System.out.println(sql);
-		
-		try {
-			pstmt = con.prepareStatement(sql);
-			
-			pstmt.setInt(1, m.getMno());
-//			pstmt.setString(2, h.getPwd());
-			
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()) { 
-				
-				result = new Host();
-				
-				result.setBsNum(rset.getString("bsnum"));
-				result.setMno(rset.getInt("mno"));
-				result.setBsName(rset.getString("bsname"));
-				result.setHtating(rset.getDouble("hrating"));
-				result.setHisok(rset.getString("hisok"));
-				
-				System.out.println("select : " + result);
-			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		return result;
-	}
-
-
-	public int updateMember(Connection con, Member m) throws MemberException {
+	public int updateGuest(Connection con, AllMember m) throws MemberException {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
@@ -475,8 +384,7 @@ public class MemberDAO {
 		return result;
 	}
 
-
-	public int updateHost(Connection con, Member m) throws MemberException {
+	public int updateHost(Connection con, AllMember m) throws MemberException {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
@@ -506,14 +414,13 @@ public class MemberDAO {
 		
 		return result;
 	}
-
-
-	public int deleteMember(Connection con, String id) throws MemberException {
+	
+	public int deleteGuest(Connection con, String id) throws MemberException {
 		int result = 0;
 		
 		PreparedStatement pstmt = null;
 		
-		String sql = prop.getProperty("deleteMember");
+		String sql = prop.getProperty("deleteGuest");
 		
 		try {
 			
@@ -535,7 +442,6 @@ public class MemberDAO {
 				
 		return result;
 	}
-
 
 	public int deleteHost(Connection con, String id) throws MemberException {
 		int result = 0;
