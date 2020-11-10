@@ -1,13 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"  import="com.kh.jsp.reservation.model.vo.*, com.kh.jsp.member.model.vo.*, com.kh.jsp.products.model.vo.*"%>
 <%
-	Reservation r = (Reservation)request.getAttribute("Reservation");
-
-	Host h = (Host)request.getAttribute("host");
+	//Reservation r = (Reservation)request.getAttribute("Reservation");
 	
-	Host ho = (Host)session.getAttribute("host");
+	Product p = (Product)request.getAttribute("product");
 	
-	Product p = (Product)request.getAttribute("Product");
+	//Host는 header에 이미 들어가져있음
 %>
 <!DOCTYPE html>
 <html>
@@ -44,6 +42,7 @@
 				action="<%=request.getContextPath()%>/ReservationHostRequest.re">
 				
 				<input type="hidden" name="pno" id="pno" value="<%=p.getPno()%>"/>
+				<input type="hidden" name="selectDate" id="selectDate" value="<%=p.getPno()%>"/>
 			
 				<div class="form-group" id="rentName">
 				    <label for="exampleInputId1" id="rentName" class="font-green font-bold" >예약자 이름</label>
@@ -68,50 +67,50 @@
 				  <div class="form-group">
 				    <label for="exampleInputId1" id="hostName" class="font-green font-bold" >호스트명</label>
 			    	<div class="inline-block">
-						<p class="font-regular" id="hostName">font-regular</p>
+						<p class="font-regular" id="hostName"><%= ho.getBsName() %></p>
 			  		</div>
 				  </div>
 				  
 				  <div class="form-group">
 				    <label for="exampleInputId1" id="placeName" class="font-green font-bold" >공간 이름</label>
 			    	<div class="inline-block">
-						<p class="font-regular" id="placeName">font-regular</p>
+						<p class="font-regular" id="placeName"><%= p.getPname() %></p>
 			  		</div>
 				  </div>
 				  
 				  <div class="form-group">
 				    <label for="exampleInputId1" id="placeAddress" class="font-green font-bold" >공간 주소</label>
 			    	<div class="inline-block">
-						<p class="font-regular" id="placeAddress">font-regular</p>
+						<p class="font-regular" id="placeAddress"><%= p.getPaddress() %></p>
 			  		</div>
 				  </div>
 				  
 				  <div class="form-group">
-				    <label for="exampleInputId1" id="rentDate" class="font-green font-bold" >예약 날짜</label>
+				    <label for="exampleInputId1" id="rentDate2" class="font-green font-bold" >예약 날짜</label>
 			    	<div class="inline-block">
-						<p class="font-regular" id="rentDate">font-regular</p>
+						<p class="font-regular" id="rentDate" name="rentDate"><%= p.getPableDate() %></p>
 			  		</div>
 				  </div>
 				  
 				  <div class="form-group">
 				    <label for="exampleInputId1" id="placeInf" class="font-green font-bold" >시설 안내</label>
 			    	<div class="inline-block">
-						<p class="font-regular" id="placeInf">font-regular</p>
+						<p class="font-regular" id="placeInf"><%=p.getPguide()%></p>
 			  		</div>
 				  </div>
 				  
 				  <div class="form-group">
 				  	<label for="exampleInputId1" id="requirements" class="font-green font-bold" >요구 사항</label>
 				  	<div class="inline-block">
-				  	<textarea name="requirements" id="requirements" cols="80" rows="5" 
-        			style="resize: none;">호스트에게 보낼 메시지를 입력해주세요.</textarea>
+				  	<textarea name="requirements" placeholder="호스트에게 보낼 메시지를 입력해주세요." id="requirements" cols="80" rows="5" 
+        			style="resize: none;"></textarea>
         			</div>
 				  </div>
 				  
 				  <div class="form-group">
-				    <label for="exampleInputId1" id="price-title" class="font-green font-bold" >결제 가격</label>
+				    <label for="exampleInputId1" id="price-title" class="font-green font-bold" >결제 가격 안내</label> <br />
 			    	<div class="inline-block">
-						<p class="font-regular" id="price-title">font-regular</p>
+						<p class="font-regular" id="price-title">결제 가격은 빌린 날짜 기준 X 10000원 입니다. (예시) 3일 대여 = 30000원 </p>
 			  		</div>
 				  </div>
 				  
@@ -121,7 +120,7 @@
 				  
 				  <br /><br />
 				  
-			  <button type="button" class="btn btn-tp-custom-green" onclick="submitRequest(this)">HOST에게 예약 요청하기</button>
+			  <button type="button" class="btn btn-tp-custom-green" onclick="submitRequest()">HOST에게 예약 요청하기</button>
 			  
 			</form>
 			
@@ -129,6 +128,33 @@
 		
 		<script>
 		
+		
+		function submitRequest(){
+			location.href="/takeplace/insertReservation.re";
+		}
+		
+		
+		// 날짜 예약 요청 페이지로 날짜 넘기기
+		$(document).ready(function(){
+			 $("#rentDate").text('<%= request.getParameter("selectDate")%>');
+		<%-- 	 
+        $.ajax({
+            type : "GET", //전송방식을 지정한다 (POST,GET)
+            url : "/views/products/productsDetail.jsp",//호출 URL을 설정
+            dataType : "text",//호출한 페이지의 형식
+            error : function(){
+                alert("날짜 전송 실패!!!!");
+            },
+            success : function(Parse_data){
+                 $("#rentDate").text('<%= request.getParameter("selectDate")%>'); //요청 페이지에 있는 rentDate에 상품 페이지에서 받아온 selectDate 값을 넣는다.
+               // $("#rentDate").append($('#selectDate'));
+                alert("날짜 데이터 값 : " + Parse_data);
+	            }
+	             
+	        }); --%>
+	    });
+		
+		/*
 		function telNo(obj){
 			
 			var patt = new RegExp("[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}");
@@ -140,15 +166,8 @@
 			}
 			
 		}
-		
-		function submitRequest(sr){
-			location.href="/takeplace/ReservationHostRequest.re";
-		}
-		
-		
+		*/
 		</script>
-		
-		
 		
 	</section>
 	

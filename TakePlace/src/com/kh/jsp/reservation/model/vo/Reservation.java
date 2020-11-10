@@ -11,7 +11,7 @@ public class Reservation implements Serializable{
 	private int pno;           // 공간 고유 번호
 	private String gname;      // 게스트 이름
 	private String gtel;       // 게스트 연락처
-	private Date resDate;      // 예약 날짜시간
+	private String resDate;    // 예약 날짜시간
 	private String gdemand;    // 요구 사항
 	private char pisOk;        // 승인 여부
 	private char pisPaid;      // 결제 여부
@@ -22,7 +22,7 @@ public class Reservation implements Serializable{
 		super();
 	}
 
-	public Reservation(int preqno, int pno, String gname, String gtel, Date resDate, String gdemand, char pisOk,
+	public Reservation(int preqno, int pno, String gname, String gtel, String resDate, String gdemand, char pisOk,
 			char pisPaid, char pisCncld, int payAmount) {
 		super();
 		this.preqno = preqno;
@@ -76,11 +76,11 @@ public class Reservation implements Serializable{
 		this.gtel = gtel;
 	}
 
-	public Date getResDate() {
+	public String getResDate() {
 		return resDate;
 	}
 
-	public void setResDate(Date resDate) {
+	public void setResDate(String resDate) {
 		this.resDate = resDate;
 	}
 
