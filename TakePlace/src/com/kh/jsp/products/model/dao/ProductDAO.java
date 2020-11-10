@@ -222,6 +222,8 @@ public class ProductDAO {
 			
 			result = pstmt.executeUpdate();
 			
+			System.out.println(result);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

@@ -117,7 +117,7 @@ public class UpdateProduct extends HttpServlet {
 	      int result = ps.updateProductImages(p, list);
 		
 		if(result > 0) {
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("index");
 			// 승인 기다려달라는 페이지 만들어서 거기로 보내야함
 		} else {
 			request.setAttribute("exception", new Exception("사진 추가 에러!"));
