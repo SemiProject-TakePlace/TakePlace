@@ -31,7 +31,7 @@
 
 	<%@ include file="../common/header.jsp" %>
 	
-	<section id="wrap-contents" class="footer-bottom">
+	<section id="wrap-contents">
 		
 		<div class="mb-5">
 			<h3 class="font-bold">공간 대여 요청</h3>
@@ -39,15 +39,15 @@
 			<br /><br />
 			
 			<form id="reHostRequest" method="post" name="reHostRequest"
-				action="<%=request.getContextPath()%>/ReservationHostRequest.re">
+				action="<%=request.getContextPath()%>/insertReservation.re">
 				
 				<input type="hidden" name="pno" id="pno" value="<%=p.getPno()%>"/>
 				<input type="hidden" name="selectDate" id="selectDate" value="<%=p.getPno()%>"/>
 			
 				<div class="form-group" id="rentName">
-				    <label for="exampleInputId1" id="rentName" class="font-green font-bold" >예약자 이름</label>
+				    <label for="exampleInputId1" id="rentNameLabel" class="font-green font-bold" >예약자 이름</label>
 				    	<div class="inline-block">
-				    		<input type="text" class="form-control inline-block" id="rentName" aria-describedby="emailHelp">
+				    		<input type="text" class="form-control inline-block" id="rentName" name="rentName" aria-describedby="emailHelp">
 				    		<small class="form-text text-muted infoId">예약자 본인의 이름을 적어주셔야 합니다.</small>
 				    		<small class="form-text text-error validationId" style="display:none;">3~5자 사이의 한글만 사용 가능합니다.</small>
 				    		<small class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
@@ -57,7 +57,7 @@
 				  <div class="form-group">
 				    <label for="exampleInputId1" class="font-green font-bold" >예약자 전화번호</label>
 			    	<div class="inline-block">
-			    		<input type="text" class="form-control inline-block" name="tlno" id="tlno" title="전화번호를 입력하세요." placeholder="000-0000-0000" onclick="telNo(this)" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13">
+			    		<input type="text" class="form-control inline-block" name="rentTel" id="rentTel" title="전화번호를 입력하세요." placeholder="000-0000-0000" maxlength="13">
 			    		<small class="form-text text-muted infoId">예약자 본인의 전화번호를 적어주셔야 합니다.</small>
 			    		<small class="form-text text-error validationId" style="display:none;">13자 숫자만 사용 가능합니다.</small>
 			    		<small class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
@@ -65,42 +65,51 @@
 				  </div>
 				  
 				  <div class="form-group">
-				    <label for="exampleInputId1" id="hostName" class="font-green font-bold" >호스트명</label>
+				    <label for="exampleInputId1" id="hostNameLabel" class="font-green font-bold" >
+				    <% if(mem.getMtype().equals("HOST")) {%>
+			  				호스트명
+			  			<% } else if (mem.getMtype().equals("GUEST")) {%>
+			  				예약자 아이디
+			  			<% } else if (mem.getMtype().equals("MANAGER")) {%>
+		  					예약자 아이디
+		  			<% } %>
+				    </label>
 			    	<div class="inline-block">
-						<p class="font-regular" id="hostName"><%= ho.getBsName() %></p>
+						<p class="font-regular" id="hostName"><%= mem.getMname() %></p>
 			  		</div>
 				  </div>
 				  
 				  <div class="form-group">
-				    <label for="exampleInputId1" id="placeName" class="font-green font-bold" >공간 이름</label>
+				    <label for="exampleInputId1" id="placeNameLabel" class="font-green font-bold" >공간 이름</label>
 			    	<div class="inline-block">
 						<p class="font-regular" id="placeName"><%= p.getPname() %></p>
 			  		</div>
 				  </div>
 				  
 				  <div class="form-group">
-				    <label for="exampleInputId1" id="placeAddress" class="font-green font-bold" >공간 주소</label>
+				    <label for="exampleInputId1" id="placeAddressLabel" class="font-green font-bold" >공간 주소</label>
 			    	<div class="inline-block">
 						<p class="font-regular" id="placeAddress"><%= p.getPaddress() %></p>
 			  		</div>
 				  </div>
 				  
 				  <div class="form-group">
-				    <label for="exampleInputId1" id="rentDate2" class="font-green font-bold" >예약 날짜</label>
+				    <label for="exampleInputId1" id="rentDateLabel" class="font-green font-bold" >예약 날짜</label>
 			    	<div class="inline-block">
-						<p class="font-regular" id="rentDate" name="rentDate"><%= p.getPableDate() %></p>
+			    		<input type="hidden" name="rentDate" value="<%= request.getParameter("selectDate") %>">
+						<p class="font-regular" id="rentDate"><%= request.getParameter("selectDate") %></p>
 			  		</div>
 				  </div>
 				  
 				  <div class="form-group">
-				    <label for="exampleInputId1" id="placeInf" class="font-green font-bold" >시설 안내</label>
+				    <label for="exampleInputId1" id="placeInfLabel" class="font-green font-bold" >시설 안내</label>
 			    	<div class="inline-block">
 						<p class="font-regular" id="placeInf"><%=p.getPguide()%></p>
 			  		</div>
 				  </div>
 				  
 				  <div class="form-group">
-				  	<label for="exampleInputId1" id="requirements" class="font-green font-bold" >요구 사항</label>
+				  	<label for="exampleInputId1" id="requirementsLabel" class="font-green font-bold" >요구 사항</label>
 				  	<div class="inline-block">
 				  	<textarea name="requirements" placeholder="호스트에게 보낼 메시지를 입력해주세요." id="requirements" cols="80" rows="5" 
         			style="resize: none;"></textarea>
@@ -108,7 +117,14 @@
 				  </div>
 				  
 				  <div class="form-group">
-				    <label for="exampleInputId1" id="price-title" class="font-green font-bold" >결제 가격 안내</label> <br />
+				    <label for="exampleInputId1" id="price-Label" class="font-green font-bold" >결제 가격</label> <br />
+			    	<div class="inline-block">
+				    	<input type="number" name="payAmount" id="payAmount" value=10000 />원
+			  		</div>
+				  </div>
+				  
+				  <div class="form-group">
+				    <label for="exampleInputId1" id="price-title-Label" class="font-green font-bold" >결제 가격 안내</label> <br />
 			    	<div class="inline-block">
 						<p class="font-regular" id="price-title">결제 가격은 빌린 날짜 기준 X 10000원 입니다. (예시) 3일 대여 = 30000원 </p>
 			  		</div>
@@ -120,7 +136,7 @@
 				  
 				  <br /><br />
 				  
-			  <button type="button" class="btn btn-tp-custom-green" onclick="submitRequest()">HOST에게 예약 요청하기</button>
+			  <button type="submit" class="btn btn-tp-custom-green">HOST에게 예약 요청하기</button>
 			  
 			</form>
 			
@@ -128,15 +144,17 @@
 		
 		<script>
 		
-		
+		<%--
 		function submitRequest(){
-			location.href="/takeplace/insertReservation.re";
+			<%-- location.href="/takeplace/insertReservation.re?pno=<%=p.getPno()%>";
+			location.href="<%= request.getContextPath() %>/insertReservation.re?pno=<%=p.getPno()%>";
 		}
-		
+		--%>
 		
 		// 날짜 예약 요청 페이지로 날짜 넘기기
 		$(document).ready(function(){
-			 $("#rentDate").text('<%= request.getParameter("selectDate")%>');
+			<%--  $("#rentDate").text('<%= request.getParameter("selectDate")%>'); --%>
+			 
 		<%-- 	 
         $.ajax({
             type : "GET", //전송방식을 지정한다 (POST,GET)

@@ -35,27 +35,33 @@ public class InsertReservation extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// 예약 테이블에 넣을 자료 
-		int preqno = Integer.parseInt(request.getParameter("preqno")); // 공간 고유 번호
+		//int preqno = Integer.parseInt(request.getParameter("preqno")); // 예약 고유 번호 - 시퀀스로 처리
 		int pno = Integer.parseInt(request.getParameter("pno")); // 공간 고유 번호
+		
 		String rentName = request.getParameter("rentName"); // 예약자 이름
 		String rentTel = request.getParameter("rentTel"); // 예약자 전화번호
 		String rentDate = request.getParameter("rentDate"); // 예약 날짜
 		String requirements = request.getParameter("requirements"); // 예약자 요구사항
-		int payAmount = Integer.parseInt(request.getParameter("payAmount")); // 결제 안내 
+		
+		//int payAmount = Integer.parseInt(request.getParameter("payAmount")); // 결제 요금
+		//String payAmount = request.getParameter("payAmount"); // 결제 요금
 
-		Reservation r = new Reservation();
+		Reservation r = new Reservation(pno, rentName, rentTel, rentDate, requirements);
 
-		r.setPno(preqno);
+		//r.setPno(preqno);
 		r.setPno(pno);
 		r.setGname(rentName);
 		r.setGtel(rentTel);
 		r.setResDate(rentDate);
 		r.setGdemand(requirements);
-		r.setPayAmount(payAmount);
+		
+		//r.setPayAmount(payAmount);
 
 		ReservationService rs = new ReservationService();
 
 		String page = "views/reservation/reservationWait.jsp";
+		
+		System.out.println(r);
 
 		try {
 

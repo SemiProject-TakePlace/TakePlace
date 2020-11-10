@@ -11,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import com.kh.jsp.common.exception.NoticeException;
 import com.kh.jsp.products.model.vo.Product;
 import com.kh.jsp.reservation.model.vo.Reservation;
 
@@ -49,7 +48,7 @@ private Properties prop;
 			pstmt.setString(3, r.getGtel());
 			pstmt.setString(4,r.getResDate());
 			pstmt.setString(5, r.getGdemand());
-			pstmt.setInt(6, r.getPayAmount());
+			//pstmt.setInt(6, r.getPayAmount());
 			
 			result = pstmt.executeUpdate();
 			
