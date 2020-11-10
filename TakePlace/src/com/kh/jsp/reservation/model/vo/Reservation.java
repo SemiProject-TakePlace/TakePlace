@@ -37,6 +37,17 @@ public class Reservation implements Serializable{
 		this.payAmount = payAmount;
 	}
 
+	
+
+	public Reservation(int pno, String gname, String gtel, String resDate, String gdemand) {
+		super();
+		this.pno = pno;
+		this.gname = gname;
+		this.gtel = gtel;
+		this.resDate = resDate;
+		this.gdemand = gdemand;
+	}
+
 	@Override
 	public String toString() {
 		return "Reservation [preqno=" + preqno + ", pno=" + pno + ", gname=" + gname + ", gtel=" + gtel + ", resDate="

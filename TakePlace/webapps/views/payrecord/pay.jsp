@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"  import="com.kh.jsp.reservation.model.vo.*, com.kh.jsp.member.model.vo.*, com.kh.jsp.products.model.vo.*"%>
+<%
+	//Reservation r = (Reservation)request.getAttribute("Reservation");
+	
+	Product p = (Product)request.getAttribute("product");
+	
+	//Host는 header에 이미 들어가져있음
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,28 +37,34 @@
 			
 			<br /><br />
 			
-			<form id="frmLogin" method="post">
+			<form id="payPage" method="post" name="payPage"
+				action="<%=request.getContextPath()%>/selectPay.pa">
+				
+				<input type="hidden" name="pno" id="pno" value="<%=p.getPno()%>"/>
+				<input type="hidden" name="selectDate" id="selectDate" value="<%=p.getPno()%>"/>
 		    	
 		    	<div class="form-group">
-				    <label for="exampleInputId1" id="placeName" class="font-green font-bold" >공간 이름</label>
+				    <label for="exampleInputId1" id="placeNameLabel" class="font-green font-bold" >공간 이름</label>
 			    	<div class="inline-block">
-						<p class="font-regular" id="placeName">font-regular</p>
+						<p class="font-regular" id="placeName"><%= p.getPname() %></p>
 			  		</div>
 				  </div>
 				  
 				  <div class="form-group">
-				    <label for="exampleInputId1" id="placeAddress" class="font-green font-bold" >공간 주소</label>
+				    <label for="exampleInputId1" id="placeAddressLabel" class="font-green font-bold" >공간 주소</label>
 			    	<div class="inline-block">
-						<p class="font-regular" id="placeAddress">font-regular</p>
+						<p class="font-regular" id="placeAddress"><%= p.getPaddress() %></p>
 			  		</div>
 				  </div>
 				  
+				  <!--
 				  <div class="form-group">
-				    <label for="exampleInputId1" id="rentDate" class="font-green font-bold" >예약 날짜</label>
+				    <label for="exampleInputId1" id="rentDateLabel" class="font-green font-bold" >예약 날짜</label>
 			    	<div class="inline-block">
-						<p class="font-regular" id="rentDate">font-regular</p>
+						<p class="font-regular" id="rentDate" name="rentDate" value="<%= p.getPableDate() %>"><%= p.getPableDate() %></p>
 			  		</div>
 				  </div>
+				    -->
 				  
 				  <div class="form-group">
 				    <label for="exampleInputId1" id="price-title" class="font-green font-bold" >결제 가격</label>
@@ -66,15 +79,6 @@
 				 </div>
 				  
 				  <div class="inline-block">
-		    		<p class="font-medium">
-		    		국가안전보장에 관련되는 대외정책·군사정책과 국내정책의 수립에 관하여 국무회의의 심의에 앞서 대통령의 자문에 응하기 위하여 국가안전보장회의를 둔다.
-					<br />
-					대통령의 임기연장 또는 중임변경을 위한 헌법개정은 그 헌법개정 제안 당시의 대통령에 대하여는 효력이 없다.
-					<br />
-					국가안전보장에 관련되는 대외정책·군사정책과 국내정책의 수립에 관하여 국무회의의 심의에 앞서 대통령의 자문에 응하기 위하여 국가안전보장회의를 둔다.
-					<br />
-					대통령의 임기연장 또는 중임변경을 위한 헌법개정은 그 헌법개정 제안 당시의 대통령에 대하여는 효력이 없다.
-					</p>
 		    		
 		    		<br />
 		    		<br />
@@ -87,6 +91,10 @@
 		</div>
 		
 		<script>
+		
+		$(document).ready(function(){
+			 $("#rentDate").text('<%= request.getParameter("rentDate")%>');
+	    });
 		
 		// 결제 api 회원가입한 db 값들 가지고 수정해야함
 		
