@@ -1,6 +1,7 @@
 package com.kh.jsp.member.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import com.kh.jsp.common.exception.MemberException;
 import com.kh.jsp.member.model.service.MemberService;
-import com.kh.jsp.member.model.vo.Member;
+import com.kh.jsp.member.model.vo.AllMember;
 
 /**
  * Servlet implementation class deleteHost
@@ -34,7 +35,7 @@ public class deleteHost extends HttpServlet {
 		// 회원 아이디 가져오기
 		HttpSession session = request.getSession(false);
 		
-		String id = ((Member)session.getAttribute("member")).getId();
+		String id = ((AllMember)session.getAttribute("member")).getId();
 		// String userId = request.getParameter("mid");
 		
 		System.out.println("회원 기존 아이디  : " + id);

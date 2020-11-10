@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kh.jsp.common.exception.MemberException;
 import com.kh.jsp.member.model.service.MemberService;
-import com.kh.jsp.member.model.vo.Member;
+import com.kh.jsp.member.model.vo.AllMember;
 
 /**
  * Servlet implementation class insertGeust
@@ -39,7 +39,7 @@ public class insertGuest extends HttpServlet {
 		String mType = request.getParameter("mType");
 		String email = request.getParameter("guestEmail");
 
-		Member m = new Member(id, mName, pwd, mType, email);
+		AllMember m = new AllMember(id, mName, pwd, mType, email);
 
 		System.out.println("가입 정보 확인 : " + m);
 		

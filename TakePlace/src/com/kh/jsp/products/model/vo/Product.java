@@ -68,7 +68,7 @@ public class Product implements Serializable {
 				+ ", pprice=" + pprice + ", pableDate=" + pableDate + ", paddress=" + paddress + ", pguide=" + pguide
 				+ ", pwarn=" + pwarn + ", pisOk=" + pisOk + ", prating=" + prating + ", preqDate=" + preqDate
 				+ ", pokDate=" + pokDate + ", isDelete=" + isDelete + ", pbookCnt=" + pbookCnt +
-				",productFile" + productFile + ", mno" + mno + ", mname" + mname + "]";
+				",productFile=" + productFile + ", mno=" + mno + ", mname=" + mname + "]";
 	}
 
 

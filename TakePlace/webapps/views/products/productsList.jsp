@@ -87,15 +87,6 @@
 					<input type="search" id="keyword" class="form-control inline-block mr-2" placeholder="검색어를 입력하세요." onkeyup="enterkey()"> 
 					<button type="button" class="btn btn-tp-custom-green mr-5" onclick="search()">검색</button>
 					
-					
-					<!--
-					이 부분 보류  
-					<select id="searchType2" class="form-control inline-block ml-3">
-						<option value="asc">가격 낮은 순</option>
-						<option value="desc">가격 높은 순</option>
-						<option value="many">이용후기 많은 순</option> 
-					</select>
-					--> 
 				</div>
 				<% if( mem != null && mem.getMtype().equals("HOST")) { %> 
 					<div class="col-2">
@@ -114,136 +105,46 @@
 			</ul>
 			
 			<div class="product-list-content">
-			<div class="product-card">
-				<div class="row">
-					<!-- 여기서부터 for문 사용하여 여러 개 상품 돌리기 -->
-					<% for(Product p : list) { %>
-					<div class="col">
-						<input type="hidden" name="pno" id="pno" value="<%= p.getPno() %>" />
-						
-							<div class="card">
-							  <img src="<%=request.getContextPath() %>/resources/images/product/<%= p.getMno()%>/<%= p.getProductFile() %>"
-							  	class="card-img-top" alt="대표이미지" width="238" height="158">
-								  <div class="card-body">
-								  		<small class="font-green">
-								  			<% if(p.getPtype().equals("STUDY")) {%>
-								  				<span class="product">스터티룸</span> /
-								  			<% } else if (p.getPtype().equals("STUDIO")) {%>
-								  				<span class="product">스튜디오</span> /
-								  			<% } else if (p.getPtype().equals("SEMINAR")) {%>
-								  				<span class="product">세미나룸</span> /
-								  			<% } else if (p.getPtype().equals("PARTY")) {%>
-								  				<span class="product">파티룸</span> /
-								  			<% } else if (p.getPtype().equals("OFFICE")) {%>
-								  				<span class="product">오피스</span> /
-								  			<% } %>
-								  			
-								  			<span class="location"><%= p.getPcity() %></span>
-								  		</small>
-									    <h5 class="card-title font-bold"><%= p.getPname() %></h5>
-									    <p class="card-text"><%= p.getPprice() %>원</p>
-									    <small class="rating">평점 <span class="font-green"><%= p.getPrating() %></span></small>
-								  </div>
+				<div class="product-card">
+					<div class="row">
+						<!-- 여기서부터 for문 사용하여 여러 개 상품 돌리기 -->
+						<% for(Product p : list) { %>
+						<div class="col">
+							<input type="hidden" name="pno" id="pno" value="<%= p.getPno() %>" />
+							
+								<div class="card">
+								  <img src="<%=request.getContextPath() %>/resources/images/product/<%= p.getMno()%>/<%= p.getProductFile() %>"
+								  	class="card-img-top" alt="대표이미지" width="238" height="158">
+									  <div class="card-body">
+									  		<small class="font-green">
+									  			<% if(p.getPtype().equals("STUDY")) {%>
+									  				<span class="product">스터티룸</span> /
+									  			<% } else if (p.getPtype().equals("STUDIO")) {%>
+									  				<span class="product">스튜디오</span> /
+									  			<% } else if (p.getPtype().equals("SEMINAR")) {%>
+									  				<span class="product">세미나룸</span> /
+									  			<% } else if (p.getPtype().equals("PARTY")) {%>
+									  				<span class="product">파티룸</span> /
+									  			<% } else if (p.getPtype().equals("OFFICE")) {%>
+									  				<span class="product">오피스</span> /
+									  			<% } %>
+									  			
+									  			<span class="location"><%= p.getPcity() %></span>
+									  		</small>
+										    <h5 class="card-title font-bold"><%= p.getPname() %></h5>
+										    <p class="card-text"><%= p.getPprice() %>원</p>
+										    <small class="rating">평점 <span class="font-green"><%= p.getPrating() %></span></small>
+									  </div>
+								</div>
 							</div>
+						<% } %>
 					</div>
-					<% } %>
 				</div>
 			</div>
-			
-		</div>
-			
-			
 		</div>
 		
 	</section>
-	
-	<%--
-	페이지네이션 보류
-	<nav class="form-group justify-content-md-center">
-	  <ul class="pagination">
-	  <%  if(currentPage <= 1){  %>	
-  	    <li class="page-item" onclick="location.href='<%= request.getContextPath() %>/productsList.pr?currentPage=1'">
-	      <a class="page-link" href="#" aria-label="Previous">
-	        <span aria-hidden="true" style="font-size:12px;"><i class="fas fa-angle-double-left"></i></span>
-	      </a>
-	    </li>
-	    <%  }else{ %>
-	    <li class="page-item" onclick="location.href='<%= request.getContextPath() %>/productsList.pr?currentPage=<%=currentPage - 1 %>'">
-	      <a class="page-link" href="#" aria-label="Previous">
-	        <span aria-hidden="true" style="font-size:10px;"><i class="fas fa-chevron-left"></i></span>
-	      </a>
-	    </li>
-	    <%  } %>
-	    
-	    <% for(int p = startPage; p <= endPage; p++){
-					if(p == currentPage){	
-		%>
-			<li class="page-item disable" onclick="location.href='<%= request.getContextPath() %>/productsList.pr?currentPage=<%= p %>'">
-			 	<a class="page-link"><%= p %></a>
-		 	</li>
-		<%      }else{ %>
-			 <li class="page-item" onclick="location.href='<%= request.getContextPath() %>/productsList.pr?currentPage=<%= p %>'">
-			 	<a class="page-link"><%= p %></a>
-		 	</li>
-		<%      } %>
-		<% } %>
-	    
-	    <!-- 
-	    <li class="page-item"><a class="page-link active" href="#">1</a></li>
-	    <li class="page-item"><a class="page-link" href="#">2</a></li>
-	    <li class="page-item"><a class="page-link" href="#">3</a></li>
-	    -->
-	    <%  if(currentPage >= maxPage){  %>
-	    <li class="page-item disable">
-		 	<a class="page-link"></a>
-	 	</li>
-	 	<%  }else{ %>
-	    <li class="page-item" onclick="location.href='<%= request.getContextPath() %>/productsList.pr?currentPage=<%=currentPage + 1 %>'">
-	      <a class="page-link" href="#" aria-label="Next">
-	        <span aria-hidden="true" style="font-size:10px;"><i class="fas fa-chevron-right"></i></span>
-	      </a>
-	    </li>
-	    <%  } %>
-	    <li class="page-item" onclick="location.href='<%= request.getContextPath() %>/productsList.pr?currentPage=<%= maxPage %>'">
-	      <a class="page-link" href="#" aria-label="Previous">
-	        <span aria-hidden="true" style="font-size:12px;"><i class="fas fa-angle-double-right"></i></span>
-	      </a>
-	    </li>
-	  </ul>
-	</nav>
-	
-	--%>
-	
-	<!--
-	<nav class="form-group justify-content-md-center">
-	  <ul class="pagination">	
-  	    <li class="page-item">
-	      <a class="page-link" href="#" aria-label="Previous">
-	        <span aria-hidden="true" style="font-size:12px;"><i class="fas fa-angle-double-left"></i></span>
-	      </a>
-	    </li>
-	    <li class="page-item">
-	      <a class="page-link" href="#" aria-label="Previous">
-	        <span aria-hidden="true" style="font-size:10px;"><i class="fas fa-chevron-left"></i></span>
-	      </a>
-	    </li>
-	    <li class="page-item"><a class="page-link active" href="#">1</a></li>
-	    <li class="page-item"><a class="page-link" href="#">2</a></li>
-	    <li class="page-item"><a class="page-link" href="#">3</a></li>
-	    <li class="page-item">
-	      <a class="page-link" href="#" aria-label="Next">
-	        <span aria-hidden="true" style="font-size:10px;"><i class="fas fa-chevron-right"></i></span>
-	      </a>
-	    </li>
-	    <li class="page-item">
-	      <a class="page-link" href="#" aria-label="Previous">
-	        <span aria-hidden="true" style="font-size:12px;"><i class="fas fa-angle-double-right"></i></span>
-	      </a>
-	    </li>
-	  </ul>
-	</nav>
-	 -->
-	
+
 	<%@ include file="../common/footer.jsp" %>
 	
 	<script>
