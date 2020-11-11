@@ -49,6 +49,7 @@
 justify-content: center;}
 #ntitle{text-align:center; background:#B8E6E1;}
 #ndate{ text-align:center; width:15%; background:#82CBC4; }
+.del{width:50px; }
 </style>
 </head>
 <body>
@@ -72,21 +73,23 @@ justify-content: center;}
           <thead>
          
             <tr >
-              <td class="tbl-accordion-section dele" style="font-weight:bold;"><%=n.getNtitle() %><% if(mem != null && mem.getMtype().equals("ADMIN")) { %>
-              <button id="debu">삭제</button>
-              <%} %>
-             
+              <td class="tbl-accordion-section" style="font-weight:bold;"><%=n.getNtitle() %>
               </td>
             </tr>
           <thead>
           <tbody>
             <tr >
-              <td class="dele"><%= n.getNcontent() %> </td>
+              <td><%= n.getNcontent() %> </td>
             </tr>
           </tbody>
         </table>
       </td>
-      <td class="dele" style="text-align:center;"><%= n.getCredate() %><td>	
+      <td style="text-align:center;"><%= n.getCredate() %><td>	
+        <% if(mem != null && mem.getMtype().equals("ADMIN")) { %>
+          <td class="del">
+              <button onclick="deleteNotice('<%= n.getNno()%>');">삭제</button>
+          </td>
+        <% } %>
     </tr>			 		
           <% } %>
   </tbody>
@@ -112,12 +115,12 @@ justify-content: center;}
 		  })
 		});
 	
-	$('#debu').click(function(){
-		$('.dele').remove();
-	})
+	function deleteNotice(nno){
+		location.href='<%=request.getContextPath() %>/nDelete.no?nno='+nno;
+	}
 	//검색창
 		function search(){
-			location.href="<%=request.getContextPath()%>/searchNotice.no?con="+$('#searchCondition').val()+"&keyword="+$('#keyword').val();
+			location.href="<%=request.getContextPath()%>/nSearch.no?keyword="+$('#keyword').val();
 		}
 	</script>
 	
