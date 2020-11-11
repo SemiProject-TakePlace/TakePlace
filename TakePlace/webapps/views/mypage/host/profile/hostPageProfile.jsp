@@ -113,10 +113,10 @@ padding-left : 30%;
               <a class="nav-link active" href="http://localhost:8088/takeplace/views/mypage/host/profile/hostPageProfile.jsp">프로필</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/host/products/productsList.jsp">내 상품 목록</a>
+              <a class="nav-link" href="<%= request.getContextPath() %>/prdouctList.my">내 상품 목록</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/host/reservation/reservationList.jsp">예약 현황</a>
+              <a class="nav-link active" href="<%= request.getContextPath()%>/selectRlist.me">예약 현황</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="<%= request.getContextPath()%>/selectQlist.me">문의 내역</a>
