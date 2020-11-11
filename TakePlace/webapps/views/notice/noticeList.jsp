@@ -55,9 +55,9 @@ justify-content: center;}
 <body>
 	<%@ include file="../common/header.jsp" %>
 	
-	<div id="#wrap-contents container" style="
-    margin-top: 150px;">
-	<h2 class="font-bold content-title" style="text-align:center;">공지사항</h2>
+	<section id="wrap-contents">
+		<div class="container">
+			<h2 class="content-title">공지사항</h2>
 	<table cellpadding="0" cellspacing="0" class="tbl-accordion">
   <thead>
     <tr>
@@ -102,6 +102,8 @@ justify-content: center;}
 				<%} %>
 	</div>
 </div>
+
+</section>
 <%@ include file="../common/footer.jsp" %>
 	<script>  
 	//아코디언 테이블 
