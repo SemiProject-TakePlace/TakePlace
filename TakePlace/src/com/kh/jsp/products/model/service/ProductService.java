@@ -106,6 +106,16 @@ public class ProductService {
 		
 		return hmap;
 	}
+	
+	public int calcRating(int pno) {
+		con = getConnection();
+		
+		int result = pDAO.calcRating(con, pno);
+		
+		close(con);
+		
+		return result;
+	}
 
 	public ArrayList<Product> productsTop() {
 		con = getConnection();

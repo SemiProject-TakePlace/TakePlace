@@ -223,8 +223,6 @@ public class ProductDAO {
 			
 			result = pstmt.executeUpdate();
 			
-			System.out.println(result);
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -340,6 +338,31 @@ public class ProductDAO {
 		}
 		
 		return hmap;
+	}
+	
+	public int calcRating(Connection con, int pno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("calcRating");
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, pno);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				result = rset.getInt("prating");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 	public ArrayList<Product> productsTop(Connection con) {
@@ -497,5 +520,6 @@ public class ProductDAO {
 		
 		return listTop;
 	}
+
 
 }

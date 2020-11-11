@@ -41,12 +41,17 @@ public class SelectOneProduct extends HttpServlet {
 		// 이용후기
 		 ArrayList<ProductReview> rlist
         						= new ProductReviewService().selectList(pno);
+		 
+		ProductService ps = new ProductService();
+		
+		int rating = ps.calcRating(pno);
 		
 		String page = "";
 
 		if(product != null && product.get("product") != null) {
 			request.setAttribute("product", product.get("product"));
 			request.setAttribute("fileList", product.get("productImages"));
+			request.setAttribute("rating", rating);
 			request.setAttribute("rlist", rlist);
 			
 			page = "views/products/productDetail.jsp";
