@@ -2,12 +2,15 @@ package com.kh.jsp.mypage.model.service;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.jsp.common.exception.NoticeException;
 import com.kh.jsp.member.controller.mypage;
 import com.kh.jsp.mypage.model.dao.MypageDAO;
 import com.kh.jsp.mypage.model.vo.Question;
 import com.kh.jsp.payrecord.model.vo.PayRecord;
+import com.kh.jsp.productReview.model.vo.ProductReview;
+import com.kh.jsp.products.model.vo.Product;
 import com.kh.jsp.reservation.model.vo.Reservation;
 
 import static com.kh.jsp.common.JDBCTemplate.*;
@@ -96,6 +99,26 @@ public class MypageService {
 		close(con);
 		
 		return list;
+	}
+
+	public ArrayList<ProductReview> selectrReviw(ArrayList<ProductReview> list, ArrayList<Product> plist) {
+		con = getConnection();
+		
+		list = mDAO.selectrReviw(con, list, plist);
+		
+		close(con);
+		
+		return list;
+	}
+
+	public HashMap<String, Object> selectrReview(ArrayList<ProductReview> list, Product p) {
+		con = getConnection();
+		
+		HashMap<String, Object> hmap = mDAO.selectrReview(con, list, p);
+		
+		close(con);
+		
+		return hmap;
 	}
 
 	

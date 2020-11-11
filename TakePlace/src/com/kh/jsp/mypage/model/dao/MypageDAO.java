@@ -10,11 +10,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 
 import com.kh.jsp.common.exception.NoticeException;
 import com.kh.jsp.mypage.model.vo.Question;
 import com.kh.jsp.payrecord.model.vo.PayRecord;
+import com.kh.jsp.productReview.model.vo.ProductReview;
+import com.kh.jsp.products.model.vo.Product;
 import com.kh.jsp.reservation.model.vo.Reservation;
 
 public class MypageDAO {
@@ -237,7 +240,7 @@ public class MypageDAO {
 				r.setPisPaid(rset.getNString("pisPaid").charAt(0));
 				r.setPisCncld(rset.getNString("pisCncld").charAt(0));
 				r.setPayAmount(rset.getInt("payAmount"));
-				
+			
 				list.add(r);
 			}
 			
@@ -255,7 +258,7 @@ public class MypageDAO {
 		list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		
+	
 		String sql = prop.getProperty("selectPList");
 		
 		try {
@@ -289,9 +292,104 @@ public class MypageDAO {
 		return list;
 	}
 
+	public ArrayList<ProductReview> selectrReviw(Connection con, ArrayList<ProductReview> list, ArrayList<Product> plist) {
+		list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+	
+		String sql = prop.getProperty("selectReview");
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				ProductReview pr = new ProductReview();
+				Product p = new Product();
+				
+				pr.setRno(rset.getInt("rno"));
+				pr.setPno(rset.getInt("pno"));
+				pr.setMno(rset.getInt("mno"));
+				pr.setRcontent(rset.getString("rcontent"));
+				pr.setRefrno(rset.getInt(5));
+				pr.setRrating(rset.getInt("rrating"));
+				pr.setRdate(rset.getDate("rdate"));
+				pr.setRlevel(rset.getInt("rlevel"));
+				
+				p.setPname(rset.getString("pname"));
+				p.setPtype(rset.getString("ptype"));
+				p.setPno(rset.getInt("pno"));
+				
+				list.add(pr);
+				plist.add(p);
+				
+				System.out.println("plist : " + plist);
+				System.out.println(list);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			close(rset);
+			close(pstmt);
+		}	
+		return list;
+	}
+
+	public HashMap<String, Object> selectrReview(Connection con, ArrayList<ProductReview> list,
+			Product p) {
+		
+		HashMap<String, Object> hmap = new HashMap<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+	
+		String sql = prop.getProperty("selectReview");
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				ProductReview pr = new ProductReview();
+				
+				pr.setRno(rset.getInt("rno"));
+				pr.setPno(rset.getInt("pno"));
+				pr.setMno(rset.getInt("mno"));
+				pr.setRcontent(rset.getString("rcontent"));
+				pr.setRefrno(rset.getInt(5));
+				pr.setRrating(rset.getInt("rrating"));
+				pr.setRdate(rset.getDate("rdate"));
+				pr.setRlevel(rset.getInt("rlevel"));
+				
+				p.setPname(rset.getString("pname"));
+				p.setPtype(rset.getString("ptype"));
+				p.setPno(rset.getInt("pno"));
+				
+				list.add(pr);
+			}
+
+			hmap.put("list", list);
+			hmap.put("p", p);
+			
+			System.out.println(hmap);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			close(rset);
+			close(pstmt);
+		}	
+		return hmap;
+	}
 }
-
-
 
 
 
