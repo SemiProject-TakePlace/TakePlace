@@ -458,4 +458,40 @@ public class ProductDAO {
 		return list;
 	}
 
+	public ArrayList<Product> selectTop8(Connection con) {
+		ArrayList<Product> listTop = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null; 
+		
+		String sql = prop.getProperty("selectTop8");
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				
+				p.setMno(rset.getInt("mno"));
+				p.setPno(rset.getInt("pno"));
+				p.setProductFile(rset.getString("changename"));
+				p.setPtype(rset.getString("ptype"));
+				p.setPcity(rset.getString("pcity"));
+				p.setPname(rset.getString("pname"));
+				p.setPprice(rset.getInt("pprice"));
+				p.setPrating(rset.getInt("prating"));
+				
+				listTop.add(p);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listTop;
+	}
+
 }

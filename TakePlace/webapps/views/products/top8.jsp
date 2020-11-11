@@ -25,7 +25,7 @@
 
 	<%@ include file="../common/header.jsp" %>
 	
-	<section id="wrap-contents" class="footer-bottom">
+	<section id="wrap-contents">
 		<div class="container top8">
 			<h2 class="font-bold content-title">
 				<span class="font-green">최고의 인기</span> 상품

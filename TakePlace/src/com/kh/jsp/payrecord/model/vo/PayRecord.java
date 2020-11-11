@@ -33,6 +33,14 @@ public class PayRecord implements Serializable{
 	}
 
 
+	public PayRecord(int payno, int mno, int preqno) {
+		super();
+		this.payno = payno;
+		this.mno = mno;
+		this.preqno = preqno;
+	}
+
+
 	@Override
 	public String toString() {
 		return "PayRecord [payno=" + payno + ", mno=" + mno + ", preqno=" + preqno + ", payDate=" + payDate

@@ -1,4 +1,4 @@
-package com.kh.jsp.reservation.model.dao;
+package com.kh.jsp.payrecord.model.dao;
 
 import static com.kh.jsp.common.JDBCTemplate.close;
 
@@ -11,18 +11,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import com.kh.jsp.common.exception.NoticeException;
+import com.kh.jsp.payrecord.model.vo.PayRecord;
 import com.kh.jsp.products.model.vo.Product;
+import com.kh.jsp.reservation.model.dao.ReservationDAO;
 import com.kh.jsp.reservation.model.vo.Reservation;
 
-public class ReservationDAO {
+public class PayDAO {
 	
-private Properties prop;
+	private Properties prop;
 	
-	public ReservationDAO() {
+	public PayDAO() {
 		prop = new Properties();
 		
 		String filePath = ReservationDAO.class
-						.getResource("/config/reservation-sql.properties")
+						.getResource("/config/pay-sql.properties")
 						.getPath();
 		
 		try {
@@ -34,39 +37,12 @@ private Properties prop;
 		}
 	}
 
-
-	public int insertReservation(Connection con, Reservation r) {
-		int result = 0;
-		PreparedStatement pstmt = null;
-		String sql = prop.getProperty("insertReservation");
-		
-		try {
-			pstmt = con.prepareStatement(sql);
-			
-			pstmt.setInt(1, r.getPno());
-			pstmt.setString(2, r.getGname());
-			pstmt.setString(3, r.getGtel());
-			pstmt.setString(4,r.getResDate());
-			pstmt.setString(5, r.getGdemand());
-			//pstmt.setInt(6, r.getPayAmount());
-			
-			result = pstmt.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-		}
-		
-		return result;
-	}
-	
-	public Product selectOneReservation(Connection con, int pno) {
+	public Product selectOnePay(Connection con, int pno) {
 		Product p = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String sql = prop.getProperty("selectOneReservation");
+		String sql = prop.getProperty("selectOnePay");
 		
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -80,8 +56,6 @@ private Properties prop;
 				
 	            p.setPno(rset.getInt("pno"));
 	            p.setPname(rset.getString("pname"));
-	            p.setPaddress(rset.getString("paddress"));
-	            p.setPguide(rset.getString("pguide"));
 				
 			}
 			
@@ -99,13 +73,57 @@ private Properties prop;
 		return p;
 	}
 
+	public int insertPay(Connection con, PayRecord pr) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertPay");
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, pr.getMno());
+			pstmt.setInt(2, pr.getPreqno());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 
-	public Reservation selectOneReservationPreq(Connection con, int preqno) {
+	public int updatePayCount(Connection con, int pno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updatePayCount");
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, pno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public Reservation selectOneReservation(Connection con, int preqno) {
 		Reservation r = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String sql = prop.getProperty("selectOneReservationPreq");
+		String sql = prop.getProperty("selectOnePayReservation");
 		
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -134,35 +152,5 @@ private Properties prop;
 		
 		return r;
 	}
-
-
-	public int selectCurrentPreqno(Connection con, int pno, String mname) {
-		int result = 0;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String sql = prop.getProperty("selectCurrentPreqno");
-		
-		try {
-			pstmt = con.prepareStatement(sql);
-			
-			rset = pstmt.executeQuery();
-			
-			if (rset.next()) { 
-				result = rset.getInt(1);
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		return result;
-	}
-
-
-
 
 }

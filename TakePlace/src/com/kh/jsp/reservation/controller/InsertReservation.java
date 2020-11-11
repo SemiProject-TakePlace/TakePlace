@@ -10,7 +10,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.kh.jsp.common.exception.NoticeException;
+import com.kh.jsp.member.model.vo.AllMember;
+import com.kh.jsp.notice.model.vo.Notice;
+import com.kh.jsp.products.model.vo.Product;
 import com.kh.jsp.reservation.model.service.ReservationService;
 import com.kh.jsp.reservation.model.vo.Reservation;
 
@@ -35,7 +40,8 @@ public class InsertReservation extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// 예약 테이블에 넣을 자료 
-		//int preqno = Integer.parseInt(request.getParameter("preqno")); // 예약 고유 번호 - 시퀀스로 처리
+		// int preqno = Integer.parseInt(request.getParameter("preqno")); // 예약 고유 번호 - 시퀀스로 처리
+		
 		int pno = Integer.parseInt(request.getParameter("pno")); // 공간 고유 번호
 		
 		String rentName = request.getParameter("rentName"); // 예약자 이름
@@ -48,7 +54,7 @@ public class InsertReservation extends HttpServlet {
 
 		Reservation r = new Reservation(pno, rentName, rentTel, rentDate, requirements);
 
-		//r.setPno(preqno);
+		// r.setPno(preqno);
 		r.setPno(pno);
 		r.setGname(rentName);
 		r.setGtel(rentTel);
@@ -59,17 +65,31 @@ public class InsertReservation extends HttpServlet {
 
 		ReservationService rs = new ReservationService();
 
-		String page = "views/reservation/reservationWait.jsp";
+		//String page = "views/reservation/reservationWait.jsp";
+		//String page = "views/payrecord/pay.jsp";
+		String page = "selectPay.pa";
 		
 		System.out.println(r);
 
 		try {
 
-			// Reservation r = rs.selectOne(preqno);
-			// request.setAttribute("reservation", r);
-
 			rs.insertReservation(r);
-			response.sendRedirect("ReservationWait.re");
+			//response.sendRedirect("selectPay.pa");
+			
+			Product p = rs.selectOneReservation(pno);
+			request.setAttribute("product", p);
+			
+			HttpSession session = request.getSession();
+			AllMember m = (AllMember)session.getAttribute("member");
+			System.out.println(pno + m.getMname());
+			
+			int preqno = rs.selectCurrentPreqno(pno, m.getMname());
+			System.out.println(preqno);
+			
+			r = rs.selectOneReservationPreq(preqno);
+			request.setAttribute("reservation", r);
+			
+			page = "selectPay.pa";
 
 		} catch (Exception e) {
 
@@ -80,9 +100,10 @@ public class InsertReservation extends HttpServlet {
 
 			e.printStackTrace();
 		}
-		/*
-		 * finally { request.getRequestDispatcher(page).forward(request, response); }
-		 */
+		
+		finally { request.getRequestDispatcher(page).forward(request, response); }
+		
+		
 		
 	}
 

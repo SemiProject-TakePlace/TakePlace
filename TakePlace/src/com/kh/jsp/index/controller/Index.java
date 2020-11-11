@@ -32,13 +32,18 @@ public class Index extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<Product> list = new ArrayList<>();
+		ArrayList<Product> listTop = new ArrayList<>();
+		
 		
 		list = new ProductService().selectRecent8();
+		
+		listTop = new ProductService().selectTop8();
 		
 		String page = "";
 		
 		if(list != null) {
 			request.setAttribute("list", list);
+			request.setAttribute("list", listTop);
 			page = "index.jsp";
 		} else {
 			request.setAttribute("error-msg", "공간 유형 리스트 목록 조회 실패");
