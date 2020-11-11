@@ -176,5 +176,15 @@ public class ProductService {
 		return list;
 	}
 
+	public ArrayList<Product> selectTop8() {
+		con = getConnection();
+		
+		ArrayList<Product> listTop = pDAO.selectTop8(con);
+		
+		close(con);
+		
+		return listTop;
+	}
+
 
 }

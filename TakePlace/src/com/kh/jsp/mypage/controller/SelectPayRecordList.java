@@ -44,16 +44,6 @@ public class SelectPayRecordList extends HttpServlet {
 		request.setAttribute("Plist", list);
 		page = "views/mypage/guest/pay/payList.jsp";
 		
-//		if( list != null && list.size() > 0) {
-//			
-//			request.setAttribute("Rlist", list);
-//			
-//			page = "views/mypage/guest/reservation/reservationList.jsp";
-//		} else {
-//			request.setAttribute("error-msg", "예약내역 조회 실패");
-//			page = "views/common/errorPage.jsp";
-//		}
-		
 		request.getRequestDispatcher(page).forward(request, response);
 		
 	}

@@ -34,7 +34,7 @@ public class SelectQuestionList extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			    // 1. 게시판 목록 처리용 변수
+			
 				ArrayList<Question> list = new ArrayList<>();
 				MypageService ms = new MypageService();
 				
@@ -89,13 +89,11 @@ public class SelectQuestionList extends HttpServlet {
 				
 				// -------------- 페이지 처리 끝! ㅎ.,ㅎ -------------- //
 				
-				Question q = new Question();
-				
 				list = ms.selectQList(mno, currentPage, limit);
 				
 				String page = "";
 				
-				if( list != null && list.size() > 0) {
+		
 					PageInfo pi = new PageInfo(currentPage, listCount, limit, 
 							                   maxPage, startPage, endPage);
 					
@@ -103,10 +101,7 @@ public class SelectQuestionList extends HttpServlet {
 					request.setAttribute("list", list);
 					
 					page = "views/mypage/guest/question/questionList.jsp";
-				} else {
-					request.setAttribute("error-msg", "문의사항 조회 실패");
-					page = "views/common/errorPage.jsp";
-				}
+				
 				
 				request.getRequestDispatcher(page).forward(request, response);
 				

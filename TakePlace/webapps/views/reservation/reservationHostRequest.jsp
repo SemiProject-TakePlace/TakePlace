@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"  import="com.kh.jsp.reservation.model.vo.*, com.kh.jsp.member.model.vo.*, com.kh.jsp.products.model.vo.*"%>
 <%
-	//Reservation r = (Reservation)request.getAttribute("Reservation");
+	Reservation r = (Reservation)request.getAttribute("Reservation");
 	
 	Product p = (Product)request.getAttribute("product");
 	
@@ -39,7 +39,7 @@
 			<br /><br />
 			
 			<form id="reHostRequest" method="post" name="reHostRequest"
-				action="<%=request.getContextPath()%>/insertReservation.re">
+				action="<%=request.getContextPath()%>/insertReservation.re?pno=<%=p.getPno()%>">
 				
 				<input type="hidden" name="pno" id="pno" value="<%=p.getPno()%>"/>
 				<input type="hidden" name="selectDate" id="selectDate" value="<%=p.getPno()%>"/>

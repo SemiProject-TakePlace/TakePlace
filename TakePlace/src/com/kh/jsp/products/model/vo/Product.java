@@ -20,7 +20,7 @@ public class Product implements Serializable {
     private String paddress; // 상세 주소
     private String pguide; // 시설 소개
     private String pwarn;  // 유의 사항
-    private char pisOk;   // 승인 여부
+    private String pisOk;   // 승인 여부
     private int prating;  // 공간 평점
     private Date preqDate; // 승인 요청 날짜
     private Date pokDate;  // 승인 날짜
@@ -37,7 +37,7 @@ public class Product implements Serializable {
 
 
 	public Product(int pno, String bsNum, String ptype, String pcity, String pname, int pprice, String pableDate,
-			String paddress, String pguide, String pwarn, char pisOk, int prating, Date preqDate, Date pokDate,
+			String paddress, String pguide, String pwarn, String pisOk, int prating, Date preqDate, Date pokDate,
 			char isDelete, int pbookCnt, String productFile, int mno, String mname) {
 		super();
 		this.pno = pno;
@@ -182,12 +182,12 @@ public class Product implements Serializable {
 	}
 
 
-	public char getPisOk() {
+	public String getPisOk() {
 		return pisOk;
 	}
 
 
-	public void setPisOk(char pisOk) {
+	public void setPisOk(String pisOk) {
 		this.pisOk = pisOk;
 	}
 

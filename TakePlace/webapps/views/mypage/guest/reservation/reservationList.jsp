@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.kh.jsp.reservation.model.vo.*, java.util.*" %>
+    pageEncoding="UTF-8" import="com.kh.jsp.reservation.model.vo.*, java.util.*, com.kh.jsp.products.model.vo.*" %>
 <%
-   ArrayList<Reservation> list = (ArrayList<Reservation>)request.getAttribute("Rlist");
+   ArrayList<Reservation> list = (ArrayList<Reservation>)request.getAttribute("list");
+   Product p = (Product)request.getAttribute("p");
 %>
 <!DOCTYPE html>
 <html>
@@ -155,7 +156,8 @@
     #ulTable > li > ul > li:first-child +li              {width:20%;} /*공 간 명 */
     #ulTable > li > ul > li:first-child +li+li           {width:20%;} /*대여날짜*/
     #ulTable > li > ul > li:first-child +li+li+li        {width:30%;} /*요구사항*/
-    #ulTable > li > ul > li:first-child +li+li+li+li     {width:20%;} /*승인여부*/
+    #ulTable > li > ul > li:first-child +li+li+li+li     {width:10%;} /*승인여부*/
+   #ulTable > li > ul > li:first-child +li+li+li+li+li  {width:10%;} /*승인여부*/
 
     #divPaging {
         clear:both; 
@@ -227,7 +229,7 @@
               <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/use/useList.jsp">이용 내역</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/review/reviewList.jsp">이용 후기</a>
+              <a class="nav-link" href="<%= request.getContextPath()%>/selectReview.me">이용 후기</a>
             </li>
             
             
@@ -278,7 +280,7 @@
               
                 <div class ="outer">
                 
-                <form action="#" method="post" id="create_waitingAccount" name="waitingForm">
+                <form action="<%= request.getContextPath() %>/selectPay.pa" method="post" id="create_waitingAccount" name="waitingForm">
              
                 <div class="outer">
                       <div id="mainWrapper">
@@ -292,24 +294,36 @@
                                               <li>대여 날짜</li>
                                               <li>요구 사항</li>
                                               <li>승인 여부</li>
+                                              <li>결제</li>
                                        </ul>                                        
                                       </li>
                                       <!-- 게시물이 출력될 영역 -->                                 
                                       <% for(Reservation r : list) { %>
+                               <input type="hidden" name="pno" value="<%= p.getPno() %>"/>
+                               <input type="hidden" name="preqno" value="<%= r.getPreqno() %>"/>
+                                      
                                       <li id="liContext">
                                           <ul>
                                               <li><%= r.getPreqno() %></li>
-                                              <li><%= r.getGname() %></li>
+                                              <li><%= r.getPname() %></li>
                                               <li><%= r.getResDate() %></li>
                                               <li><%= r.getGdemand() %></li>
                                               <% if(r.getPisOk() == 'N'){ %>
                                               <li>미승인</li>
+                                              <li>
+                                                    <button class="btn btn-tp-custom-green" hidden="hidden">결제하기</button>
+                                               </li>
                                               <% } else { %>
                                                <li>승인</li>
-                                               <% } %>
+                                               <li>
+                                                    <button class="btn btn-tp-custom-green">결제하기</button>
+                                               </li>
+                                                <% } %>
+                                              
                                           </ul>
                                       </li>
-                                    <% } %>                              
+                           
+                                  <% } %>                        
                                   </ul>
                               </li>
                               </ul>
@@ -317,6 +331,7 @@
                                   </div> 
                                  
                                </div>
+                              
                          
                 </form>
                 
@@ -324,20 +339,6 @@
               
          </div>
          
-               <script>
-               $(function(){
-                  $('#liContext ul li').mouseenter(function(){
-                     $(this).parent().css({"background" : "silver", "cursor" : "pointer"});
-                  }).mouseout(function(){
-                     $(this).parent().css({"background" : "black"});
-                  }).click(function(){
-                     var inqno = $(this).parent().children().eq(0).text();
-                     console.log(inqno);
-                     location.href = "<%= request.getContextPath() %>/selectQone.me?inqno=" + inqno; 
-                     
-                  });
-               });
-            </script>
             
             <!-- 여기가 컨텐츠 끝 -->
          </div>

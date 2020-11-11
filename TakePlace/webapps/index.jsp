@@ -3,6 +3,8 @@
 <%@ page import="java.util.*, com.kh.jsp.products.model.vo.*" %>
 <%
 	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
+
+	ArrayList<Product> listTop = (ArrayList<Product>)request.getAttribute("listTop");
  %>
 <!DOCTYPE html>
 <html>
@@ -83,24 +85,36 @@
 				<div class="container">
 					<div class="row">
 					<!-- 여기서부터 for문 사용하여 8개 상품 돌리기 -->
+						<% for(Product p : listTop) { %>
 						<div class="col">
-							<a href="#">
+							<input type="hidden" name="pno" id="pno" value="<%= p.getPno() %>" />
+							
 								<div class="card">
-								<!-- DB연동 시 지울 이미지 -->
-								  <img src="<%= request.getContextPath() %>/resources/images/main-sample.jpg" class="card-img-top" alt="대표이미지">
+								  <img src="<%=request.getContextPath() %>/resources/images/product/<%= p.getMno()%>/<%= p.getProductFile() %>"
+								  	class="card-img-top" alt="대표이미지" width="238" height="158">
 									  <div class="card-body">
 									  		<small class="font-green">
-									  			<span class="product">스터디룸</span>/<span class="location">서울시</span>
+									  			<% if(p.getPtype().equals("STUDY")) {%>
+									  				<span class="product">스터티룸</span> /
+									  			<% } else if (p.getPtype().equals("STUDIO")) {%>
+									  				<span class="product">스튜디오</span> /
+									  			<% } else if (p.getPtype().equals("SEMINAR")) {%>
+									  				<span class="product">세미나룸</span> /
+									  			<% } else if (p.getPtype().equals("PARTY")) {%>
+									  				<span class="product">파티룸</span> /
+									  			<% } else if (p.getPtype().equals("OFFICE")) {%>
+									  				<span class="product">오피스</span> /
+									  			<% } %>
+									  			
+									  			<span class="location"><%= p.getPcity() %></span>
 									  		</small>
-										    <h5 class="card-title font-bold">강남 일등 스터디룸</h5>
-										    <p class="card-text">10000원</p>
-										    <small class="rating">평점 
-										    	<span class="font-green">10.0</span>
-										    </small>
+										    <h5 class="card-title font-bold"><%= p.getPname() %></h5>
+										    <p class="card-text"><%= p.getPprice() %>원</p>
+										    <small class="rating">평점 <span class="font-green"><%= p.getPrating() %></span></small>
 									  </div>
 								</div>
-							</a>
 						</div>
+						<% } %>
 						
 					</div>
 				</div>

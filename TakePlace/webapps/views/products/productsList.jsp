@@ -109,9 +109,9 @@
 					<div class="row">
 						<!-- 여기서부터 for문 사용하여 여러 개 상품 돌리기 -->
 						<% for(Product p : list) { %>
+					
 						<div class="col">
 							<input type="hidden" name="pno" id="pno" value="<%= p.getPno() %>" />
-							
 								<div class="card">
 								  <img src="<%=request.getContextPath() %>/resources/images/product/<%= p.getMno()%>/<%= p.getProductFile() %>"
 								  	class="card-img-top" alt="대표이미지" width="238" height="158">

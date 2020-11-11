@@ -100,4 +100,69 @@ private Properties prop;
 	}
 
 
+	public Reservation selectOneReservationPreq(Connection con, int preqno) {
+		Reservation r = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectOneReservationPreq");
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, preqno);
+			
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				r = new Reservation();
+				
+	            r.setPno(rset.getInt("preqno"));
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		System.out.println(r);
+		
+		
+		
+		return r;
+	}
+
+
+	public int selectCurrentPreqno(Connection con, int pno, String mname) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectCurrentPreqno");
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) { 
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+
+
 }
