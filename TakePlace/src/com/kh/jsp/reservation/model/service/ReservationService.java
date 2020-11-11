@@ -4,7 +4,6 @@ import static com.kh.jsp.common.JDBCTemplate.*;
 
 import java.sql.Connection;
 
-import com.kh.jsp.notice.model.vo.Notice;
 import com.kh.jsp.products.model.vo.Product;
 import com.kh.jsp.reservation.model.dao.ReservationDAO;
 import com.kh.jsp.reservation.model.vo.Reservation;
@@ -43,6 +42,31 @@ public class ReservationService {
 		return p;
 			
 		
+	}
+
+	public Reservation selectOneReservationPreq(int preqno) {
+		con = getConnection();
+		
+		Reservation r = rDAO.selectOneReservationPreq(con, preqno);
+		
+		close(con);
+		
+		System.out.println(r);
+		
+		return r;
+	}
+
+	public int selectCurrentPreqno(int pno, String mname) {
+		con = getConnection();
+		
+		int result = rDAO.selectCurrentPreqno(con, pno, mname);
+		
+		if(result > 0) commit(con);
+		else rollback(con);
+		
+		close(con);
+		
+		return result;
 	}
 
 	

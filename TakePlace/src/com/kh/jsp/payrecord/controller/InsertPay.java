@@ -8,21 +8,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.jsp.payrecord.model.service.PayService;
-import com.kh.jsp.products.model.vo.Product;
+import com.kh.jsp.payrecord.model.vo.PayRecord;
 import com.kh.jsp.reservation.model.service.ReservationService;
 import com.kh.jsp.reservation.model.vo.Reservation;
 
 /**
- * Servlet implementation class SelectPay
+ * Servlet implementation class PayLink
  */
-@WebServlet("/selectPay.pa")
-public class SelectPay extends HttpServlet {
+@WebServlet("/insertPay.pa")
+public class InsertPay extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectPay() {
+    public InsertPay() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,39 +32,46 @@ public class SelectPay extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int pno = Integer.parseInt(request.getParameter("pno"));
-		System.out.println("pno= " + pno);
-		int preqno = Integer.parseInt(request.getParameter("preqno"));
+		/*
+		 * String page = "views/payrecord/paySuccess.jsp";
+		 * 
+		 * request.getRequestDispatcher(page).forward(request, response);
+		 */
+		
+		int mno = Integer.parseInt(request.getParameter("mno")); // 회원 번호
+		int preqno = Integer.parseInt(request.getParameter("preqno")); // 예약 고유 번호
+
+		PayRecord pr = new PayRecord();
+
+		//r.setPno(preqno);
+		pr.setMno(mno);
+		pr.setPreqno(preqno);
+		
+		//r.setPayAmount(payAmount);
 
 		PayService ps = new PayService();
 
-		String page = null;
+		//String page = "views/reservation/reservationWait.jsp";
+		String page = "views/payrecord/pay.jsp";
 		
+		System.out.println(pr);
+
 		try {
-			
-			Product p = ps.selectOnePay(pno);
-			
-			request.setAttribute("product", p);
-			
-			Reservation r = ps.selectOnePayReservation(preqno);
-			
-			request.setAttribute("reservation", r);
-			
-			//System.out.println(pno);
-			
-			page = "views/payrecord/pay.jsp";
-			
+
+			ps.insertPay(pr);
+			response.sendRedirect("views/payrecord/paySuccess.jsp");
+
 		} catch (Exception e) {
-			
+
 			request.setAttribute("exception", e);
-			request.setAttribute("error-msg", "예약 요청 실패!");
-			
+			request.setAttribute("error-msg", "예약 요청 페이지 조회 실패!");
+
 			page = "views/common/errorPage.jsp";
-			
+
 			e.printStackTrace();
-		} finally {
-			request.getRequestDispatcher(page).forward(request, response);
 		}
+		
+		
 		
 	}
 
