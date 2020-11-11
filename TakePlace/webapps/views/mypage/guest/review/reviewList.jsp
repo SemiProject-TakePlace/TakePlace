@@ -152,11 +152,12 @@
         vertical-align:baseline;
 }    
 
-    #ulTable > li > ul > li:first-child                  {width:10%;} /*No 크기*/
-    #ulTable > li > ul > li:first-child +li              {width:20%;} /*공 간 명 */
-    #ulTable > li > ul > li:first-child +li+li           {width:20%;} /*대여날짜*/
-    #ulTable > li > ul > li:first-child +li+li+li        {width:30%;} /*요구사항*/
-    #ulTable > li > ul > li:first-child +li+li+li+li     {width:20%;} /*승인여부*/
+    #ulTable > li > ul > li:first-child                  {width:10%;} 
+    #ulTable > li > ul > li:first-child +li              {width:10%;} 
+    #ulTable > li > ul > li:first-child +li+li           {width:15%;} 
+    #ulTable > li > ul > li:first-child +li+li+li        {width:30%;} 
+    #ulTable > li > ul > li:first-child +li+li+li+li     {width:10%;}
+    #ulTable > li > ul > li:first-child +li+li+li+li+li  {width:25%;} 
 
     #divPaging {
         clear:both; 
@@ -228,7 +229,7 @@
               <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/use/useList.jsp">이용 내역</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<%= request.getContextPath()%>/selectReview.me">이용 후기</a>
+              <a class="nav-link active" href="<%= request.getContextPath()%>/selectReview.me">이용 후기</a>
             </li>
             
             
@@ -279,7 +280,7 @@
               
                 <div class ="outer">
                 
-                <form action="#" method="post" id="create_waitingAccount" name="waitingForm">
+                <form action="<%= request.getContextPath() %>/selectOneProduct.pr?pno=<%= p.getPno() %>" method="post" id="create_waitingAccount" name="waitingForm">
              
                 <div class="outer">
                       <div id="mainWrapper">
@@ -293,6 +294,7 @@
                                               <li>공간 명</li>
                                               <li>후기 내용</li>
                                               <li>평점</li>
+                                              <li>후기작성</li>
                                        </ul>                                        
                                       </li>
                                       <!-- 게시물이 출력될 영역 -->                                 
@@ -300,7 +302,6 @@
                                       
                                       <li id="liContext">
                                           <ul>
-                                           
                                               <li><%= pr.getRno() %></li>
                                               
                                               <li><%= p.getPtype() %></li>
@@ -308,7 +309,11 @@
                                      
                                               <li><%= pr.getRcontent() %></li>   
                                               <li><%= pr.getRrating() %></li>
-                       
+                       						  
+                       						  <li>
+                       						  	<button class="btn btn-tp-custom-green">후기작성하기</button>
+                       						  </li>
+                       						  
                                           </ul>
                                       </li>
                                     <% } %>                              
@@ -321,26 +326,12 @@
                                </div>
                          
                 </form>
+               
                 
                 </div>   
               
          </div>
          
-               <script>
-               $(function(){
-                  $('#liContext ul li').mouseenter(function(){
-                     $(this).parent().css({"background" : "silver", "cursor" : "pointer"});
-                  }).mouseout(function(){
-                     $(this).parent().css({"background" : "black"});
-                  }).click(function(){
-                     var inqno = $(this).parent().children().eq(0).text();
-                     console.log(inqno);
-                     location.href = "<%= request.getContextPath() %>/selectQone.me?inqno=" + inqno; 
-                     
-                  });
-               });
-            </script>
-            
             <!-- 여기가 컨텐츠 끝 -->
          </div>
       </div>

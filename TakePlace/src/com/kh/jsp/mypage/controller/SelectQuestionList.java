@@ -34,7 +34,7 @@ public class SelectQuestionList extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			    // 1. 게시판 목록 처리용 변수
+			
 				ArrayList<Question> list = new ArrayList<>();
 				MypageService ms = new MypageService();
 				

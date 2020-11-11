@@ -34,14 +34,12 @@ public class SelectRevewList extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			// 1. 게시판 목록 처리용 변수
+			
 			ArrayList<ProductReview> list = new ArrayList<>();
 			Product p = new Product();
 			MypageService ms = new MypageService();
 			
 			HashMap<String, Object> product = ms.selectrReview(list, p);
-			
-			// Reservation r = new Reservation();
 			
 			String page = "";
 			

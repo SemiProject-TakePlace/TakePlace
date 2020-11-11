@@ -213,8 +213,10 @@ public class MypageDAO {
 	////////////////////////// 예약내역(게스트) ////////////////////////////////////
 	
 	
-	public ArrayList<Reservation> selectRList(Connection con, ArrayList<Reservation> list) {
-		list = new ArrayList<>();
+	public HashMap<String, Object> selectRList(Connection con, ArrayList<Reservation> list,
+			Product p) {
+		
+		HashMap<String, Object> hmap = new HashMap<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
@@ -242,7 +244,14 @@ public class MypageDAO {
 				r.setPayAmount(rset.getInt("payAmount"));
 			
 				list.add(r);
+				
+				p.setPno(rset.getInt("pno"));
+				p.setPname(rset.getString("pname"));
+				
 			}
+			
+			hmap.put("list", list);
+			hmap.put("p", p);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -251,7 +260,7 @@ public class MypageDAO {
 			close(rset);
 			close(pstmt);
 		}	
-		return list;
+		return hmap;
 	}
 
 	public ArrayList<PayRecord> selectPList(Connection con, ArrayList<PayRecord> list) {
@@ -280,54 +289,6 @@ public class MypageDAO {
 				p.setPayStatus(rset.getNString("paystatus").charAt(0));
 				
 				list.add(p);
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			
-		} finally {
-			close(rset);
-			close(pstmt);
-		}	
-		return list;
-	}
-
-	public ArrayList<ProductReview> selectrReviw(Connection con, ArrayList<ProductReview> list, ArrayList<Product> plist) {
-		list = new ArrayList<>();
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-	
-		String sql = prop.getProperty("selectReview");
-		
-		try {
-			pstmt = con.prepareStatement(sql);
-			
-			
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
-				
-				ProductReview pr = new ProductReview();
-				Product p = new Product();
-				
-				pr.setRno(rset.getInt("rno"));
-				pr.setPno(rset.getInt("pno"));
-				pr.setMno(rset.getInt("mno"));
-				pr.setRcontent(rset.getString("rcontent"));
-				pr.setRefrno(rset.getInt(5));
-				pr.setRrating(rset.getInt("rrating"));
-				pr.setRdate(rset.getDate("rdate"));
-				pr.setRlevel(rset.getInt("rlevel"));
-				
-				p.setPname(rset.getString("pname"));
-				p.setPtype(rset.getString("ptype"));
-				p.setPno(rset.getInt("pno"));
-				
-				list.add(pr);
-				plist.add(p);
-				
-				System.out.println("plist : " + plist);
-				System.out.println(list);
 			}
 			
 		} catch (SQLException e) {
@@ -377,8 +338,6 @@ public class MypageDAO {
 
 			hmap.put("list", list);
 			hmap.put("p", p);
-			
-			System.out.println(hmap);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
