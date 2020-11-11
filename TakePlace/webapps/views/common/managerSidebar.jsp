@@ -91,22 +91,13 @@
               <a class="nav-link active" href="<%=request.getContextPath()%>/memberList.ml?type=guest">회원관리</a>
             </li>
             <li class="nav-item dropdown-btn">
-              <a class="nav-link" href="#">상품 관리<i class="fa fa-chevron-down"></i></a>
+              <a class="nav-link" href="#">공간 관리<i class="fa fa-chevron-down"></i></a>
               <ul style="display: none;">
               	<li class="nav-item">
-	              <a class="nav-link nav-sub-link" href="http://localhost:8088/takeplace/views/mypage/manager/products/studyRoom.jsp">스터디룸</a>
+	              <a class="nav-link nav-sub-link" href="<%=request.getContextPath()%>/nonApprovalProductList.mp">공간 비승인 관리</a>
 	            </li>
-	            <li class="nav-item">
-	              <a class="nav-link nav-sub-link" href="http://localhost:8088/takeplace/views/mypage/manager/products/studioRoom.jsp">스튜디오</a>
-	            </li>
-	            <li class="nav-item">
-	              <a class="nav-link nav-sub-link" href="http://localhost:8088/takeplace/views/mypage/manager/products/seminarRoom.jsp">세미나룸</a>
-	            </li>
-	            <li class="nav-item">
-	              <a class="nav-link nav-sub-link" href="http://localhost:8088/takeplace/views/mypage/manager/products/partyRoom.jsp">파티룸</a>
-	            </li>
-	            <li class="nav-item">
-	              <a class="nav-link nav-sub-link" href="http://localhost:8088/takeplace/views/mypage/manager/products/officeRoom.jsp">오피스</a>
+              	<li class="nav-item">
+	              <a class="nav-link nav-sub-link" href="<%=request.getContextPath()%>/approvalProductList.mp">공간 승인 관리</a>
 	            </li>
               </ul>
             </li>

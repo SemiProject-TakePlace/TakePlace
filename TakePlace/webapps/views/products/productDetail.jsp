@@ -215,11 +215,11 @@
 	  			<% } else if (p.getPtype().equals("OFFICE")) {%>
 	  				<span class="font-green">오피스</span>
 	  			<% } %>
-
-					<button type="button" class="btn btn-tp-custom-green active" style="float:right;"
-						onclick="location.href='<%= request.getContextPath() %>/updateProductView.pr?pno='+<%=p.getPno()%>">상품 수정
-					</button>
-					
+				<%if(mem.getBsnum() != null && mem.getBsnum().equals(p.getBsNum())) { %>
+				<button type="button" class="btn btn-tp-custom-green active" style="float:right;"
+					onclick="location.href='<%= request.getContextPath() %>/updateProductView.pr?pno='+<%=p.getPno()%>">상품 수정
+				</button>
+				<% } %>
 			</h2>
 		</div>
 		<div class="product-detail">
@@ -441,8 +441,8 @@
 														<p class="host-date text-muted"><%= pr.getRdate() %></p> <!-- pr.getRdate() -->
 													</div>
 												</li>
-					      	 				<% } %>
-					      	 				<%if(pr.getRlevel() == 1 && mem.getBsnum().equals(p.getBsNum())) { %>
+					      	 				<% } %> 
+					      	 				<%if(mem.getBsnum() != null && mem.getBsnum().equals(p.getBsNum())) { %>
 												<button class="btn btn-tp-custom-white ml-2 my-2 my-sm-0" type="button"
 														style="float:right; padding: 5px; font-size:10px;"
 														onclick="writeReply(this)">답글 남기기</button>
@@ -467,12 +467,21 @@
 				</div>
 		
 		<!-- 관리자로 로그인했을때 / 승인 리스트에 들어와있을때 보여주기 -->
-		<div class="btn-area text-center mt-5">
-			<!-- 승인 일때는 DB에 들어간 공간정보 유지 -->
-			<button class="btn btn-tp-custom-green mr-3" onclick="">승인</button>
-			<!-- 비승인 일때는 DB에 들어간 공간 정보 삭제 -->
-			<button class="btn btn-tp-custom-white ml-3" onclick="">비승인</button>
-		</div>
+		<% if(mem.getMtype().equals("MANAGER") && p.getPisOk().equals("N")) { %>
+			<div class="btn-area text-center mt-5">
+				<!-- 승인 일때는 DB에 들어간 공간정보 유지 -->
+				<form action="approvalProduct.mp" method="post">
+					<input type="hidden" name="pno" value="<%= p.getPno() %>" />
+					<input type="hidden" name="approval" value="<%= p.getPisOk() %>" />
+					<button class="btn btn-tp-custom-green mr-3 approval">승인</button>
+				</form>
+				<!-- 비승인 일때는 DB에 들어간 공간 정보 삭제 -->
+				<form action="nonApprovalProduct.mp" method="post">
+					<input type="hidden" name="pno" value="<%= p.getPno() %>" />
+					<button class="btn btn-tp-custom-white ml-3 nonApproval">비승인</button>
+				</form>
+			</div>
+		<% } %>
 	</section>
 	<% } else {
 		request.setAttribute("error-msg", "회원 가입 후 이용 가능합니다.");

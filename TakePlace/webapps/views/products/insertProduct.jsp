@@ -49,7 +49,7 @@ input[type="file"] {
 
 	<%@ include file="../common/header.jsp" %>
 	
-	<% if(mem != null && mem.getMtype().equals("HOST")) { %>
+	<% if(mem != null && ((mem.getHisok().equals("Y")) || mem.getMtype().equals("MANAGER"))) { %>
 	<section id="wrap-contents">
 		<div class="container">
 			<h2 class="content-title">공간 등록</h2>
