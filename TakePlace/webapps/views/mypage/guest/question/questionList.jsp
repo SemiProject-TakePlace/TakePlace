@@ -3,11 +3,11 @@
 <%
     ArrayList<Question> list = (ArrayList<Question>)request.getAttribute("list");
     PageInfo pi = (PageInfo)request.getAttribute("pi");
-	int listCount = pi.getListCount();
-	int currentPage = pi.getCurrentPage();
-	int maxPage = pi.getMaxPage();
-	int startPage = pi.getStartPage();
-	int endPage = pi.getEndPage();
+   int listCount = pi.getListCount();
+   int currentPage = pi.getCurrentPage();
+   int maxPage = pi.getMaxPage();
+   int startPage = pi.getStartPage();
+   int endPage = pi.getEndPage();
 %>
 <!DOCTYPE html>
 <html>
@@ -106,10 +106,11 @@
 
 .outer{
       width:auto;
-      height:600px;
+      height:300px;
       margin-left:auto;
       margin-right:auto;
       margin-top:50px;
+      margin-bottom:50px;
    }
    
    
@@ -222,7 +223,7 @@
               <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/profile/guestPageProfile.jsp">프로필</a>
             </li>
             <li class="nav-item">
-			  <a class="nav-link" href="<%= request.getContextPath()%>/selectRlist.me">예약 현황</a>
+           <a class="nav-link" href="<%= request.getContextPath()%>/selectRlist.me">예약 현황</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="<%= request.getContextPath()%>/selectPlist.me">결제 내역</a>
@@ -234,7 +235,7 @@
               <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/use/useList.jsp">이용 내역</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/review/reviewList.jsp">이용 후기</a>
+              <a class="nav-link" href="<%= request.getContextPath()%>/selectReview.me">이용 후기</a>
             </li>
             <%  } else { %>
             <li class="nav-item">
@@ -342,33 +343,33 @@
                 </form>
                 
                 <div class="pagingArea" align="center">
-		
-		<button onclick="location.href='<%= request.getContextPath() %>/selectQlist.me?currentPage=1'"><<</button>
-			<%  if(currentPage <= 1){  %>
-			<button disabled><</button>
-			<%  }else{ %>
-			<button onclick="location.href='<%= request.getContextPath() %>/selectQlist.me?currentPage=<%=currentPage - 1 %>'"><</button>
-			<%  } %>
-			
-			<% for(int p = startPage; p <= endPage; p++){
-					if(p == currentPage){	
-			%>
-				<button disabled><%= p %></button>
-			<%      }else{ %>
-				<button onclick="location.href='<%= request.getContextPath() %>/selectQlist.me?currentPage=<%= p %>'"><%= p %></button>
-			<%      } %>
-			<% } %>
-				
-			<%  if(currentPage >= maxPage){  %>
-			<button disabled>></button>
-			<%  }else{ %>
-			<button onclick="location.href='<%= request.getContextPath() %>/selectQlist.me?currentPage=<%=currentPage + 1 %>'">></button>
-			<%  } %>
-			<button onclick="location.href='<%= request.getContextPath() %>/selectQlist.me?currentPage=<%= maxPage %>'">>></button>
-		
-		</div>
+      
+      <button class="btn btn-tp-custom-white" onclick="location.href='<%= request.getContextPath() %>/selectQlist.me?currentPage=1'"><<</button>
+         <%  if(currentPage <= 1){  %>
+         <button class="btn btn-tp-custom-white" disabled><</button>
+         <%  }else{ %>
+         <button class="btn btn-tp-custom-white" onclick="location.href='<%= request.getContextPath() %>/selectQlist.me?currentPage=<%=currentPage - 1 %>'"><</button>
+         <%  } %>
+         
+         <% for(int p = startPage; p <= endPage; p++){
+               if(p == currentPage){   
+         %>
+            <button class="btn btn-tp-custom-white" disabled><%= p %></button>
+         <%      }else{ %>
+            <button class="btn btn-tp-custom-white" onclick="location.href='<%= request.getContextPath() %>/selectQlist.me?currentPage=<%= p %>'"><%= p %></button>
+         <%      } %>
+         <% } %>
+            
+         <%  if(currentPage >= maxPage){  %>
+         <button class="btn btn-tp-custom-white" disabled>></button>
+         <%  }else{ %>
+         <button class="btn btn-tp-custom-white" onclick="location.href='<%= request.getContextPath() %>/selectQlist.me?currentPage=<%=currentPage + 1 %>'">></button>
+         <%  } %>
+         <button class="btn btn-tp-custom-white" onclick="location.href='<%= request.getContextPath() %>/selectQlist.me?currentPage=<%= maxPage %>'">>></button>
+      
+      </div>
                 
-                      
+                      <br>
                          <div class="btnArea" align="center">
                         <% if ( mem != null ) { 
                          if( mem.getMtype().equals("GUEST")){ %>
@@ -387,6 +388,18 @@
                 </div>   
               
          </div>
+         
+         
+         
+         
+         
+      
+      
+      
+      
+      
+      
+      
          
                <script>
                $(function(){

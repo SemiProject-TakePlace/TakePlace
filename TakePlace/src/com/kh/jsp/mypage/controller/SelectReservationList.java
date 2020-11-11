@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.jsp.mypage.model.service.MypageService;
+import com.kh.jsp.products.model.vo.Product;
 import com.kh.jsp.reservation.model.vo.Reservation;
 
 /**
@@ -35,25 +36,16 @@ public class SelectReservationList extends HttpServlet {
 		ArrayList<Reservation> list = new ArrayList<>();
 		MypageService ms = new MypageService();
 		
-		Reservation r = new Reservation();
-		
+		// Reservation r = new Reservation();
+	
 		list = ms.selectRList(list);
 		
 		String page = "";
 		
 		request.setAttribute("Rlist", list);
+		
 		page = "views/mypage/guest/reservation/reservationList.jsp";
-		
-//		if( list != null && list.size() > 0) {
-//			
-//			request.setAttribute("Rlist", list);
-//			
-//			page = "views/mypage/guest/reservation/reservationList.jsp";
-//		} else {
-//			request.setAttribute("error-msg", "예약내역 조회 실패");
-//			page = "views/common/errorPage.jsp";
-//		}
-		
+	
 		request.getRequestDispatcher(page).forward(request, response);
 		
 	}
