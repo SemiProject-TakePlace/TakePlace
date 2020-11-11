@@ -15,6 +15,7 @@
 	
 	ArrayList<ProductReview> rlist = (ArrayList<ProductReview>)request.getAttribute("rlist");
 	
+	int rating = (int)request.getAttribute("rating");
 %>
 <!DOCTYPE html>
 <html>
@@ -322,9 +323,7 @@
 						<dt class="font-bold font-green">가격</dt>
 						<dd><%= p.getPprice() %></dd>
 						<dt class="font-bold font-green">HOST 평점</dt>
-						<dd>10.0</dd> <!-- 호스트의 시설평점 / 시설 개수 -->
-						<dt class="font-bold font-green">시설 평점</dt>
-						<dd><%= p.getPrating() %></dd>
+						<dd><%= rating %></dd>
 					</dl>
 				</div>
 				
@@ -395,13 +394,13 @@
 								<div class="replyWriteArea write-review" style="display: none;">
 									
 										<form action="<%= request.getContextPath()%>/insertProductReview.re" method="post">
-											<input type="text" name="mname" value="<%= mem.getMname() %>"/>
-											<input type="text" name="mno" value="<%= mem.getMno() %>"/>
+											<input type="hidden" name="mname" value="<%= mem.getMname() %>"/>
+											<input type="hidden" name="mno" value="<%= mem.getMno() %>"/>
 											<input type="hidden" name="pno" value="<%= p.getPno() %>" />
 											<input type="hidden" name="refrno" value="0" />
 											<input type="hidden" name="rlevel" value="1" />
 											<label for="pRating" class="font-green font-bold" style="float: left; margin: 5px 10px 20px 5px" >평점</label>
-											<input type=text id="pRating" name="pRating" class="form-control" />
+											<input type="number" min="0" max="10" id="pRating" name="pRating" class="form-control" />
 											<textarea id="reviewContent" name="reviewContent" rows="5" style='width: 100%;'></textarea>
 											<button type="submit" class="btn btn-tp-custom-green mr-3 btn-confirm-review"
 												style="display:block;">이용후기 등록</button>
@@ -434,11 +433,11 @@
 					      	 				<% } else if( pr.getRlevel() == 2 ) { %>
 					      	 					<li class="rlist">
 					      	 					<div class="host-reply reply<%=pr.getRlevel()%>">
-														<p class="host-name font-green">호스트님의 답글</p> <!-- pr.getMame() -->
+														<p class="host-name font-green">호스트님의 답글</p>
 														<p class="reply-detail mb-2">
-															<%= pr.getRcontent() %> <!-- pr.getRcontent() -->
+															<%= pr.getRcontent() %>
 														</p>
-														<p class="host-date text-muted"><%= pr.getRdate() %></p> <!-- pr.getRdate() -->
+														<p class="host-date text-muted"><%= pr.getRdate() %></p>
 													</div>
 												</li>
 					      	 				<% } %> 
