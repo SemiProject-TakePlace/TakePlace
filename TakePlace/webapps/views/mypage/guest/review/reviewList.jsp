@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.kh.jsp.reservation.model.vo.*, java.util.*, com.kh.jsp.products.model.vo.*" %>
+    pageEncoding="UTF-8" import="com.kh.jsp.productReview.model.vo.*, java.util.*, com.kh.jsp.products.model.vo.*" %>
 <%
-   ArrayList<Reservation> list = (ArrayList<Reservation>)request.getAttribute("list");
+   ArrayList<ProductReview> list = (ArrayList<ProductReview>)request.getAttribute("list");
    Product p = (Product)request.getAttribute("p");
 %>
 <!DOCTYPE html>
@@ -152,12 +152,12 @@
         vertical-align:baseline;
 }    
 
-    #ulTable > li > ul > li:first-child                  {width:10%;} /*No 크기*/
-    #ulTable > li > ul > li:first-child +li              {width:20%;} /*공 간 명 */
-    #ulTable > li > ul > li:first-child +li+li           {width:20%;} /*대여날짜*/
-    #ulTable > li > ul > li:first-child +li+li+li        {width:30%;} /*요구사항*/
-    #ulTable > li > ul > li:first-child +li+li+li+li     {width:10%;} /*승인여부*/
-   #ulTable > li > ul > li:first-child +li+li+li+li+li  {width:10%;} /*승인여부*/
+    #ulTable > li > ul > li:first-child                  {width:10%;} 
+    #ulTable > li > ul > li:first-child +li              {width:10%;} 
+    #ulTable > li > ul > li:first-child +li+li           {width:15%;} 
+    #ulTable > li > ul > li:first-child +li+li+li        {width:30%;} 
+    #ulTable > li > ul > li:first-child +li+li+li+li     {width:10%;}
+    #ulTable > li > ul > li:first-child +li+li+li+li+li  {width:25%;} 
 
     #divPaging {
         clear:both; 
@@ -217,7 +217,7 @@
               <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/profile/guestPageProfile.jsp">프로필</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="<%= request.getContextPath()%>/selectRlist.me">예약 현황</a>
+              <a class="nav-link" href="<%= request.getContextPath()%>/selectRlist.me">예약 현황</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="<%= request.getContextPath()%>/selectPlist.me">결제 내역</a>
@@ -229,7 +229,7 @@
               <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/use/useList.jsp">이용 내역</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<%= request.getContextPath()%>/selectReview.me">이용 후기</a>
+              <a class="nav-link active" href="<%= request.getContextPath()%>/selectReview.me">이용 후기</a>
             </li>
             
             
@@ -268,10 +268,10 @@
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/index">Home</a></li>
                 <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/views/mypage/guest/profile/guestPageProfile.jsp">마이페이지</a></li>
-                <li class="breadcrumb-item active" aria-current="page">예약 현황</li>
+                <li class="breadcrumb-item active" aria-current="page">이용 후기</li>
               </ol>
             </nav>
-            <h2 class="content-title">예약 현황</h2>
+            <h2 class="content-title">이용 후기</h2>
             
             <!-- 여기서부터 자유롭게 컨텐츠 잡으면서 시작 -->
             
@@ -280,8 +280,7 @@
               
                 <div class ="outer">
                 
-                <form action="<%= request.getContextPath() %>/selectPay.pa" method="post" id="create_waitingAccount" name="waitingForm">
-             
+               
                 <div class="outer">
                       <div id="mainWrapper">
                           <ul>
@@ -290,41 +289,33 @@
                                       <li>                                 
                                           <ul>
                                               <li>No</li>
+                                              <li>공간 유형</li>
                                               <li>공간 명</li>
-                                              <li>대여 날짜</li>
-                                              <li>요구 사항</li>
-                                              <li>승인 여부</li>
-                                              <li>결제</li>
+                                              <li>후기 내용</li>
+                                              <li>평점</li>
+                                              <li>후기작성</li>
                                        </ul>                                        
                                       </li>
                                       <!-- 게시물이 출력될 영역 -->                                 
-                                      <% for(Reservation r : list) { %>
-                                      <% if(p.getMno() == mem.getMno()) { %>
-                               <input type="hidden" name="pno" value="<%= p.getPno() %>"/>
-                               <input type="hidden" name="preqno" value="<%= r.getPreqno() %>"/>
-                                      
+                                      <% for(ProductReview pr : list) { %>
+                                      <% if(pr.getMno() == mem.getMno()) { %>
                                       <li id="liContext">
                                           <ul>
-                                              <li><%= r.getPreqno() %></li>
-                                              <li><%= p.getPname() %></li>
-                                              <li><%= r.getResDate() %></li>
-                                              <li><%= r.getGdemand() %></li>
-                                              <% if(r.getPisOk() == 'N'){ %>
-                                              <li>미승인</li>
-                                              <li>
-                                                    <button class="btn btn-tp-custom-green" hidden="hidden">결제하기</button>
-                                               </li>
-                                              <% } else { %>
-                                               <li>승인</li>
-                                               <li>
-                                                    <button class="btn btn-tp-custom-green">결제하기</button>
-                                               </li>
-                                                <% } %>
+                                              <li><%= pr.getRno() %></li>
                                               
+                                              <li><%= pr.getPtype() %></li>
+                                              <li><%= pr.getPname() %></li>
+                                     
+                                              <li><%= pr.getRcontent() %></li>   
+                                              <li><%= pr.getRrating() %></li>
+                       						  
+                       						  <li>
+                       						  	<button class="btn btn-tp-custom-green" onclick="location.href='<%= request.getContextPath() %>/selectOneProduct.pr?pno=<%= pr.getPno() %>'">후기작성하기</button>
+                       						  </li>
                                           </ul>
                                       </li>
-                                   <% } %> 
-                                  <% } %>                        
+                                       <% } %>  
+                                    <% } %>                              
                                   </ul>
                               </li>
                               </ul>
@@ -332,15 +323,12 @@
                                   </div> 
                                  
                                </div>
-                              
-                         
-                </form>
+              
                 
                 </div>   
               
          </div>
          
-            
             <!-- 여기가 컨텐츠 끝 -->
          </div>
       </div>
