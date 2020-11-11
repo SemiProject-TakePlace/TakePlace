@@ -67,29 +67,30 @@ public class InsertReservation extends HttpServlet {
 
 		//String page = "views/reservation/reservationWait.jsp";
 		//String page = "views/payrecord/pay.jsp";
-		String page = "selectPay.pa";
+		String page = "selectRlist.me";
 		
 		System.out.println(r);
 
 		try {
-
-			rs.insertReservation(r);
-			//response.sendRedirect("selectPay.pa");
-			
 			Product p = rs.selectOneReservation(pno);
 			request.setAttribute("product", p);
+
+			rs.insertReservation(r);
+			//response.sendRedirect("selectRlist.me");
+			page = "selectRlist.me";
 			
-			HttpSession session = request.getSession();
-			AllMember m = (AllMember)session.getAttribute("member");
-			System.out.println(pno + m.getMname());
 			
-			int preqno = rs.selectCurrentPreqno(pno, m.getMname());
-			System.out.println(preqno);
+//			HttpSession session = request.getSession();
+//			AllMember m = (AllMember)session.getAttribute("member");
+//			System.out.println(pno + m.getMname());
+//			
+//			int preqno = rs.selectCurrentPreqno(pno, m.getMname());
+//			System.out.println(preqno);
 			
-			r = rs.selectOneReservationPreq(preqno);
-			request.setAttribute("reservation", r);
+			//r = rs.selectOneReservationPreq(preqno);
+			//request.setAttribute("reservation", r);
 			
-			page = "selectPay.pa";
+			//page = "selectPay.pa";
 
 		} catch (Exception e) {
 

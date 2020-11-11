@@ -66,7 +66,7 @@ public class PayDAO {
 			close(pstmt);
 		}
 		
-		System.out.println(p);
+		//System.out.println(p);
 		
 		
 		
@@ -118,6 +118,8 @@ public class PayDAO {
 		return result;
 	}
 
+	
+	/*
 	public Reservation selectOneReservation(Connection con, int preqno) {
 		Reservation r = null;
 		PreparedStatement pstmt = null;
@@ -152,5 +154,6 @@ public class PayDAO {
 		
 		return r;
 	}
+	*/
 
 }

@@ -157,7 +157,7 @@
     #ulTable > li > ul > li:first-child +li+li           {width:20%;} /*대여날짜*/
     #ulTable > li > ul > li:first-child +li+li+li        {width:30%;} /*요구사항*/
     #ulTable > li > ul > li:first-child +li+li+li+li     {width:10%;} /*승인여부*/
-	#ulTable > li > ul > li:first-child +li+li+li+li+li  {width:10%;} /*승인여부*/
+   #ulTable > li > ul > li:first-child +li+li+li+li+li  {width:10%;} /*승인여부*/
 
     #divPaging {
         clear:both; 
@@ -280,7 +280,7 @@
               
                 <div class ="outer">
                 
-                <form action="#" method="post" id="create_waitingAccount" name="waitingForm">
+                <form action="<%= request.getContextPath() %>/selectPay.pa" method="post" id="create_waitingAccount" name="waitingForm">
              
                 <div class="outer">
                       <div id="mainWrapper">
@@ -299,27 +299,31 @@
                                       </li>
                                       <!-- 게시물이 출력될 영역 -->                                 
                                       <% for(Reservation r : list) { %>
+                               <input type="hidden" name="pno" value="<%= p.getPno() %>"/>
+                               <input type="hidden" name="preqno" value="<%= r.getPreqno() %>"/>
+                                      
                                       <li id="liContext">
                                           <ul>
                                               <li><%= r.getPreqno() %></li>
-                                              <li><%= p.getPname() %></li>
+                                              <li><%= r.getPname() %></li>
                                               <li><%= r.getResDate() %></li>
                                               <li><%= r.getGdemand() %></li>
                                               <% if(r.getPisOk() == 'N'){ %>
                                               <li>미승인</li>
                                               <li>
-                                               	  <button class="btn btn-tp-custom-green" hidden="hidden">결제하기</button>
+                                                    <button class="btn btn-tp-custom-green" hidden="hidden">결제하기</button>
                                                </li>
                                               <% } else { %>
                                                <li>승인</li>
                                                <li>
-                                               	  <button class="btn btn-tp-custom-green">결제하기</button>
+                                                    <button class="btn btn-tp-custom-green">결제하기</button>
                                                </li>
                                                 <% } %>
                                               
                                           </ul>
                                       </li>
-                                   <% } %>                       
+                           
+                                  <% } %>                        
                                   </ul>
                               </li>
                               </ul>
@@ -327,6 +331,7 @@
                                   </div> 
                                  
                                </div>
+                              
                          
                 </form>
                 

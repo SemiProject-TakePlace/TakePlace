@@ -3,7 +3,7 @@
 <%
 	Reservation r = (Reservation)request.getAttribute("reservation");
 	
-	Product p = (Product)request.getAttribute("product");
+	//Product p = (Product)request.getAttribute("product");
 	
 	int price = Integer.parseInt(request.getParameter("num"))
 			* Integer.parseInt(request.getParameter("price"));
