@@ -43,7 +43,7 @@ public class Index extends HttpServlet {
 		
 		if(list != null) {
 			request.setAttribute("list", list);
-			request.setAttribute("list", listTop);
+			request.setAttribute("listTop", listTop);
 			page = "index.jsp";
 		} else {
 			request.setAttribute("error-msg", "공간 유형 리스트 목록 조회 실패");
