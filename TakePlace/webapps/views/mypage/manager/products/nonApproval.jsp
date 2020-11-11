@@ -84,8 +84,7 @@
 	<script>
 		$("#proInfo td").click(function() {
 			var pno = $(this).parent().children().eq(0).text();
-			console.log(pno);
-			location.href="<%=request.getContextPath()%>/selectOneProduct.pr?pno=" + pno;
+			location.href="<%=request.getContextPath()%>/selectOneProduct.pr?pno="+pno;
 		});
 	</script>
 </body>

@@ -43,7 +43,6 @@ public class SelectOneProduct extends HttpServlet {
         						= new ProductReviewService().selectList(pno);
 		
 		String page = "";
-		
 
 		if(product != null && product.get("product") != null) {
 			request.setAttribute("product", product.get("product"));
@@ -54,7 +53,7 @@ public class SelectOneProduct extends HttpServlet {
 			
 		} else {
 			request.setAttribute("exception", new Exception("공간 상세 조회 실패"));
-			request.setAttribute("error-msg", "공간상세 조회 실패");
+			request.setAttribute("error-msg", "공간 상세 조회 실패");
 			
 			page ="views/common/errorPage.jsp";
 		}

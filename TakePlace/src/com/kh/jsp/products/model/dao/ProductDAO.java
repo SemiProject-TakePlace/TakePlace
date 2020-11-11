@@ -59,6 +59,7 @@ public class ProductDAO {
 				p.setPname(rset.getString("pname"));
 				p.setPprice(rset.getInt("pprice"));
 				p.setPrating(rset.getInt("prating"));
+				p.setBsNum(rset.getString("bsnum"));
 				
 				list.add(p);
 			}
@@ -311,6 +312,7 @@ public class ProductDAO {
 				p.setPaddress(rset.getString("paddress"));
 				p.setPguide(rset.getString("pguide"));
 				p.setPwarn(rset.getString("pwarn"));
+				p.setPisOk(rset.getString("pisok"));
 				
 				ProductImages pi = new ProductImages();
 				
