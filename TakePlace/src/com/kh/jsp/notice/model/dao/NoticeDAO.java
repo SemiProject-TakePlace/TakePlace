@@ -152,7 +152,7 @@ public class NoticeDAO {
 		return result;
 	}
 
-	public ArrayList<Notice> searchList(Connection con, String condition, String keyword) throws NoticeException {
+	public ArrayList<Notice> searchList(Connection con, String keyword) throws NoticeException {
 		
 		ArrayList<Notice> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
@@ -160,17 +160,6 @@ public class NoticeDAO {
 		
 		String sql = null;
 		
-		switch (condition) {
-		case "writer" :   // 작성자로 검색 시
-			sql = prop.getProperty("searchWriter");
-			break;
-		case "title" :    // 제목으로 검색 시
-			sql = prop.getProperty("searchTitle");
-			break;
-		case "content" :  // 내용으로 검색 시
-			sql = prop.getProperty("searchContent");
-			break;
-		}
 		
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -182,12 +171,9 @@ public class NoticeDAO {
 			while(rset.next()) {
 				Notice n = new Notice();
 				
-				n.setNno(rset.getInt(1));
+				n.setNwriter(rset.getString(1));
 				n.setNtitle(rset.getString(2));
-			//	n.setNcontent(rset.getString(3));
-				n.setNwriter(rset.getString(4));
-			//	n.setNcount(rset.getInt(5));
-			//	n.setNdate(rset.getDate(6));
+				n.setNcontent(rset.getString(3));
 				
 				list.add(n);
 			}
@@ -220,7 +206,8 @@ public class NoticeDAO {
 			pstmt.setString(1, keyword);
 			pstmt.setString(2, keyword);
 			pstmt.setString(3, keyword);
-			
+
+		
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
@@ -228,10 +215,9 @@ public class NoticeDAO {
 				
 				n.setNno(rset.getInt(1));
 				n.setNtitle(rset.getString(2));
-			//	n.setNcontent(rset.getString(3));
-				n.setNwriter(rset.getString(4));
-			//	n.setNcount(rset.getInt(5));
-			//	n.setNdate(rset.getDate(6));
+				n.setNwriter(rset.getString(3));
+				n.setNcontent(rset.getString(4));
+				n.setCredate(rset.getDate(5));
 				
 				list.add(n);
 			}
