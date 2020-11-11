@@ -81,30 +81,21 @@ public class MypageService {
 		return result;
 	}
 
-	public ArrayList<Reservation> selectRList(ArrayList<Reservation> list) {
+	public HashMap<String, Object> selectRList(ArrayList<Reservation> list, Product p) {
 		con = getConnection();
 		
-		list = mDAO.selectRList(con, list);
+		HashMap<String, Object> hmap = mDAO.selectRList(con, list, p);
 		
 		close(con);
 		
-		return list;
+		
+		return hmap;
 	}
 
 	public ArrayList<PayRecord> selectPList(ArrayList<PayRecord> list) {
 		con = getConnection();
 		
 		list = mDAO.selectPList(con, list);
-		
-		close(con);
-		
-		return list;
-	}
-
-	public ArrayList<ProductReview> selectrReviw(ArrayList<ProductReview> list, ArrayList<Product> plist) {
-		con = getConnection();
-		
-		list = mDAO.selectrReviw(con, list, plist);
 		
 		close(con);
 		

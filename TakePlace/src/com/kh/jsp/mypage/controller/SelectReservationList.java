@@ -2,6 +2,7 @@ package com.kh.jsp.mypage.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,18 +35,26 @@ public class SelectReservationList extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 1. 게시판 목록 처리용 변수
 		ArrayList<Reservation> list = new ArrayList<>();
+		Product p = new Product();
 		MypageService ms = new MypageService();
 		
-		// Reservation r = new Reservation();
+		HashMap<String, Object> product = ms.selectRList(list, p);
 	
-		list = ms.selectRList(list);
-		
 		String page = "";
 		
-		request.setAttribute("Rlist", list);
+		if(product != null && product.get("list") != null) {
+			request.setAttribute("list", product.get("list"));
+			request.setAttribute("p", product.get("p"));
+
+			page = "views/mypage/guest/reservation/reservationList.jsp";
+			
+		} else {
+			request.setAttribute("exception", new Exception("예약 현황 조회 실패"));
+			request.setAttribute("error-msg", "예약 현화 조회 실패");
+			
+			page ="views/common/errorPage.jsp";
+		}
 		
-		page = "views/mypage/guest/reservation/reservationList.jsp";
-	
 		request.getRequestDispatcher(page).forward(request, response);
 		
 	}
