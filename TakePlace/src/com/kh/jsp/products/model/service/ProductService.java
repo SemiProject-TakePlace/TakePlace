@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.kh.jsp.notice.model.vo.Notice;
 import com.kh.jsp.products.model.dao.ProductDAO;
 import com.kh.jsp.products.model.vo.Product;
 import com.kh.jsp.products.model.vo.ProductImages;

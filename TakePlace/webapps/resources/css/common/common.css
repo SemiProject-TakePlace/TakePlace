@@ -217,10 +217,11 @@ a:hover { text-decoration: none; }
 
 }
 
-.product-card .col {
+.product-card .pcard {
 	cursor: pointer;
     padding: 0;
     margin: 0 15px;
+    flex-grow: 0;
 }
 
 .product-card .card {

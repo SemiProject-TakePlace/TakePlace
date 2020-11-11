@@ -27,14 +27,6 @@
 		width: 150px;
 	}
 	
-	.search-area #searchType2 {
-		width: 200px;
-	}
-	
-	.product-list-content {
-		background : rgb(240, 240, 240);
-	}
-	
 	.product-list {
 	    color: #656565;
         margin: 0 auto 30px auto;
@@ -94,7 +86,6 @@
 					 </div>
 				<% } %> 
 			</div>
-			<!-- 각 상품 클릭 시 쿼리 작성하여 DB에서 유형별로 다시 받아오기 -->
 			<ul class="product-list">
 				<li id="all"><a>전체</a></li>
 				<li id="study"><a>스터디룸</a></li>
@@ -107,10 +98,8 @@
 			<div class="product-list-content">
 				<div class="product-card">
 					<div class="row">
-						<!-- 여기서부터 for문 사용하여 여러 개 상품 돌리기 -->
 						<% for(Product p : list) { %>
-					
-						<div class="col">
+						<div class="pcard">
 							<input type="hidden" name="pno" id="pno" value="<%= p.getPno() %>" />
 								<div class="card">
 								  <img src="<%=request.getContextPath() %>/resources/images/product/<%= p.getMno()%>/<%= p.getProductFile() %>"
@@ -176,9 +165,6 @@
 			if (url.indexOf("?type=study") > -1 ) {
 			     $("#study").addClass("active");
 			     $(".product-name").text("스터디룸");
-			     // $("select#searchType2").change(function(){
-			    //	 var orderBy = $(this).children(":selected").val();
-				//	});
 			} else if (url.indexOf("?type=studio") > -1 ) {
 			     $("#studio").addClass("active");
 			     $(".product-name").text("스튜디오");
@@ -196,7 +182,7 @@
 			     $(".product-name").text("전체");
 			}
 			
-			$(".col").click(function() {
+			$(".pcard").click(function() {
 				var pno = $(this).children("#pno").val();
 				location.href="<%= request.getContextPath()%>/selectOneProduct.pr?pno=" + pno;
 			})

@@ -478,6 +478,7 @@
 				<!-- 비승인 일때는 DB에 들어간 공간 정보 삭제 -->
 				<form action="nonApprovalProduct.mp" method="post">
 					<input type="hidden" name="pno" value="<%= p.getPno() %>" />
+					<input type="hidden" name="approval" value="<%= p.getPisOk() %>" />
 					<button class="btn btn-tp-custom-white ml-3 nonApproval">비승인</button>
 				</form>
 			</div>
@@ -499,16 +500,10 @@
 		    var startMonth = ableDate[0].substr(5, 2);
 		    var startDay = ableDate[0].substr(8, 2);
 		    var startTime = ableDate[0].substr(11, 2);
-		    var endYear = ableDate[1].substr(0, 4);
-		    var endMonth = ableDate[1].substr(5, 2);
-		    var endDay = ableDate[1].substr(8, 2);
 		    
 		    var fromAbleDate = new Date(startYear, startMonth - 1 , startDay);
-		    var toAbleDate = new Date(endYear, endMonth - 1 , endDay);
-		   
 			var start = new Date(startYear, startMonth - 1 , startDay),
 								prevDay;		
-			var end = new Date(endYear, endMonth - 1 , endDay);			
 
 		    $("#selectDate").datepicker({
 		    	multipleDates: true,

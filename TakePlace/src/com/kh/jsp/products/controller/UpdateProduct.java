@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.kh.jsp.common.MyRenamePolicy;
-import com.kh.jsp.member.model.vo.Host;
+import com.kh.jsp.member.model.vo.AllMember;
 import com.kh.jsp.products.model.service.ProductService;
 import com.kh.jsp.products.model.vo.Product;
 import com.kh.jsp.products.model.vo.ProductImages;
@@ -42,7 +42,7 @@ public class UpdateProduct extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		Host ho = (Host)session.getAttribute("host");
+		AllMember mem = (AllMember)session.getAttribute("member");
 
 	      int maxSize = 1024 * 1024 * 10; // 10MB
 	
@@ -54,7 +54,7 @@ public class UpdateProduct extends HttpServlet {
 		
 		String root = request.getServletContext().getRealPath("/resources/images");
 		
-		String savePath = root + "/product/" + ho.getMno() + "/";
+		String savePath = root + "/product/" + mem.getMno() + "/";
 		
 		File folder = new File(savePath);
 		if(!folder.exists()) {
@@ -120,8 +120,8 @@ public class UpdateProduct extends HttpServlet {
 			response.sendRedirect("index");
 			// 승인 기다려달라는 페이지 만들어서 거기로 보내야함
 		} else {
-			request.setAttribute("exception", new Exception("사진 추가 에러!"));
-	        request.setAttribute("error-msg", "사진 추가에 실패하였습니다. 관리자에게 문의하세요.");
+			request.setAttribute("exception", new Exception("공간 수정 에러!"));
+	        request.setAttribute("error-msg", "공간 수정에 실패하였습니다. 관리자에게 문의하세요.");
 	        request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
 	}
