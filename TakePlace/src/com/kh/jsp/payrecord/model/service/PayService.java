@@ -33,22 +33,22 @@ public class PayService {
 		
 		close(con);
 		
-		System.out.println(p);
+		//System.out.println(p);
 		
 		return p;
 	}
 	
-	public Reservation selectOnePayReservation(int preqno) {
-		con = getConnection();
-		
-		Reservation r = pDAO.selectOneReservation(con, preqno);
-		
-		close(con);
-		
-		System.out.println(r);
-		
-		return r;
-	}
+//	public Reservation selectOnePayReservation(int preqno) {
+//		con = getConnection();
+//		
+//		Reservation r = pDAO.selectOneReservation(con, preqno);
+//		
+//		close(con);
+//		
+//		System.out.println(r);
+//		
+//		return r;
+//	}
 
 	public int insertPay(PayRecord pr) {
 		con = getConnection();

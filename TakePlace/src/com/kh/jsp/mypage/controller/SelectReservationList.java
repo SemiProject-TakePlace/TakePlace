@@ -9,7 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.kh.jsp.member.model.vo.AllMember;
 import com.kh.jsp.mypage.model.service.MypageService;
 import com.kh.jsp.products.model.vo.Product;
 import com.kh.jsp.reservation.model.vo.Reservation;
@@ -43,8 +45,16 @@ public class SelectReservationList extends HttpServlet {
 		String page = "";
 		
 		if(product != null && product.get("list") != null) {
+			
+			HttpSession session = request.getSession();
+			AllMember m = (AllMember)session.getAttribute("member");
+			
+			int mno = ms.selectCurrentMno(m.getMno());
+			System.out.println(mno);
+			
 			request.setAttribute("list", product.get("list"));
 			request.setAttribute("p", product.get("p"));
+			request.setAttribute("mno", mno);
 
 			page = "views/mypage/guest/reservation/reservationList.jsp";
 			

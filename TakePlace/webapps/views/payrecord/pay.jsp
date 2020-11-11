@@ -5,6 +5,15 @@
 	
 	Product p = (Product)request.getAttribute("product");
 	
+	//int preqno = request.getParameter("preqno");
+	
+	int pno = (Integer)request.getAttribute("pno");
+	int preqno = (Integer)request.getAttribute("preqno");
+	
+	//int mno = (Integer)request.getAttribute("mno");
+	
+	//System.out.println(p.getPno() + mno);
+	
 	// Member는 header에 이미 들어가있음
 %>
 <!DOCTYPE html>
@@ -47,12 +56,12 @@
 				action="<%=request.getContextPath()%>/insertPay.pa">
 				  
 				  
-				  <input type="hidden" name="mno" value="<%= mem.getMno() %>" />
-				  <input type="hidden" name="preqno" value="<%= r.getPreqno() %>" />
-				  <input type="hidden" name="pno" value="<%= p.getPno() %>" />
-				  <input type="hidden" name="pname" value="<%= p.getPname() %>" />
-				  <input type="hidden" name="price" value="10000" />
-				  <input type="hidden" name="num" value="1" />
+				  <input type="hidden" name="mno" id="mno" value="<%= mem.getMno() %>" />
+				  <input type="hidden" name="preqno" id="preqno" value="<%= preqno %>" />
+				  <input type="hidden" name="pno" id="pno" value="<%= pno %>" />
+				  <input type="hidden" name="pname" id="pname" value="<%= p.getPname() %>" />
+				  <input type="hidden" name="price" id="price" value="10000" />
+				  <input type="hidden" name="num" id="num" value="1" />
 				  
 				  <input type="hidden" name="email" value="<%= mem.getEmail() %>" />
 				  <input type="hidden" name="mname" value="<%= mem.getMname() %>" />
@@ -66,7 +75,7 @@
 		    	<br />
 		    	<br />
 		    	<br />
-				<button type="submit" class="btn btn-tp-custom-green" id="payBtn">결제하기</button> &nbsp;&nbsp;&nbsp;&nbsp;
+				<button type="button" class="btn btn-tp-custom-green" id="payBtn">결제하기</button> &nbsp;&nbsp;&nbsp;&nbsp;
 				<button type="reset" class="btn btn-tp-custom-white">취소</button>
 			</form>
 			
@@ -91,8 +100,8 @@
 				    pay_method : 'card',
 				    merchant_uid : 'merchant_' + new Date().getTime(),
 					name : '주문명:' + $('#pname').text(),
-					amount : parseInt($('#price').text()) * $('#num').val(),
-					buyer_email : '이메일:' + $('#email').text(),
+					amount : parseInt($('#price').val()) * $('#num').val(), // amount : parseInt($('[name=price]').text()) * $('#num').val(),
+					buyer_email : $('#email').text(),
 					buyer_name : '주문자:' + $('#mname').text(),
 					buyer_tel : '010-1234-5678',
 					buyer_addr : '서울시 강남구 역삼동',
@@ -101,7 +110,7 @@
 					if (rsp.success) {
 						//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
 						$.ajax({
-							url : "takeplace/payLink.pa", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
+							url : "takeplace/insertPay.pa", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
 							type : 'POST',
 							dataType : 'json',
 							data : {

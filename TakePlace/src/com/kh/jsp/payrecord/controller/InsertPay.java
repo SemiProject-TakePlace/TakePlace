@@ -38,8 +38,15 @@ public class InsertPay extends HttpServlet {
 		 * request.getRequestDispatcher(page).forward(request, response);
 		 */
 		
+		
 		int mno = Integer.parseInt(request.getParameter("mno")); // 회원 번호
 		int preqno = Integer.parseInt(request.getParameter("preqno")); // 예약 고유 번호
+		
+		int price = Integer.parseInt(request.getParameter("price"));
+		int num = Integer.parseInt(request.getParameter("num"));
+		
+		request.setAttribute("price", price);
+		request.setAttribute("num", num);
 
 		PayRecord pr = new PayRecord();
 
