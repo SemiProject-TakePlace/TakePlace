@@ -129,46 +129,51 @@ public class MemberDAO {
 	   }
 	
 
-	   public Member selectPwd(Connection con, String id, String email) {
-	      // 비밀번호 찾기위해 아이디, 이메일 조회
-	      Member result = null;
-	      Member m = new Member();
-	      PreparedStatement pstmt = null; 
-	      ResultSet rset = null;  
-	      
-	      String sql = prop.getProperty("selectPwd");
-	      
-	      System.out.println("sql : " + sql);
-	      
-	      try {
-	         pstmt = con.prepareStatement(sql);
+	  public Member selectPwd(Connection con, String id, String email) {
+	         // 비밀번호 찾기위해 아이디, 이메일 조회
+	         Member result =  null;
+	         PreparedStatement pstmt = null; 
+	         ResultSet rset = null;  
 	         
-	         pstmt.setString(1, id);
-	         pstmt.setString(2, email);
+	         String sql = prop.getProperty("selectPwd");
 	         
-	         rset = pstmt.executeQuery();
+	         System.out.println("sql : " + sql);
 	         
-	         rset.next();
-	         
-	         result = new Member();
+	         try {
+	            pstmt = con.prepareStatement(sql);
+	            
+	            pstmt.setString(1, id);
+	            pstmt.setString(2, email);
+	            
+	            rset = pstmt.executeQuery();
+	            
+	            if(rset.next()){
+	               result = new Member();
 
-	         result.setId(rset.getString("id"));
-	         result.setEmail(rset.getString("email"));
+	               result.setId(rset.getString("id"));
+	               result.setEmail(rset.getString("email"));
 
-	         System.out.println(result.toString());
+	               // System.out.println(result.toString());
+	            } else{
+	               result = new Member();
 
+	               result.setId("null");
+	               result.setEmail("null");
+	            }
+	            
+	            System.out.println(result.toString());
+	            
+	         } catch (SQLException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	         }  finally {
+	            close(rset);
+	            close(pstmt);
+	         }
 	         
-	      } catch (SQLException e) {
-	         // TODO Auto-generated catch block
-	         e.printStackTrace();
-	      }  finally {
-	         close(rset);
-	         close(pstmt);
+	         return result;
 	      }
-	      
-	      return result;
-	   }
-
+	  
 		   public int updatePwd(Connection con, String newPwd, String id) {
 		      // TODO Auto-generated method stub
 		      int res = 0;
