@@ -37,7 +37,7 @@
   height: calc(100vh - 48px);
   padding-top: .5rem;
   overflow-x: hidden;
-  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  // overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
 }
 
 @supports ((position: -webkit-sticky) or (position: sticky)) {
@@ -299,6 +299,7 @@
                                       </li>
                                       <!-- 게시물이 출력될 영역 -->                                 
                                       <% for(Reservation r : list) { %>
+                                   
                                <input type="hidden" name="pno" value="<%= p.getPno() %>"/>
                                <input type="hidden" name="preqno" value="<%= r.getPreqno() %>"/>
                                       
@@ -309,7 +310,11 @@
                                               <li><%= r.getResDate() %></li>
                                               <li><%= r.getGdemand() %></li>
                                               <% if(r.getPisOk() == 'N'){ %>
+                                              <% if(r.getPisCncld() == 'Y'){ %>
+                                              <li>취소</li>
+                                              <% } else { %>
                                               <li>미승인</li>
+                                              <% } %>
                                               <li>
                                                     <button class="btn btn-tp-custom-green" hidden="hidden">결제하기</button>
                                                </li>
@@ -322,8 +327,7 @@
                                               
                                           </ul>
                                       </li>
-                           
-                                  <% } %>                        
+                            		<% } %>                          
                                   </ul>
                               </li>
                               </ul>
@@ -332,7 +336,6 @@
                                  
                                </div>
                               
-                         
                 </form>
                 
                 </div>   

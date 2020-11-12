@@ -150,14 +150,16 @@
         height : 50px;
         border-bottom:1px solid silver;
         vertical-align:baseline;
+        
 }    
 
-    #ulTable > li > ul > li:first-child                  {width:10%;} /*No 크기*/
+    #ulTable > li > ul > li:first-child                  {width:5%;} /*No 크기*/
     #ulTable > li > ul > li:first-child +li              {width:20%;} /*공 간 명 */
-    #ulTable > li > ul > li:first-child +li+li           {width:20%;} /*대여날짜*/
-    #ulTable > li > ul > li:first-child +li+li+li        {width:30%;} /*요구사항*/
-    #ulTable > li > ul > li:first-child +li+li+li+li     {width:10%;} /*승인여부*/
-   #ulTable > li > ul > li:first-child +li+li+li+li+li  {width:10%;} /*승인여부*/
+    #ulTable > li > ul > li:first-child +li+li           {width:25%;} /*대여날짜*/
+    #ulTable > li > ul > li:first-child +li+li+li        {width:10%;} /*예약자*/
+    #ulTable > li > ul > li:first-child +li+li+li+li     {width:15%;} /*연락처*/
+   #ulTable > li > ul > li:first-child +li+li+li+li+li   {width:15%;} /*승인여부*/
+   #ulTable > li > ul > li:first-child +li+li+li+li+li+li   {width:10%;} /*승인결과*/
 
     #divPaging {
         clear:both; 
@@ -192,17 +194,21 @@
         height:100px;
         align : center;
 
-}
-
-
-/*
-.liContext:hover {
-   background: rgba(0, 0, 0, 0.1);
-}
-*/
-
-   
-
+	}
+	
+	#liContext ul li:last-child {
+		display:flex;
+	}
+	
+	.disabled {
+		background: gray;
+		border: none;
+		}	
+	.disabled:hover {
+		background: gray;
+		border: none;
+		cursor: default;
+		}	
 </style>
 
 </head>
@@ -214,7 +220,7 @@
         <div class="sidebar-sticky">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link active" href="http://localhost:8088/takeplace/views/mypage/host/profile/hostPageProfile.jsp">프로필</a>
+              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/host/profile/hostPageProfile.jsp">프로필</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="<%= request.getContextPath() %>/prdouctList.my">내 상품 목록</a>
@@ -272,7 +278,7 @@
               
                 <div class ="outer">
                 
-                <form action="#" method="post" id="create_waitingAccount" name="waitingForm">
+               
              
                 <div class="outer">
                       <div id="mainWrapper">
@@ -286,35 +292,46 @@
                                               <li>대여 날짜</li>
                                               <li>예약자</li>
                                               <li>연락처</li>
-                                              <li>승인여부</li>
+                                              <li>승인/취소</li>
+                                              <li>결과</li>
                                        </ul>                                        
                                       </li>
                                       <!-- 게시물이 출력될 영역 -->                                 
                                       <% for(Reservation r : list) { %>
+                                      <% if(r.getBsnum().equals(mem.getBsnum())){ %>
                                <input type="hidden" name="pno" value="<%= p.getPno() %>"/>
                                <input type="hidden" name="preqno" value="<%= r.getPreqno() %>"/>
-                                      
+                               <input type="hidden" name="pisok" value="<%= r.getPisOk() %>"/>     
                                       <li id="liContext">
                                           <ul>
                                               <li><%= r.getPreqno() %></li>
                                               <li><%= r.getPname() %></li>
+                                              <li><%= r.getResDate() %></li>
                                               <li><%= r.getGname() %></li>
                                               <li><%= r.getGtel() %></li>
-                                              <% if(r.getPisOk() == 'N'){ %>
-                                              <li>미승인</li>
-                                              <li>
-                                                    <button class="btn btn-tp-custom-green" hidden="hidden">결제하기</button>
-                                               </li>
-                                              <% } else { %>
-                                               <li>승인</li>
-                                               <li>
-                                                    <button class="btn btn-tp-custom-green">결제하기</button>
-                                               </li>
-                                                <% } %>
                                               
+                                              <% if(r.getPisOk() == 'N' && r.getPisCncld() == 'N'){ %>
+                                              <li>
+                                              	<button class="btn btn-tp-custom-green" onclick="pisok();">승인</button>
+                                              
+                                              	<button class="btn btn-tp-custom-green" onclick="pisCancel();">취소</button>
+                                              </li>
+                                              <li>미승인</li> 
+                                              <% } else if(r.getPisOk() == 'Y' || r.getPisCncld() == 'Y') { %>
+                                               <li>
+                                              	<button class="btn btn-tp-custom-green disabled" disabled="disabled">승인</button>
+                                              	<button class="btn btn-tp-custom-green disabled" disabled="disabled">취소</button>
+                                              </li>
+                                              <% if(r.getPisOk() == 'Y') { %>
+                                              	<li>승인</li>
+                                                <% } else if(r.getPisCncld() == 'Y') { %>
+                                                <li>취소</li>
+                                               <% } %> 
+                                              <% } %>  
+                                               
                                           </ul>
                                       </li>
-                           
+                          			 <% } %> 
                                   <% } %>                        
                                   </ul>
                               </li>
@@ -323,13 +340,36 @@
                                   </div> 
                                  
                                </div>
-                              
-                         
-                </form>
-                
+                               
+                             
                 </div>   
               
          </div>
+         
+            <script>
+            
+            function pisCancel() {
+            	$(function(){
+                    $('#liContext ul li').click(function(){
+                       var preqno = $(this).parent().children().eq(0).text();
+                       console.log(preqno);
+                       location.href = "<%= request.getContextPath() %>/reservationC.re?preqno=" + preqno; 
+                    });
+                 });
+				
+			}
+            
+            function pisok() {
+            	$(function(){
+                    $('#liContext ul li').click(function(){
+                       var preqno = $(this).parent().children().eq(0).text();
+                       console.log(preqno);
+                       location.href = "<%= request.getContextPath() %>/reservationY.re?preqno=" + preqno; 
+                    });
+                 });
+				
+			}
+                </script>
          
             
             <!-- 여기가 컨텐츠 끝 -->

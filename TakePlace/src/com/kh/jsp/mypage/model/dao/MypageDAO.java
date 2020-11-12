@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 
+import com.kh.jsp.common.exception.MemberException;
 import com.kh.jsp.common.exception.NoticeException;
 import com.kh.jsp.mypage.model.vo.Question;
 import com.kh.jsp.payrecord.model.vo.PayRecord;
@@ -244,6 +245,8 @@ public class MypageDAO {
             r.setPisPaid(rset.getString("pisPaid").charAt(0));
             r.setPisCncld(rset.getString("pisCncld").charAt(0));
             r.setPayAmount(rset.getInt("payAmount"));
+            r.setBsnum(rset.getString("bsnum"));
+            r.setMno(rset.getInt("mno"));
          
             list.add(r);
             
@@ -352,6 +355,58 @@ public class MypageDAO {
       }   
       return hmap;
    }
+
+public int pisokChange(Connection con, int preqno) {
+	int result = 0;
+	PreparedStatement pstmt = null;
+	
+	String sql = prop.getProperty("pisokChange");
+	
+	try {
+		pstmt = con.prepareStatement(sql);
+		
+		pstmt.setInt(1, preqno);
+		
+		result = pstmt.executeUpdate();
+		
+		
+	} catch (SQLException e) {
+		
+		e.printStackTrace();
+		
+	} finally {
+		
+		close(pstmt);
+	}
+	
+	return result;
+}
+
+public int pisokCancel(Connection con, int preqno) {
+	int result = 0;
+	PreparedStatement pstmt = null;
+	
+	String sql = prop.getProperty("pisokCancel");
+	
+	try {
+		pstmt = con.prepareStatement(sql);
+		
+		pstmt.setInt(1, preqno);
+		
+		result = pstmt.executeUpdate();
+		
+		
+	} catch (SQLException e) {
+		
+		e.printStackTrace();
+		
+	} finally {
+		
+		close(pstmt);
+	}
+	
+	return result;
+}
 }
 
 
