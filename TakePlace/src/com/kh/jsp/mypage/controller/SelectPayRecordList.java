@@ -8,7 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.kh.jsp.member.model.vo.AllMember;
 import com.kh.jsp.mypage.model.service.MypageService;
 import com.kh.jsp.payrecord.model.vo.PayRecord;
 
@@ -35,9 +37,12 @@ public class SelectPayRecordList extends HttpServlet {
 		ArrayList<PayRecord> list = new ArrayList<>();
 		MypageService ms = new MypageService();
 		
-		PayRecord p = new PayRecord();
+		HttpSession session = request.getSession();
+		AllMember mem = (AllMember)session.getAttribute("member");
 		
-		list = ms.selectPList(list);
+		int mno = mem.getMno();
+		
+		list = ms.selectPList(list, mno);
 		
 		String page = "";
 		

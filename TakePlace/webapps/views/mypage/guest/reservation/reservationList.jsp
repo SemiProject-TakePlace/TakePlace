@@ -236,9 +236,6 @@
                <a class="nav-link" href="<%= request.getContextPath()%>/selectQlist.me">문의 내역</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/use/useList.jsp">이용 내역</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" href="<%= request.getContextPath()%>/selectReview.me">이용 후기</a>
             </li>
             
@@ -310,7 +307,7 @@
                                       </li>
                                       <!-- 게시물이 출력될 영역 -->                                 
                                       <% for(Reservation r : list) { %>
-                                   
+                                   	  <% if( r.getPisPaid() == 'N'){ %>
                                <input type="hidden" name="pno" value="<%= p.getPno() %>"/>
                                <input type="hidden" name="preqno" value="<%= r.getPreqno() %>"/>
                                       
@@ -332,7 +329,7 @@
                                               <% } else { %>
                                                <li>승인</li>
                                                <li>
-                                                    <button class="btn btn-tp-custom-green">결제하기</button>
+                                                    <button class="btn btn-tp-custom-green" id="paybtn" onclick="pay();">결제하기</button>
                                                </li>
                                                 <% } %>
                                                 
@@ -342,6 +339,7 @@
                                               
                                           </ul>
                                       </li>
+                                      <% } %>
                             		<% } %>                          
                                   </ul>
                               </li>
@@ -357,14 +355,17 @@
               
          </div>
     	
-    	<script>
+    		<script>
+              
                $(function(){
-                  $('#liContext ul li').click(function(){
-                     var preqno = $(this).parent().children().eq(0).text();
-                     location.href = "<%= request.getContextPath() %>/deleteReservation.me?preqno=" + preqno; 
-                     
-                  });
-               });
+                   $('#liContext ul li #paybtn').click(function(){
+                      var preqno = $(this).siblings().eq(0).text();
+                      console.log(preqno);
+                      
+                      // location.href = "<%= request.getContextPath() %>/deleteReservation.me?preqno=" + preqno; 
+                      
+                   });
+                });
             </script>
                  
 	            
