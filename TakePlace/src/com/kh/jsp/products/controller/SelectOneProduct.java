@@ -49,16 +49,11 @@ public class SelectOneProduct extends HttpServlet {
 		 
 		ProductService ps = new ProductService();
 		
-		int ableReviewer = ps.ableReviewer(mem.getMno());
-		
-		System.out.println(ableReviewer);
-		
 		String page = "";
 
 		if(product != null && product.get("product") != null) {
 			request.setAttribute("product", product.get("product"));
 			request.setAttribute("fileList", product.get("productImages"));
-			request.setAttribute("ableReviewr", ableReviewer);
 			request.setAttribute("rlist", rlist);
 			
 			page = "views/products/productDetail.jsp";

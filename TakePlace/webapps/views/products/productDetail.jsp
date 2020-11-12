@@ -192,6 +192,12 @@
 	    left: unset;
 	    z-index: 10;
 	}
+	
+	.btn-area {
+		display: flex;
+	    margin: 0 auto;
+	    width: 13%;
+	}
 </style>
 
 </head>
@@ -215,13 +221,14 @@
 	  				<span class="font-green">오피스</span>
 	  			<% } %>
 				<%if(mem.getBsnum() != null && mem.getBsnum().equals(p.getBsNum())) { %>
-					<button type="button" class="btn btn-tp-custom-green" style="float: right;"
-						onclick="location.href='<%= request.getContextPath() %>/updateProductView.pr?pno='+<%=p.getPno()%>">공간 수정
-					</button>
-					<button type="button" class="btn btn-tp-custom-green" style="float: right;"
-						onclick="location.href='<%= request.getContextPath() %>/deleteProduct.pr?pno='+<%=p.getPno()%>">공간 삭제
-					</button>
-				}
+					<div style="float: right;">
+						<button type="button" class="btn btn-tp-custom-green"
+							onclick="location.href='<%= request.getContextPath() %>/updateProductView.pr?pno='+<%=p.getPno()%>">공간 수정
+						</button>
+						<button type="button" class="btn btn-tp-custom-white"
+							onclick="location.href='<%= request.getContextPath() %>/deleteProduct.pr?pno='+<%=p.getPno()%>">공간 삭제
+						</button>
+					</div>
 				<% } %>
 			</h2>
 		</div>

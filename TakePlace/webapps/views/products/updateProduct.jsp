@@ -64,7 +64,8 @@
 		<div class="container">
 			<h2 class="content-title">공간 수정</h2>
 			
-			<form id="manage-product" method="post" enctype="multipart/form-data">
+			<form id="manage-product" method="post" enctype="multipart/form-data"
+					action="<%= request.getContextPath() %>/updateProduct.pr">
 				
 				<input type="hidden" name="pno" value="<%= p.getPno() %>"/>
 				<input type="hidden" name="mno" value="<%= mem.getMno() %>"/>
@@ -264,7 +265,6 @@
 					if(isError) {
 						return;
 					} else {
-						<%--$("#manage-product").action = "<%= request.getContextPath() %>/updateProduct.pr"; --%>
 						$("#manage-product").submit();
 					}
 				}
