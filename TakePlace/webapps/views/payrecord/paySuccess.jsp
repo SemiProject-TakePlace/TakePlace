@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"  import="com.kh.jsp.reservation.model.vo.*, com.kh.jsp.member.model.vo.*, com.kh.jsp.products.model.vo.*"%>
 <%
-	Reservation r = (Reservation)request.getAttribute("reservation");
+	//Reservation r = (Reservation)request.getAttribute("reservation");
 	
 	//Product p = (Product)request.getAttribute("product");
 	
-	int price = Integer.parseInt(request.getParameter("num"))
-			* Integer.parseInt(request.getParameter("price"));
+	//int price = Integer.parseInt(request.getParameter("num")) //* Integer.parseInt(request.getParameter("price"));
 	
 	//Host는 header에 이미 들어가져있음
 %>
@@ -44,16 +43,17 @@
 	<section id="wrap-contents" class="footer-bottom">
 		
 		<div class="container">
-			<h2 class="font-bold content-title">결제 페이지</h2>
+			<h2 class="font-bold content-title">결제 완료 페이지</h2>
 			
-			<form id="payPage" method="post" name="payPage"
-				action="<%=request.getContextPath()%>/payLink.pa">
-				  
-				  <h1>결제 완료 : <%= request.getParameter("item") %></h1>
-					<p class="font-medium">
-						구매 갯수 : <%= request.getParameter("num") %> <br>
-						총 구매금액 : <%= price %> <br>
-					</p>
+			<form id="payPage" method="post" name="payPage">
+				   
+				   <div class="inline-block">
+				  		<p class="font-bold">결제가 완료되었습니다.</p>
+				  		<br />
+			    		<p id="smallText" class="font-regular">결제는 마이페이지에서 취소할 수 있습니다.</p>
+			      </div>
+				   
+					
 			</form>
 			
 		</div>

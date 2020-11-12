@@ -43,8 +43,8 @@ public class SelectPay extends HttpServlet {
       
       try {
     	  
-    	  request.setAttribute("pno", pno);
-    	  request.setAttribute("preqno", preqno);
+		 request.setAttribute("pno", pno);
+		 request.setAttribute("preqno", preqno);
          
          Product p = ps.selectOnePay(pno);
          
