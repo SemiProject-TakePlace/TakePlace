@@ -14,7 +14,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>예약 현황</title>
+<title>Take Place : 이용후기</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/bootstrap.min.css" type="text/css" />
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/common.css" type="text/css" />
 
@@ -232,9 +232,6 @@
                <a class="nav-link" href="<%= request.getContextPath()%>/selectQlist.me">문의 내역</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/use/useList.jsp">이용 내역</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link active" href="<%= request.getContextPath()%>/selectReview.me">이용 후기</a>
             </li>
             
@@ -302,21 +299,23 @@
                                               <li>후기작성</li>
                                        </ul>                                        
                                       </li>
-                                      <!-- 게시물이 출력될 영역 -->                                 
+                                      <!-- 게시물이 출력될 영역 -->           
+                                      <% int count = listCount - ((currentPage-1)*5);
+                                      %>                      
                                       <% for(ProductReview pr : list) { %>
                                       <li id="liContext">
                                           <ul>
-                                              <li><%= pr.getRno() %></li>
+                                              <li><%= count-- %></li>
                                               
                                               <li><%= pr.getPtype() %></li>
                                               <li><%= pr.getPname() %></li>
                                      
                                               <li><%= pr.getRcontent() %></li>   
                                               <li><%= pr.getRrating() %></li>
-                       						  
-                       						  <li>
-                       						  	<button class="btn btn-tp-custom-green" onclick="location.href='<%= request.getContextPath() %>/selectOneProduct.pr?pno=<%= pr.getPno() %>'">후기작성하기</button>
-                       						  </li>
+                                           
+                                           <li>
+                                              <button class="btn btn-tp-custom-green" onclick="location.href='<%= request.getContextPath() %>/selectOneProduct.pr?pno=<%= pr.getPno() %>'">후기작성하기</button>
+                                           </li>
                                           </ul>
                                       </li>
                                     <% } %>                              
@@ -327,8 +326,8 @@
                                   </div> 
                                  
                                </div>
-              		
-              		<div class="pagingArea" align="center">
+                    
+                    <div class="pagingArea" align="center">
       
       <button class="btn btn-tp-custom-white" onclick="location.href='<%= request.getContextPath() %>/selectReview.me?currentPage=1'"><<</button>
          <%  if(currentPage <= 1){  %>
@@ -354,7 +353,7 @@
          <button class="btn btn-tp-custom-white" onclick="location.href='<%= request.getContextPath() %>/selectReview.me?currentPage=<%= maxPage %>'">>></button>
       
       </div>
-              		
+                    
                 
                 </div>   
               

@@ -32,7 +32,7 @@ public class updateHost extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String pwd = request.getParameter("hostPwd");
+		String pwd = request.getParameter("pwd");
 		String email = request.getParameter("hostemail");
 		
 		// 해당 회원을 구분짓는 ID 받아오기
@@ -54,7 +54,7 @@ public class updateHost extends HttpServlet {
 			
 			session.invalidate();
 			
-			response.sendRedirect("index");
+			response.sendRedirect("/takeplace/views/member/updateSuccess.jsp");
 						
 		} catch(MemberException e) {
 			

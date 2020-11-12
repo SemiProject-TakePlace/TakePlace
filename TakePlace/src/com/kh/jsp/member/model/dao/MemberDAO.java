@@ -380,7 +380,7 @@ public class MemberDAO {
 				
 				result.setMno(rset.getInt("mno"));
 				result.setId(rset.getString("id"));
-				result.setMname(rset.getString("pwd"));
+				result.setMname(rset.getString("mname"));
 				result.setJoindate(rset.getDate("joindate"));
 				result.setJoindate(rset.getDate("chdate"));
 				result.setMtype(rset.getString("mtype"));

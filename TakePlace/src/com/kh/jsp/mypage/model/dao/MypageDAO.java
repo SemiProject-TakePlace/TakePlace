@@ -267,7 +267,7 @@ public class MypageDAO {
       return hmap;
    }
 
-   public ArrayList<PayRecord> selectPList(Connection con, ArrayList<PayRecord> list) {
+   public ArrayList<PayRecord> selectPList(Connection con, ArrayList<PayRecord> list, int mno) {
       list = new ArrayList<>();
       PreparedStatement pstmt = null;
       ResultSet rset = null;
@@ -276,7 +276,8 @@ public class MypageDAO {
       
       try {
          pstmt = con.prepareStatement(sql);
-         
+        
+         pstmt.setInt(1, mno);
          
          rset = pstmt.executeQuery();
          
@@ -291,6 +292,8 @@ public class MypageDAO {
             p.setPayMethod(rset.getString("paymethod"));
             p.setPayAmount(rset.getInt("payamount"));
             p.setPayStatus(rset.getNString("paystatus").charAt(0));
+            p.setPname(rset.getString("pname"));
+            p.setPaddress(rset.getString("paddress"));
             
             list.add(p);
          }

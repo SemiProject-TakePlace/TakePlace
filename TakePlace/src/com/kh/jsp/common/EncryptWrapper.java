@@ -19,7 +19,7 @@ public class EncryptWrapper extends HttpServletRequestWrapper {
 		// 사용자가 입력한 값 중 비밀번호만 따로 빼내서
 		// 암호화 처리 후 다시 덮어 씌우는 작업
 		
-		if(name != null && name.equals("userPwd")) {
+		if(name != null && name.equals("pwd")) {
 			// 암호화 코드 실행
 			return getSHA512(super.getParameter(name));
 		} else {

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>My Page UI</title>
+<title>Take Place : 프로필</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/bootstrap.min.css" type="text/css" />
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/common.css" type="text/css" />
 
@@ -120,9 +120,6 @@ padding-left : 30%;
             </li>
             <li class="nav-item">
               <a class="nav-link" href="<%= request.getContextPath()%>/selectQlist.me">문의 내역</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/use/useList.jsp">이용 내역</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="<%= request.getContextPath()%>/selectReview.me">이용 후기</a>

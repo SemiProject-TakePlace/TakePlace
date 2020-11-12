@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>My Page UI</title>
+<title>Take Place : 결제 내역</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/bootstrap.min.css" type="text/css" />
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/common.css" type="text/css" />
 
@@ -155,8 +155,8 @@
     #ulTable > li > ul > li:first-child +li              {width:20%;} 
     #ulTable > li > ul > li:first-child +li+li           {width:30%;} 
     #ulTable > li > ul > li:first-child +li+li+li        {width:20%;} 
-    #ulTable > li > ul > li:first-child +li+li+li+li     {width:20%;} 
-   
+    #ulTable > li > ul > li:first-child +li+li+li+li     {width:10%;} 
+    #ulTable > li > ul > li:first-child +li+li+li+li+li  {width:10%;} 
 
     #divPaging {
         clear:both; 
@@ -225,9 +225,6 @@
                <a class="nav-link" href="<%= request.getContextPath()%>/selectQlist.me">문의 내역</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/use/useList.jsp">이용 내역</a>
-            </li>
-            <li class="nav-item">
                <a class="nav-link" href="<%= request.getContextPath()%>/selectReview.me">이용 후기</a>
             </li>
             
@@ -290,24 +287,34 @@
                                           <ul>
                                               <li>No</li>
                                               <li>공간 명</li>
+                                              <li>상세 주소</li>
                                               <li>예약 확정 날짜</li>
-                                              <li>주소</li>
-                                              <li>취소</li>
+                                              <li>결제 방법</li>
+                                              <li>결제 상태</li>
                                        </ul>                                        
                                       </li>
-                                      <!-- 게시물이 출력될 영역 -->                                 
+                                      <!-- 게시물이 출력될 영역 -->
+                                      <% int count=0; %>                                  
                                       <% for(PayRecord p : list) { %>
-                                     <% if(p.getMno() == mem.getMno()) { %>
+                                   			 <% count++;%>
+                                   		<% } %>
+                                   		
+                                   		 <% for(PayRecord p : list) { %>
                                       <li id="liContext">
                                           <ul>
-                                              <li><%= p.getPayno() %></li>
-                                              <li><%= p.getPayDate() %></li>
+                                              <li><%= count-- %></li>
+                                              <li><%= p.getPname() %></li>
+                                              <li><%= p.getPaddress() %></li>
                                               <li><%= p.getPayDate() %></li>
                                      		  <li><%= p.getPayMethod() %></li>
-                                          	  <li><%= p.getPayStatus() %></li>
+                                     		  <% if(p.getPayStatus() == 'Y'){ %>
+                                          	  <li>결제 완료</li>
+                                          	    <% } else { %>
+                                          	    <li>결제 취소</li>
+                                          	    <% } %>   
                                           </ul>
                                       </li>
-                                      <% } %>    
+                                    
                                     <% } %>                              
                                   </ul>
                               </li>
@@ -324,20 +331,6 @@
               
          </div>
          
-               <script>
-               $(function(){
-                  $('#liContext ul li').mouseenter(function(){
-                     $(this).parent().css({"background" : "silver", "cursor" : "pointer"});
-                  }).mouseout(function(){
-                     $(this).parent().css({"background" : "black"});
-                  }).click(function(){
-                     var inqno = $(this).parent().children().eq(0).text();
-                     console.log(inqno);
-                     location.href = "<%= request.getContextPath() %>/selectQone.me?inqno=" + inqno; 
-                     
-                  });
-               });
-            </script>
             
             <!-- 여기가 컨텐츠 끝 -->
          </div>

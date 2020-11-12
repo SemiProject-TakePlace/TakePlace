@@ -5,9 +5,6 @@ import static com.kh.jsp.common.JDBCTemplate.*;
 import java.sql.Connection;
 
 import com.kh.jsp.payrecord.model.dao.PayDAO;
-import com.kh.jsp.payrecord.model.vo.PayRecord;
-import com.kh.jsp.products.model.vo.Product;
-import com.kh.jsp.reservation.model.dao.ReservationDAO;
 import com.kh.jsp.reservation.model.vo.Reservation;
 
 public class PayService {
@@ -18,18 +15,18 @@ public class PayService {
 	public Reservation selectOnePay(int pno, int preqno) {
 		con = getConnection();
 		
-		Reservation r = pDAO.selectOnePay(con, pno);
+		Reservation r = pDAO.selectOnePay(con, pno, preqno);
 		
 		if( r != null ) {
 			// PRODUCT 테이블 예약 횟수 1 증가
-			int result = pDAO.updatePayCount(con, pno);
+			int result = pDAO.updatePayCount(con, preqno, pno);
 			
 			// RESERVATION 테이블 결제 여부 변경
 			int result2 = pDAO.updateIsPay(con, preqno);
 			
-			System.out.println("result = " + result + ", result2 = " + result2);
+			//System.out.println("result = " + result + ", result2 = " + result2);
 			
-			if(result > 0 && result2 > 0) {
+			if(result > 0 || result2 > 0) {
 				commit(con);
 			} else {
 				rollback(con);

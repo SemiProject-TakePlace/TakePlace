@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>My Page UI</title>
+<title>Take Place : 프로필 수정</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/bootstrap.min.css" type="text/css" />
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/common.css" type="text/css" />
 
@@ -110,22 +110,20 @@ padding-left : 30%;
         <div class="sidebar-sticky">
           <ul class="nav flex-column">
             <li class="nav-item">
+               <li class="nav-item">
               <a class="nav-link active" href="http://localhost:8088/takeplace/views/mypage/guest/profile/guestPageProfile.jsp">프로필</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/reservation/reservationList.jsp">예약 현황</a>
+              <a class="nav-link" href="<%= request.getContextPath()%>/selectRlist.me">예약 현황</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/pay/payList.jsp">결제 내역</a>
+              <a class="nav-link" href="<%= request.getContextPath()%>/selectPlist.me">결제 내역</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/question/questionList.jsp">문의 내역</a>
+              <a class="nav-link" href="<%= request.getContextPath()%>/selectQlist.me">문의 내역</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/use/useList.jsp">이용 내역</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/review/reviewList.jsp">이용 후기</a>
+              <a class="nav-link" href="<%= request.getContextPath()%>/selectReview.me">이용 후기</a>
             </li>
           </ul>
         </div>
@@ -191,7 +189,7 @@ padding-left : 30%;
               
               <div class="form-group">
                 <label for="userpwd" class="font-green inline-block" >새 비밀번호</label>
-                <input type="password" class="form-control inline-block" id="userpwd" name="userpwd" aria-describedby="emailHelp" placeholder="비밀번호 입력" maxlength="30">
+                <input type="password" class="form-control inline-block" id="userpwd" name="pwd" aria-describedby="emailHelp" placeholder="비밀번호 입력" maxlength="30">
                 &nbsp;&nbsp; 
                 <small id="infoPwd" class="form-text text-muted">영문자, 숫자, 특수문자를 조합하여 8~30자를 입력하세요.</small>
                 <small id="validationPwd" class="form-text text-error" style="display:none;">영문자, 숫자, 특수문자를 조합하여 8~30자를 입력하세요.</small>

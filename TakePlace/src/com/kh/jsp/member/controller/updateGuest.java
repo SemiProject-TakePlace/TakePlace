@@ -36,7 +36,7 @@ public class updateGuest extends HttpServlet {
 		// 회원 정보 수정용 데이터 꺼내오기
 		
 		String mname = request.getParameter("userNick");
-		String pwd = request.getParameter("userpwd");
+		String pwd = request.getParameter("pwd");
 		String email = request.getParameter("userEmail");
 		
 		// 해당 회원을 구분짓는 ID 받아오기
@@ -59,7 +59,7 @@ public class updateGuest extends HttpServlet {
 			
 			session.invalidate();
 			
-			response.sendRedirect("index");
+			response.sendRedirect("/takeplace/views/member/updateSuccess.jsp");
 						
 		} catch(MemberException e) {
 			

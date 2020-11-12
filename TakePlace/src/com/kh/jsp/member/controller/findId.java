@@ -124,8 +124,6 @@ public class findId extends HttpServlet {
       	}
       }
    
-
-   
    // 임시비밀번호 생성메소드
    public static String getRandomPwd(int len) {
       char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',

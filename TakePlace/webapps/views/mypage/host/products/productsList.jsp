@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>My Page UI</title>
+<title>Take Place : 결제 내역</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/bootstrap.min.css" type="text/css" />
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/common.css" type="text/css" />
 
@@ -90,7 +90,7 @@
 
 .mypage-content {
    margin-left: 225px; /*마이페이지에서만 sidebar 때문에  margin-left*/
-   width : 1250px;
+   width : auto;
    height : auto;
 }
 
@@ -99,13 +99,14 @@
 }
 
 .top8 h2 {
+      
       margin-bottom: 30px;
    }
 .top8-content {
       background : rgb(240, 240, 240);
    }
 
-
+   
 
 </style>
 
@@ -170,12 +171,13 @@
             <h2 class="content-title">내 상품 목록</h2>
             
             <!-- 여기서부터 자유롭게 컨텐츠 잡으면서 시작 -->
-            <div class="top8-content">
+            <div class="product-list-content">
          <div class="product-card">
             <div class="row">
                <!-- 여기서부터 for문 사용하여 여러 개 상품 돌리기 -->
                
                <% for(Product p : list) { %>
+               <div class="pcard">
                <% if(p.getBsNum().equals(mem.getBsnum())) { %>
                   <div class="col">
                      <input type="hidden" name="pno" id="pno" value="<%= p.getPno() %>" />
@@ -187,13 +189,14 @@
                                    
                                   <h5 class="card-title font-bold"><%= p.getPname() %></h5>
                                   <p class="card-text"><%= p.getPprice() %>원</p>
-                                  <small class="rating">평점 <span class="font-green"><%= p.getPrating() %></span></small>
+                                 
                                   
                                                                          
                              </div>
                         </div>
                      </div>
                      <% } %>
+                     </div>
                   <% } %>
                   
                
