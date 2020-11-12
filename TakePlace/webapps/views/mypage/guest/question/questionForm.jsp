@@ -16,11 +16,11 @@ h2 {
 	margin-bottom: 50px;
 }
  
-button {
-	width: 150px;
-	height: 50px;
-	margin: 10px;
-}
+ 	.questionbtn {
+		width: 150px;
+		height: 50px;
+		margin: 10px;
+	}
 </style>
 
 </head>
@@ -75,8 +75,8 @@ button {
 			  </div>
 			
 			  <div class="text-center mt-5">
-			  	<button type="button" class="btn btn-tp-custom-green" onclick="submitInq();">문의 하기</button>
-			  	<button type="button" class="btn btn-tp-custom-white">취소</button>
+			  	<button type="button" class="btn btn-tp-custom-green questionbtn" onclick="submitInq();">문의 하기</button>
+			  	<button type="button" class="btn btn-tp-custom-white questionbtn"onclick="location.href='<%= request.getContextPath() %>/selectQlist.me'">목록으로 돌아가기</button>
 			  </div>
 			</form>
 			

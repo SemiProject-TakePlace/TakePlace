@@ -38,15 +38,15 @@ public class SelectReservationList extends HttpServlet {
 		// 1. 게시판 목록 처리용 변수
 		ArrayList<Reservation> list = new ArrayList<>();
 		Product p = new Product();
-		
 		MypageService ms = new MypageService();
-		
-		HashMap<String, Object> product = ms.selectRList(list, p);
 		
 		HttpSession session = request.getSession();
 		AllMember mem = (AllMember)session.getAttribute("member");
 		
-	
+		int mno = mem.getMno();
+		
+		HashMap<String, Object> product = ms.selectRList(list, p, mno);
+		
 		String page = "";
 		
 			if(mem.getMtype().equals("GUEST")) {

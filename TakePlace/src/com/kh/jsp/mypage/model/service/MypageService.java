@@ -22,7 +22,7 @@ public class MypageService {
 		return null;
 	}
 	
-	public int getListCount(int mno) { //총게시글수
+	public int getListCount(int mno) { // 문의내역 총게시글수
 		con = getConnection();
 		
 		int result = mDAO.getListCount(con, mno);
@@ -31,7 +31,7 @@ public class MypageService {
 		
 		return result;
 	}
-
+	
 	public ArrayList<Question> selectQList(int mno, int currentPage, int limit) {
 		con = getConnection();
 		
@@ -81,10 +81,10 @@ public class MypageService {
 		return result;
 	}
 
-	public HashMap<String, Object> selectRList(ArrayList<Reservation> list, Product p) {
+	public HashMap<String, Object> selectRList(ArrayList<Reservation> list, Product p, int mno) {
 		con = getConnection();
 		
-		HashMap<String, Object> hmap = mDAO.selectRList(con, list, p);
+		HashMap<String, Object> hmap = mDAO.selectRList(con, list, p, mno);
 		
 		close(con);
 		
@@ -100,16 +100,6 @@ public class MypageService {
 		close(con);
 		
 		return list;
-	}
-
-	public HashMap<String, Object> selectrReview(ArrayList<ProductReview> list, Product p) {
-		con = getConnection();
-		
-		HashMap<String, Object> hmap = mDAO.selectrReview(con, list, p);
-		
-		close(con);
-		
-		return hmap;
 	}
 
 	public int pisokChange(int preqno) {
@@ -145,5 +135,35 @@ public class MypageService {
 		return result;
 
 	}
+
+	public int ListCountReview(int mno) { // 리뷰게시글 개수세기~!
+		con = getConnection();
+		
+		int result = mDAO.ListCountReview(con, mno);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public ArrayList<ProductReview> selectReview(int mno, int currentPage, int limit) {
+		con = getConnection();
+		
+		ArrayList<ProductReview> list = mDAO.selectReview(con, mno, currentPage, limit);
+		
+		close(con);
+		
+		return list;
+	}
+
+	public int deleteROne(int preqno) throws NoticeException {
+		con = getConnection();
+		int result = mDAO.deleteROne(con, preqno);
+	      
+	      close(con);
+	      
+	      return result;
+	   }
+	
 }
 

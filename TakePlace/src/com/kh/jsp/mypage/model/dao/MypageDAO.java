@@ -215,7 +215,7 @@ public class MypageDAO {
    
    
    public HashMap<String, Object> selectRList(Connection con, ArrayList<Reservation> list,
-         Product p) {
+         Product p, int mno) {
       
       HashMap<String, Object> hmap = new HashMap<>();
       PreparedStatement pstmt = null;
@@ -226,6 +226,7 @@ public class MypageDAO {
       try {
          pstmt = con.prepareStatement(sql);
          
+         pstmt.setInt(1, mno);
          
          rset = pstmt.executeQuery();
          
@@ -234,7 +235,6 @@ public class MypageDAO {
             Reservation r = new Reservation();
             
             r.setPreqno(rset.getInt("preqno"));
-            
             r.setPno(rset.getInt("pno"));
             r.setPname(rset.getString("pname"));
             r.setGname(rset.getString("gname"));
@@ -246,8 +246,7 @@ public class MypageDAO {
             r.setPisCncld(rset.getString("pisCncld").charAt(0));
             r.setPayAmount(rset.getInt("payAmount"));
             r.setBsnum(rset.getString("bsnum"));
-            r.setMno(rset.getInt("mno"));
-         
+            
             list.add(r);
             
             p.setPno(rset.getInt("pno"));
@@ -306,56 +305,6 @@ public class MypageDAO {
       return list;
    }
 
-   public HashMap<String, Object> selectrReview(Connection con, ArrayList<ProductReview> list,
-         Product p) {
-      
-      HashMap<String, Object> hmap = new HashMap<>();
-      PreparedStatement pstmt = null;
-      ResultSet rset = null;
-   
-      String sql = prop.getProperty("selectReview");
-      
-      try {
-         pstmt = con.prepareStatement(sql);
-         
-         
-         rset = pstmt.executeQuery();
-         
-         while(rset.next()) {
-            
-            ProductReview pr = new ProductReview();
-            
-            pr.setRno(rset.getInt("rno"));
-            pr.setPno(rset.getInt("pno"));
-            pr.setMno(rset.getInt("mno"));
-            pr.setRcontent(rset.getString("rcontent"));
-            pr.setRefrno(rset.getInt(5));
-            pr.setRrating(rset.getInt("rrating"));
-            pr.setRdate(rset.getDate("rdate"));
-            pr.setRlevel(rset.getInt("rlevel"));
-            pr.setPname(rset.getString("pname"));
-            pr.setPtype(rset.getString("ptype"));
-            
-            p.setPname(rset.getString("pname"));
-            p.setPtype(rset.getString("ptype"));
-            p.setPno(rset.getInt("pno"));
-            
-            list.add(pr);
-         }
-
-         hmap.put("list", list);
-         hmap.put("p", p);
-         
-      } catch (SQLException e) {
-         e.printStackTrace();
-         
-      } finally {
-         close(rset);
-         close(pstmt);
-      }   
-      return hmap;
-   }
-
 public int pisokChange(Connection con, int preqno) {
 	int result = 0;
 	PreparedStatement pstmt = null;
@@ -407,6 +356,110 @@ public int pisokCancel(Connection con, int preqno) {
 	
 	return result;
 }
+
+public int ListCountReview(Connection con, int mno) {
+	 int result = 0; 
+     PreparedStatement pstmt = null;
+     ResultSet rset = null;
+     
+     String sql = prop.getProperty("ListCountReview");
+     
+     try {
+        pstmt = con.prepareStatement(sql);
+        
+        pstmt.setInt(1, mno);
+        
+        rset = pstmt.executeQuery();
+        
+        if(rset.next()) {
+           result = rset.getInt(1);
+        }
+        
+     } catch (SQLException e) {
+        e.printStackTrace();
+     } finally {
+        close(rset);
+        close(pstmt);
+     }
+     
+     return result;
+  }
+
+
+public ArrayList<ProductReview> selectReview(Connection con, int mno, int currentPage, int limit) {
+	
+	ArrayList<ProductReview> list = new ArrayList<>();
+    PreparedStatement pstmt = null;
+    ResultSet rset = null;
+    
+    String sql = prop.getProperty("selectReview");
+    
+    try {
+       pstmt = con.prepareStatement(sql);
+       
+       // 1. 마지막 행의 번호
+       // 2. 첫 행의 번호
+       int startRow = (currentPage - 1) * limit + 1; 
+       int endRow = startRow + limit - 1;
+
+       pstmt.setInt(1, mno);
+       pstmt.setInt(2, endRow);
+       pstmt.setInt(3, startRow);
+                
+       rset = pstmt.executeQuery();
+       
+       while(rset.next()) {
+          
+    	  ProductReview pr = new ProductReview();
+          
+    	  pr.setRno(rset.getInt("rno"));
+          pr.setPno(rset.getInt("pno"));
+          pr.setMno(rset.getInt("mno"));
+          pr.setRcontent(rset.getString("rcontent"));
+          pr.setRrating(rset.getInt("rrating"));
+          pr.setRdate(rset.getDate("rdate"));
+          pr.setRlevel(rset.getInt("rlevel"));
+          pr.setPname(rset.getString("pname"));
+          pr.setPtype(rset.getString("ptype"));
+          
+          list.add(pr);
+       }
+       
+    } catch (SQLException e) {
+       e.printStackTrace();
+       
+    } finally {
+       close(rset);
+       close(pstmt);
+    }   
+    return list;
+ }
+
+public int deleteROne(Connection con, int preqno) throws NoticeException {
+	 int result = 0;
+     PreparedStatement pstmt = null;
+     
+     String sql = prop.getProperty("deleteROne");
+     
+     try {
+        pstmt = con.prepareStatement(sql);
+        
+        pstmt.setInt(1, preqno);
+        
+        result = pstmt.executeUpdate();
+        
+     } catch (SQLException e) {
+        
+        e.printStackTrace();
+        
+        throw new NoticeException("[DAO] : " + e.getMessage());
+     } finally { 
+        
+        close(pstmt);
+     }
+           
+     return result;
+  }
 }
 
 
