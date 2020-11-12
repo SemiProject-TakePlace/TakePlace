@@ -15,13 +15,15 @@ public class PayRecord implements Serializable{
 	private int payAmount;
 	private char payStatus;
 	
+	private String pname;
+	private String paddress;
 	
 	public PayRecord() {
 		super();
 	}
 
 
-	public PayRecord(int payno, int mno, int preqno, Date payDate, String payMethod, int payAmount, char payStatus) {
+	public PayRecord(int payno, int mno, int preqno, Date payDate, String payMethod, int payAmount, char payStatus, String gname) {
 		super();
 		this.payno = payno;
 		this.mno = mno;
@@ -30,6 +32,8 @@ public class PayRecord implements Serializable{
 		this.payMethod = payMethod;
 		this.payAmount = payAmount;
 		this.payStatus = payStatus;
+		this.pname = pname;
+		this.paddress = paddress;
 	}
 	
 	
@@ -53,7 +57,8 @@ public class PayRecord implements Serializable{
 	@Override
 	public String toString() {
 		return "PayRecord [payno=" + payno + ", mno=" + mno + ", preqno=" + preqno + ", payDate=" + payDate
-				+ ", payMethod=" + payMethod + ", payAmount=" + payAmount + ", payStatus=" + payStatus + "]";
+				+ ", payMethod=" + payMethod + ", payAmount=" + payAmount + ", payStatus=" + payStatus + ", pname="
+				+ pname + ", paddress=" + paddress + "]";
 	}
 
 
@@ -125,7 +130,36 @@ public class PayRecord implements Serializable{
 	public void setPayStatus(char payStatus) {
 		this.payStatus = payStatus;
 	}
-	
+
+
+	public String getGname() {
+		return pname;
+	}
+
+
+	public void setGname(String gname) {
+		this.pname = gname;
+	}
+
+
+	public String getPname() {
+		return pname;
+	}
+
+
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+
+
+	public String getPaddress() {
+		return paddress;
+	}
+
+
+	public void setPaddress(String paddress) {
+		this.paddress = paddress;
+	}
 	
 
 }

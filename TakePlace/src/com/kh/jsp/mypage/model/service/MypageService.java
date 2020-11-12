@@ -92,10 +92,10 @@ public class MypageService {
 		return hmap;
 	}
 
-	public ArrayList<PayRecord> selectPList(ArrayList<PayRecord> list) {
+	public ArrayList<PayRecord> selectPList(ArrayList<PayRecord> list, int mno) {
 		con = getConnection();
 		
-		list = mDAO.selectPList(con, list);
+		list = mDAO.selectPList(con, list, mno);
 		
 		close(con);
 		

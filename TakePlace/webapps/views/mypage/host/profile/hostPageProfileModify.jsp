@@ -202,7 +202,7 @@ padding-left : 30%;
               
               <div id="button">
               <button type="button" class="btn btn-tp-custom-green" onclick="updateHost();">수정 완료</button>&nbsp;&nbsp;
-              <button type="button" class="btn btn-tp-custom-white" onclick="signUp();">취소</button>  
+              <button type="button" class="btn btn-tp-custom-white" onclick="location.href='hostPageProfile.jsp'">취소</button>  
                 
               </div>
               <script>
