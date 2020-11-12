@@ -19,12 +19,10 @@ margin-top: 100px;}
 </head>
 <body>
 	<%@ include file="../common/header.jsp" %>
-	<% if(mem != null && mem.getMtype().equals("ADMIN")) {/*널포 방지용 !=NULL*/ %>
+	<% if(mem != null && mem.getMtype().equals("MANAGER")) {/*널포 방지용 !=NULL*/ %>
 	<div class="outer">
 		<br>
 			<div class="container">
-
-		<div class="row">
 			<form method="post" action="<%= request.getContextPath() %>/nInsert.no">
 				<table class="table table-striped"
 					style="text-align: center;">
@@ -47,7 +45,6 @@ margin-top: 100px;}
     style="margin-left: 12px;"
 				 />
 			</form>
-		</div>
 
 	</div>
 
