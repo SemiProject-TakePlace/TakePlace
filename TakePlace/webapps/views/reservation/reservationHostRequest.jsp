@@ -48,9 +48,9 @@
 				    <label for="exampleInputId1" id="rentNameLabel" class="font-green font-bold" >예약자 이름</label>
 				    	<div class="inline-block">
 				    		<input type="text" class="form-control inline-block" id="rentName" name="rentName" aria-describedby="emailHelp">
-				    		<small class="form-text text-muted infoId">예약자 본인의 이름을 적어주셔야 합니다.</small>
+				    		<small class="form-text text-muted infoId" id="infoName">예약자 본인의 이름을 적어주셔야 합니다.</small>
 				    		<small class="form-text text-error validationId" style="display:none;">3~5자 사이의 한글만 사용 가능합니다.</small>
-				    		<small class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
+				    		<small class="form-text text-error requiredId"  id="reqName" style="display:none;">필수 입력 사항 입니다.</small>
 				  		</div>
 				  </div>
 			
@@ -58,9 +58,9 @@
 				    <label for="exampleInputId1" class="font-green font-bold" >예약자 전화번호</label>
 			    	<div class="inline-block">
 			    		<input type="text" class="form-control inline-block" name="rentTel" id="rentTel" title="전화번호를 입력하세요." placeholder="000-0000-0000" maxlength="13">
-			    		<small class="form-text text-muted infoId">예약자 본인의 전화번호를 적어주셔야 합니다.</small>
+			    		<small class="form-text text-muted infoId" id="infoName2">예약자 본인의 전화번호를 적어주셔야 합니다.</small>
 			    		<small class="form-text text-error validationId" style="display:none;">13자 숫자만 사용 가능합니다.</small>
-			    		<small class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
+			    		<small class="form-text text-error requiredId"  id="reqName2" style="display:none;">필수 입력 사항 입니다.</small>
 			  		</div>
 				  </div>
 				  
@@ -111,7 +111,7 @@
 				  <div class="form-group">
 				  	<label for="exampleInputId1" id="requirementsLabel" class="font-green font-bold" >요구 사항</label>
 				  	<div class="inline-block">
-				  	<textarea name="requirements" placeholder="호스트에게 보낼 메시지를 입력해주세요." id="requirements" cols="80" rows="5" 
+				  	<textarea name="requirements" value="없음" placeholder="호스트에게 보낼 메시지를 입력해주세요." id="requirements" cols="80" rows="5" 
         			style="resize: none;"></textarea>
         			</div>
 				  </div>
@@ -136,7 +136,7 @@
 				  
 				  <br /><br />
 				  
-			  <button type="submit" class="btn btn-tp-custom-green">HOST에게 예약 요청하기</button>
+			  <button type="button" class="btn btn-tp-custom-green"  onclick="submitReservation()">HOST에게 예약 요청하기</button>
 			  
 			</form>
 			
@@ -144,47 +144,42 @@
 		
 		<script>
 		
-		<%--
-		function submitRequest(){
-			<%-- location.href="/takeplace/insertReservation.re?pno=<%=p.getPno()%>";
-			location.href="<%= request.getContextPath() %>/insertReservation.re?pno=<%=p.getPno()%>";
-		}
-		--%>
-		
-		// 날짜 예약 요청 페이지로 날짜 넘기기
-		$(document).ready(function(){
-			<%--  $("#rentDate").text('<%= request.getParameter("selectDate")%>'); --%>
-			 
-		<%-- 	 
-        $.ajax({
-            type : "GET", //전송방식을 지정한다 (POST,GET)
-            url : "/views/products/productsDetail.jsp",//호출 URL을 설정
-            dataType : "text",//호출한 페이지의 형식
-            error : function(){
-                alert("날짜 전송 실패!!!!");
-            },
-            success : function(Parse_data){
-                 $("#rentDate").text('<%= request.getParameter("selectDate")%>'); //요청 페이지에 있는 rentDate에 상품 페이지에서 받아온 selectDate 값을 넣는다.
-               // $("#rentDate").append($('#selectDate'));
-                alert("날짜 데이터 값 : " + Parse_data);
-	            }
-	             
-	        }); --%>
-	    });
-		
-		/*
-		function telNo(obj){
+		function submitReservation() {
 			
-			var patt = new RegExp("[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}");
-			var res = patt.test( $("#tlno").val(obj));
-	
-			if( !patt.test( $("#tlno").val(obj)) ){
-			    alert("전화번호를 정확히 입력하여 주십시오.");
-			    return false;
+			var isError = false;
+			
+			if($("#rentName").val().length == 0 || $("#rentName").val() == "") {
+				$("#infoName").css("display", "none");
+				$("#reqName").css("display", "block");
+				isError = true;
+				
+				$("#rentName").focusout(function () {
+					$("#reqName").css("display", "none");
+				})
+				
+			}rentTel
+			
+			if($("#rentTel").val().length == 0 || $("#rentTel").val() == "") {
+				$("#infoName2").css("display", "none");
+				$("#reqName2").css("display", "block");
+				isError = true;
+				
 			}
 			
+			System.out.println("실패 : " + isError);
+			
+			submitReservation(isError);
+			
 		}
-		*/
+		
+		function submitReservation(isError) {
+			if(isError) {
+				return;
+			} else {
+				$("#reHostRequest").submit();
+				System.out.println("성공 : " + isError);
+			}
+		}
 		</script>
 		
 	</section>
