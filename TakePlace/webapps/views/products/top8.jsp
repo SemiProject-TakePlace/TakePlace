@@ -15,9 +15,6 @@
 	.top8 h2 {
 		margin-bottom: 30px;
 	}
-	.top8-content {
-		background : rgb(240, 240, 240);
-	}
 </style>
 
 </head>
@@ -30,35 +27,28 @@
 			<h2 class="font-bold content-title">
 				<span class="font-green">최고의 인기</span> 상품
 			</h2>
-		</div>
-		
-		
-		
-		
-		<div class="top8-content">
-			<div class="product-card">
-				<div class="row">
-					<!-- 여기서부터 for문 사용하여 여러 개 상품 돌리기 -->
-					<% for(Product p : list) { %>
-		               <div class="col">
-		                  <a href="#">
-		                     <div class="card">
-		                       <img src="<%=request.getContextPath() %>/resources/images/product/<%= p.getMno()%>/<%= p.getProductFile() %>"
-		                          class="card-img-top" alt="대표이미지" width="238" height="158">
-		                          <div class="card-body">
-		                                <small class="font-green">
-		                                   
-		                                   <span class="product"><%= p.getPtype() %></span>/
-		                                   <span class="location"><%= p.getPcity() %></span>
-		                                </small>
-		                               <h5 class="card-title font-bold"><%= p.getPname() %></h5>
-		                               <p class="card-text"><%= p.getPprice() %>원</p>
-		                               <small class="rating">평점 <span class="font-green"><%= p.getPrating() %></span></small>
-		                          </div>
-		                     </div>
-		                  </a>
-		               </div>
-               		<% } %>
+			<div class="top8-content">
+				<div class="product-card">
+					<div class="row">
+						<% for(Product p : list) { %>
+			               <div class="pcard">
+			               	<input type="hidden" name="pno" id="pno" value="<%= p.getPno() %>" />
+			                     <div class="card">
+			                       <img src="<%=request.getContextPath() %>/resources/images/product/<%= p.getMno()%>/<%= p.getProductFile() %>"
+			                          class="card-img-top" alt="대표이미지" width="238" height="158">
+			                          <div class="card-body">
+			                                <small class="font-green">
+			                                   
+			                                   <span class="product"><%= p.getPtype() %></span>/
+			                                   <span class="location"><%= p.getPcity() %></span>
+			                                </small>
+			                               <h5 class="card-title font-bold"><%= p.getPname() %></h5>
+			                               <p class="card-text"><%= p.getPprice() %>원</p>
+			                          </div>
+			                     </div>
+			               </div>
+	               		<% } %>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -67,6 +57,15 @@
 		
 	</section>
 	<%@ include file="../common/footer.jsp" %>
+	
+	<script>
+		$(function() {
+			$(".pcard").click(function() {
+				var pno = $(this).children("#pno").val();
+				location.href="<%= request.getContextPath()%>/selectOneProduct.pr?pno=" + pno;
+			})
+		});
+	</script>
 
 </body>
 </html>

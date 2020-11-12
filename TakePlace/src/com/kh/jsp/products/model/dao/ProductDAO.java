@@ -485,7 +485,7 @@ public class ProductDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null; 
 		
-		String sql = prop.getProperty("selectTop8");
+		String sql = prop.getProperty("productsTop");
 		
 		try {
 			pstmt = con.prepareStatement(sql);
