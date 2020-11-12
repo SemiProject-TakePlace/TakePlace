@@ -101,9 +101,6 @@
 	            </li>
               </ul>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/manager/oneToOneQuestion/oneToOneQuestionList.jsp">1:1 문의</a>
-            </li>
           </ul>
         </div>
    	</nav>
