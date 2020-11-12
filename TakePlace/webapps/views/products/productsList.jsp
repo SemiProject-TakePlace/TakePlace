@@ -122,7 +122,6 @@
 									  		</small>
 										    <h5 class="card-title font-bold"><%= p.getPname() %></h5>
 										    <p class="card-text"><%= p.getPprice() %>원</p>
-										    <small class="rating">평점 <span class="font-green"><%= p.getPrating() %></span></small>
 									  </div>
 								</div>
 							</div>
