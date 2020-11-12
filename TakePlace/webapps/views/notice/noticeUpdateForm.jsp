@@ -31,8 +31,8 @@ margin-top: 100px;}
 					<thead>
 					  <tr>
 					    <th colspan="2"
-					     style="background-color: #eeeeee; text align:center;">공지사항 수정
-					     <input type="hidden" name="no" value="<%= n.getNno()%>">  </th>
+					     style="background-color: #eeeeee; text-align:center;">공지사항 수정
+					     <input type="hidden" name="nno" value="<%= n.getNno()%>">  </th>
 					  </tr>
 					</thead>
 					<tbody> 
