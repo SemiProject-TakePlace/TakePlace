@@ -3,6 +3,7 @@ package com.kh.jsp.member.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.mail.Session;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -64,11 +65,10 @@ public class signIn extends HttpServlet {
     		   
     	   
     		   if(m.getHisok().equals("N")) { // 승인 받지않은 호스트
-
-    			   request.setAttribute("error-msg", "관리자의 승인을 기다려주세요!");
-    			   // 왜 안가냐.. 에러페이지로....?
-    			   request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
     			   
+    			   response.getWriter().write("hostfail");
+    			   
+    			   request.setAttribute("error-msg", "관리자의 승인을 기다려주세요!");
     	     
     	  } else if(m.getHisok().equals("Y")) { // 승인 받은 호스트
             HttpSession session = request.getSession();

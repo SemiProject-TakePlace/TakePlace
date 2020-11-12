@@ -70,7 +70,7 @@
          <div class="find">
             <form action="/takeplace/find.me">
                <h2>비밀번호 찾기</h2>
-               <label for="findPwd" class="font-green inline-block" >아이디</label>
+               <label for="findPwd" class="font-green inline-block" >아이디</label><br> 
                 <input type="text" class="form-control inline-block" name="findPwd" id="findPwd" />
             
                <label for="findPwd2" class="font-green inline-block" >이메일 주소</label>
