@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 
+import com.kh.jsp.productReview.model.vo.ProductReview;
 import com.kh.jsp.products.model.vo.Product;
 import com.kh.jsp.products.model.vo.ProductImages;
 
@@ -343,22 +344,16 @@ public class ProductDAO {
 	public int calcRating(Connection con, int pno) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		String sql = prop.getProperty("calcRating");
+		String sql = prop.getProperty("updateProductRating");
 		
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, pno);
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
-				Product p = new Product();
-				result = rset.getInt("prating");
-			}
+			pstmt.setInt(2, pno);
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(rset);
 			close(pstmt);
 		}
 		
@@ -521,5 +516,52 @@ public class ProductDAO {
 		return listTop;
 	}
 
+	public int deleteProduct(Connection con, int pno) {
+		int result = 0;
+	      PreparedStatement pstmt = null;
+	      
+	      String sql = prop.getProperty("deleteProduct");
+	      
+	      try {
+	         pstmt = con.prepareStatement(sql);
+	         
+	         pstmt.setInt(1, pno);
+	         
+	         result = pstmt.executeUpdate();
+	         
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(pstmt);
+	      }
 
+	      return result;
+	}
+
+	public int ableReviewer(Connection con, int mno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null; 
+		
+		String sql = prop.getProperty("ableReviewr");
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+	         pstmt.setInt(1, mno);
+	         rset = pstmt.executeQuery();
+				
+			while(rset.next()) {
+				result = rset.getInt("mno");
+			}
+	         
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+	         close(pstmt);
+	      }
+
+		
+		return result;
+	}
 }

@@ -60,6 +60,12 @@ public class Product implements Serializable {
 		this.mno = mno;
 		this.mname = mname;
 	}
+	
+	
+	public Product(int prating) {
+		super();
+		this.prating = prating;
+	}
 
 
 	@Override

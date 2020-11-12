@@ -45,11 +45,11 @@ input[type="file"] {
 </style>
 
 </head>
-<body>
+<body>mem.getMtype().equals("MANAGER") || mem.getHisok().equals("Y"))
 
 	<%@ include file="../common/header.jsp" %>
-	
-	<% if(mem != null && ((mem.getHisok().equals("Y")) || mem.getMtype().equals("MANAGER"))) { %>
+	<% if(mem != null && !mem.getMtype().equals("GUEST")) { %>
+	<% if(mem.getMtype().equals("MANAGER") || mem.getHisok().equals("Y")) { %>
 	<section id="wrap-contents">
 		<div class="container">
 			<h2 class="content-title">공간 등록</h2>
@@ -182,262 +182,255 @@ input[type="file"] {
 			  	<button type="button" class="btn btn-tp-custom-green" onclick="submitProduct()">등록 요청 하기</button>
 			  </div>
 			</form>
-			
-			
-			<script>
-				function submitProduct() {
-				
-					var isError = false;
-					
-					if($("#pName").val().length == 0 || $("#pName").val() == "") {
-						$("#infoName").css("display", "none");
-						$("#reqName").css("display", "block");
-						isError = true;
-						
-						$("#pName").focusout(function () {
-							$("#reqName").css("display", "none");
-						})
-						
-					}
-					
-					if($("#pPrice").val().length == 0 || $("#pPrice").val() == "") {	
-						$("#reqPrice").css("display", "block");
-						isError = true;
-						
-						$("#pPrice").focusout(function () {
-							$("#reqPrice").css("display", "none");
-						})
-					}
-					
-					if($("#pAbleDate").val().length == 0 || $("#pAbleDate").val() == "") {
-						$("#reqDate").css("display", "block");
-						isError = true;
-						
-						$("#pAbleDate").focusout(function () {
-							$("#reqDate").css("display", "none");
-						})
-					
-					}
-					
-					if($("#pTitleImg").val().length == 0 || $("#pTitleImg").val() == "") {
-						$("#reqTitleImg").css("display", "block");
-						isError = true;
-					} else {
-						$("#reqTitleImg").css("display", "none");
-					}
-					
-					if($("#pZipCode").val().length == 0 || $("#pZipCode").val() == "" ||
-						$("#pAddress1").val().length == 0 || $("#pAddress1").val() == "" ||
-						$("#pAddress2").val().length == 0 || $("#pAddress2").val() == "" ) {
-						$("#reqAddr").css("display", "block");
-						isError = true;
-						
-						$("#pAddress2").focusout(function () {
-							$("#reqAddr").css("display", "none");
-						});
-						
-					}
-					
-					if($("#pGuide").val().length == 0 || $("#pGuide").val() == "") {
-						$("#reqGuide").css("display", "block");
-						isError = true;
-						
-						$("#pGuide").focusout(function () {
-							$("#reqGuide").css("display", "none");
-						});
-					} 
-					
-					
-					if($("#pWarn").val().length == 0 || $("#pWarn").val() == "") {
-						$("#reqWarn").css("display", "block");
-						isError = true;
-						
-						$("#pWarn").focusout(function () {
-							$("#reqWarn").css("display", "none");
-						});
-					} 
-					
-					submitForm(isError);
-					
-				}
-				
-				function submitForm(isError) {
-					if(isError) {
-						return;
-					} else {
-						$("#insertProduct").submit();
-					}
-				}
-				
-			</script>
-			
-			<script>
-				$(function() {
-					// Create start date
-				    var start = new Date(), prevDay;
-			
-				    $("#pAbleDate").datepicker({
-				    	multipleDates: true,
-				        language: "en",
-				        minDate: start,
-				        startDate: start,
-				        dateFormat: "yyyy/mm/dd",
-				        onSelect: function (fd, d, picker) {
-				            // Do nothing if selection was cleared
-				            
-				            if (!d) return;
-				           
-				            var day = d[0].getDay();
-				       
-				            // Trigger only if date is changed
-				            if (prevDay != undefined && prevDay == day) return;
-				            prevDay = day;
-				        }
-				    
-				    })
-				});
-				
-			</script>
-				
-			<script>
-			
-				// 사진 게시글 미리 보기 기능 구현
-		   		$(function() {
-		   			
-		   			$(".titleFileUpload").click(function() {
-		   				$("#pTitleImg").click();
-		   			});
-		   			
-		   			var titleFileTarget = $('.title-upload-hidden');
-					
-					titleFileTarget.on('change', function(e){
-						// 대표 이미지 값이 변경되면 
-						if(window.FileReader){ // modern browser
-							var filename = $(this)[0].files[0].name;
-						} else { // old IE
-							var filename = $(this).val().split('/').pop().split('\\').pop(); // 파일명만 추출
-						} 
-						
-						// 추출한 파일명 삽입 
-						$(this).siblings('.upload-name').val(filename); 
-		   				  
-		   				if($(this)[0].files[0]) {
-			   				var reader = new FileReader();
-			   				
-			   				reader.onload = function(e) {
-			   					
-			   					
-			   					$("#titleImgArea").children(".titleImg").attr('src', e.target.result)
-			   				  	.css('width', "120")
-			   				  	.css("height", "100")
-			   				
-			   				}
-			   				
-			   				reader.readAsDataURL($(this)[0].files[0]);
-			   			}
-					}); 
-				
-					
-					$("#subImg1").click(function() {
-		   				$("#subImgInput1").click();
-		   			});
-		   			$("#subImg2").click(function() {
-		   				$("#subImgInput2").click();
-		   			});
-		   			$("#subImg3").click(function() {
-		   				$("#subImgInput3").click();
-		   			});
-		   			$("#subImg4").click(function() {
-		   				$("#subImgInput4").click();
-		   			});
-		   			
-		   			$("#fileArea").hide();
-					
-		   		});
-				
-		   		function loadImg(img, num) {
-		   			if(img.files && img.files[0]) {
-		   				var reader = new FileReader();
-		   				
-		   				reader.onload = function(e) {
-		   					switch(num) {
-		   					case 1: $("#subImg1").attr("src", e.target.result);
-		 									break;
-		   					case 2: $("#subImg2").attr("src", e.target.result);
-									break;
-		   					case 3: $("#subImg3").attr("src", e.target.result);
-									break;
-		   					case 4: $("#subImg4").attr("src", e.target.result);
-									break;
-		   					}
-		   				}
-		   				
-		   				reader.readAsDataURL(img.files[0]);
-		   			}
-		   		};
-		
-			</script>
-			
-			<script>
-				// 참조 API : http://postcode.map.daum.net/guide
-				function searchAddr() {
-			        new daum.Postcode({
-			            oncomplete: function(data) {
-			                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-		
-			                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-			                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-			                var fullAddr = ''; // 최종 주소 변수
-			                var extraAddr = ''; // 조합형 주소 변수
-		
-			                // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-			                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-			                    fullAddr = data.roadAddress;
-		
-			                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-			                    fullAddr = data.jibunAddress;
-			                }
-		
-			                // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
-			                if(data.userSelectedType === 'R'){
-			                    //법정동명이 있을 경우 추가한다.
-			                    if(data.bname !== ''){
-			                        extraAddr += data.bname;
-			                    }
-			                    // 건물명이 있을 경우 추가한다.
-			                    if(data.buildingName !== ''){
-			                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-			                    }
-			                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
-			                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
-			                }
-		
-			                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-			                $("#pZipCode").val(data.zonecode); //5자리 새우편번호 사용
-			                
-			                $("#pAddress1").val(fullAddr);
-		
-			                // 커서를 상세주소 필드로 이동한다.
-			                $("#pAddress2").focus();
-			            }
-			        }).open();
-			    };
-			    
-			</script>
-			
-			
-			
-			
-	
 		</div>
 	</section>
-	<% } else {
+		<% } } else {
 		request.setAttribute("error-msg", "호스트 외에 접근이 불가능한 페이지입니다.");
 		request.getRequestDispatcher("../common/errorPage.jsp").forward(request, response);
 	} %>
+	
 	<%@ include file="../common/footer.jsp" %>
 	
+	<script>
+		function submitProduct() {
+		
+			var isError = false;
+			
+			if($("#pName").val().length == 0 || $("#pName").val() == "") {
+				$("#infoName").css("display", "none");
+				$("#reqName").css("display", "block");
+				isError = true;
+				
+				$("#pName").focusout(function () {
+					$("#reqName").css("display", "none");
+				})
+				
+			}
+			
+			if($("#pPrice").val().length == 0 || $("#pPrice").val() == "") {	
+				$("#reqPrice").css("display", "block");
+				isError = true;
+				
+				$("#pPrice").focusout(function () {
+					$("#reqPrice").css("display", "none");
+				})
+			}
+			
+			if($("#pAbleDate").val().length == 0 || $("#pAbleDate").val() == "") {
+				$("#reqDate").css("display", "block");
+				isError = true;
+				
+				$("#pAbleDate").focusout(function () {
+					$("#reqDate").css("display", "none");
+				})
+			
+			}
+			
+			if($("#pTitleImg").val().length == 0 || $("#pTitleImg").val() == "") {
+				$("#reqTitleImg").css("display", "block");
+				isError = true;
+			} else {
+				$("#reqTitleImg").css("display", "none");
+			}
+			
+			if($("#pZipCode").val().length == 0 || $("#pZipCode").val() == "" ||
+				$("#pAddress1").val().length == 0 || $("#pAddress1").val() == "" ||
+				$("#pAddress2").val().length == 0 || $("#pAddress2").val() == "" ) {
+				$("#reqAddr").css("display", "block");
+				isError = true;
+				
+				$("#pAddress2").focusout(function () {
+					$("#reqAddr").css("display", "none");
+				});
+				
+			}
+			
+			if($("#pGuide").val().length == 0 || $("#pGuide").val() == "") {
+				$("#reqGuide").css("display", "block");
+				isError = true;
+				
+				$("#pGuide").focusout(function () {
+					$("#reqGuide").css("display", "none");
+				});
+			} 
+			
+			
+			if($("#pWarn").val().length == 0 || $("#pWarn").val() == "") {
+				$("#reqWarn").css("display", "block");
+				isError = true;
+				
+				$("#pWarn").focusout(function () {
+					$("#reqWarn").css("display", "none");
+				});
+			} 
+			
+			submitForm(isError);
+			
+		}
+		
+		function submitForm(isError) {
+			if(isError) {
+				return;
+			} else {
+				$("#insertProduct").submit();
+			}
+		}
+		
+	</script>
 	
+	<script>
+		$(function() {
+			// Create start date
+		    var start = new Date(), prevDay;
+	
+		    $("#pAbleDate").datepicker({
+		    	multipleDates: true,
+		        language: "en",
+		        minDate: start,
+		        startDate: start,
+		        dateFormat: "yyyy/mm/dd",
+		        onSelect: function (fd, d, picker) {
+		            // Do nothing if selection was cleared
+		            
+		            if (!d) return;
+		           
+		            var day = d[0].getDay();
+		       
+		            // Trigger only if date is changed
+		            if (prevDay != undefined && prevDay == day) return;
+		            prevDay = day;
+		        }
+		    
+		    })
+		});
+		
+	</script>
+		
+	<script>
+	
+		// 사진 게시글 미리 보기 기능 구현
+   		$(function() {
+   			
+   			$(".titleFileUpload").click(function() {
+   				$("#pTitleImg").click();
+   			});
+   			
+   			var titleFileTarget = $('.title-upload-hidden');
+			
+			titleFileTarget.on('change', function(e){
+				// 대표 이미지 값이 변경되면 
+				if(window.FileReader){ // modern browser
+					var filename = $(this)[0].files[0].name;
+				} else { // old IE
+					var filename = $(this).val().split('/').pop().split('\\').pop(); // 파일명만 추출
+				} 
+				
+				// 추출한 파일명 삽입 
+				$(this).siblings('.upload-name').val(filename); 
+   				  
+   				if($(this)[0].files[0]) {
+	   				var reader = new FileReader();
+	   				
+	   				reader.onload = function(e) {
+	   					
+	   					
+	   					$("#titleImgArea").children(".titleImg").attr('src', e.target.result)
+	   				  	.css('width', "120")
+	   				  	.css("height", "100")
+	   				
+	   				}
+	   				
+	   				reader.readAsDataURL($(this)[0].files[0]);
+	   			}
+			}); 
+		
+			
+			$("#subImg1").click(function() {
+   				$("#subImgInput1").click();
+   			});
+   			$("#subImg2").click(function() {
+   				$("#subImgInput2").click();
+   			});
+   			$("#subImg3").click(function() {
+   				$("#subImgInput3").click();
+   			});
+   			$("#subImg4").click(function() {
+   				$("#subImgInput4").click();
+   			});
+   			
+   			$("#fileArea").hide();
+			
+   		});
+		
+   		function loadImg(img, num) {
+   			if(img.files && img.files[0]) {
+   				var reader = new FileReader();
+   				
+   				reader.onload = function(e) {
+   					switch(num) {
+   					case 1: $("#subImg1").attr("src", e.target.result);
+ 									break;
+   					case 2: $("#subImg2").attr("src", e.target.result);
+							break;
+   					case 3: $("#subImg3").attr("src", e.target.result);
+							break;
+   					case 4: $("#subImg4").attr("src", e.target.result);
+							break;
+   					}
+   				}
+   				
+   				reader.readAsDataURL(img.files[0]);
+   			}
+   		};
+
+	</script>
+	
+	<script>
+		// 참조 API : http://postcode.map.daum.net/guide
+		function searchAddr() {
+	        new daum.Postcode({
+	            oncomplete: function(data) {
+	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+	                var fullAddr = ''; // 최종 주소 변수
+	                var extraAddr = ''; // 조합형 주소 변수
+
+	                // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+	                    fullAddr = data.roadAddress;
+
+	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+	                    fullAddr = data.jibunAddress;
+	                }
+
+	                // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
+	                if(data.userSelectedType === 'R'){
+	                    //법정동명이 있을 경우 추가한다.
+	                    if(data.bname !== ''){
+	                        extraAddr += data.bname;
+	                    }
+	                    // 건물명이 있을 경우 추가한다.
+	                    if(data.buildingName !== ''){
+	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                    }
+	                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+	                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+	                }
+
+	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+	                $("#pZipCode").val(data.zonecode); //5자리 새우편번호 사용
+	                
+	                $("#pAddress1").val(fullAddr);
+
+	                // 커서를 상세주소 필드로 이동한다.
+	                $("#pAddress2").focus();
+	            }
+	        }).open();
+	    };
+	    
+	</script>
 	
 </body>
 </html>

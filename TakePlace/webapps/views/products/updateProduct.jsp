@@ -64,11 +64,10 @@
 		<div class="container">
 			<h2 class="content-title">공간 수정</h2>
 			
-			<form id="update-product" method="post"
-				action="<%= request.getContextPath() %>/updateProduct.pr"
-				enctype="multipart/form-data">
+			<form id="manage-product" method="post" enctype="multipart/form-data">
 				
 				<input type="hidden" name="pno" value="<%= p.getPno() %>"/>
+				<input type="hidden" name="mno" value="<%= mem.getMno() %>"/>
 				
 			  <div class="form-group">
 			    <label for="pCity" class="font-green font-bold">지역</label>
@@ -265,7 +264,8 @@
 					if(isError) {
 						return;
 					} else {
-						$("#update-product").submit();
+						<%--$("#manage-product").action = "<%= request.getContextPath() %>/updateProduct.pr"; --%>
+						$("#manage-product").submit();
 					}
 				}
 				

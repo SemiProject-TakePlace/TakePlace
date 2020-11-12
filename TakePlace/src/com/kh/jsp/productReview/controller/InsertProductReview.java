@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kh.jsp.productReview.model.service.ProductReviewService;
 import com.kh.jsp.productReview.model.vo.ProductReview;
+import com.kh.jsp.products.model.vo.Product;
 
 /**
  * Servlet implementation class InsertProductReview

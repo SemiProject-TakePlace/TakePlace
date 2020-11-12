@@ -2,6 +2,7 @@ package com.kh.jsp.products.model.service;
 
 import static com.kh.jsp.common.JDBCTemplate.*;
 
+import java.io.File;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -109,8 +110,13 @@ public class ProductService {
 	
 	public int calcRating(int pno) {
 		con = getConnection();
-		
 		int result = pDAO.calcRating(con, pno);
+		
+		if(result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
 		
 		close(con);
 		
@@ -195,5 +201,27 @@ public class ProductService {
 		return listTop;
 	}
 
+	public int deleteProduct(int pno) {
+		con = getConnection();
+		
+		int result = pDAO.deleteProduct(con, pno);
+		
+		if(result > 0) commit(con);
+		else rollback(con);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int ableReviewer(int mno) {
+		con = getConnection();
+		
+		int result = pDAO.ableReviewer(con, mno);
+		
+		close(con);
+		
+		return result;
+	}
 
 }

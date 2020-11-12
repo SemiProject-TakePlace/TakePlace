@@ -14,8 +14,6 @@
 	ProductImages subImg4 = fileList.get(4);
 	
 	ArrayList<ProductReview> rlist = (ArrayList<ProductReview>)request.getAttribute("rlist");
-	
-	int rating = (int)request.getAttribute("rating");
 %>
 <!DOCTYPE html>
 <html>
@@ -217,9 +215,13 @@
 	  				<span class="font-green">오피스</span>
 	  			<% } %>
 				<%if(mem.getBsnum() != null && mem.getBsnum().equals(p.getBsNum())) { %>
-				<button type="button" class="btn btn-tp-custom-green active" style="float:right;"
-					onclick="location.href='<%= request.getContextPath() %>/updateProductView.pr?pno='+<%=p.getPno()%>">상품 수정
-				</button>
+					<button type="button" class="btn btn-tp-custom-green" style="float: right;"
+						onclick="location.href='<%= request.getContextPath() %>/updateProductView.pr?pno='+<%=p.getPno()%>">공간 수정
+					</button>
+					<button type="button" class="btn btn-tp-custom-green" style="float: right;"
+						onclick="location.href='<%= request.getContextPath() %>/deleteProduct.pr?pno='+<%=p.getPno()%>">공간 삭제
+					</button>
+				}
 				<% } %>
 			</h2>
 		</div>
@@ -292,9 +294,11 @@
 	                            <small class="form-text text-error requiredId" style="display:none;">필수 입력 사항 입니다.</small>
 	                        </div>          
 	                    </div>
-	                    <button type="submit" class="btn btn-dark mt-4">
-	                             HOST에게 예약 요청하기
-	                    </button>
+	                    <% if(mem.getMtype().equals("GUEST")) { %>
+		                    <button type="submit" class="btn btn-dark mt-4">
+		                             HOST에게 예약 요청하기
+		                    </button>
+	                    <% } %>
 	                    </form>
 	               </div>
 			
@@ -323,7 +327,7 @@
 						<dt class="font-bold font-green">가격</dt>
 						<dd><%= p.getPprice() %></dd>
 						<dt class="font-bold font-green">공간 평점</dt>
-						<dd><%= rating %></dd>
+						<dd><%= p.getPrating() %></dd>
 					</dl>
 				</div>
 				
@@ -385,10 +389,8 @@
 					<div class="container-fluid review-content">
 						<div id="review" class="detail-review">
 							<h4 class="font-bold font-green">이용 후기
-								<!-- 이용 내역이 있고 후기를 아직 남기지 않은 회원만 -->
-								<button class="btn btn-tp-custom-green my-2 my-sm-0" type="button" onclick="writeReview(this)">이용 후기 남기기</button>
+									<button class="btn btn-tp-custom-green my-2 my-sm-0" type="button" onclick="writeReview(this)">이용 후기 남기기</button>
 							</h4>
-							
 							
 							<div class="replyArea">
 								<div class="replyWriteArea write-review" style="display: none;">
@@ -408,7 +410,6 @@
 									
 								</div>						
 								<div class="reveiw-area">
-									<!-- 댓글 목록 구현 영역 -->
 									<% if(rlist.size() == 0) { %>
 										<span>아직 이용후기가 없습니다!</span>
 									<% } else {

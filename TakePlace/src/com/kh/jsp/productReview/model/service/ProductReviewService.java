@@ -37,5 +37,4 @@ public class ProductReviewService {
 		return rlist;
 	}
 
-
 }

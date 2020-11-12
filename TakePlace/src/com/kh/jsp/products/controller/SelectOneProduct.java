@@ -9,7 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.kh.jsp.member.model.vo.AllMember;
 import com.kh.jsp.productReview.model.service.ProductReviewService;
 import com.kh.jsp.productReview.model.vo.ProductReview;
 import com.kh.jsp.products.model.service.ProductService;
@@ -34,6 +36,9 @@ public class SelectOneProduct extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		HttpSession session = request.getSession();
+		AllMember mem = (AllMember)session.getAttribute("member");
+		
 		int pno = Integer.parseInt(request.getParameter("pno"));
 		
 		HashMap<String, Object> product = new ProductService().selectOne(pno);
@@ -44,14 +49,16 @@ public class SelectOneProduct extends HttpServlet {
 		 
 		ProductService ps = new ProductService();
 		
-		int rating = ps.calcRating(pno);
+		int ableReviewer = ps.ableReviewer(mem.getMno());
+		
+		System.out.println(ableReviewer);
 		
 		String page = "";
 
 		if(product != null && product.get("product") != null) {
 			request.setAttribute("product", product.get("product"));
 			request.setAttribute("fileList", product.get("productImages"));
-			request.setAttribute("rating", rating);
+			request.setAttribute("ableReviewr", ableReviewer);
 			request.setAttribute("rlist", rlist);
 			
 			page = "views/products/productDetail.jsp";
