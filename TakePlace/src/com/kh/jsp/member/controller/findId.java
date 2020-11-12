@@ -1,6 +1,10 @@
 package com.kh.jsp.member.controller;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.Properties;
 
 import javax.servlet.ServletException;
@@ -21,6 +25,25 @@ import com.kh.jsp.member.model.vo.Member;
  */
 @WebServlet("/find.me")
 public class findId extends HttpServlet {
+	
+	private static String getSHA512(String pwd) {
+	      
+	      try {
+	         MessageDigest md = MessageDigest.getInstance("SHA-512");
+	         byte[] bytes = pwd.getBytes(Charset.forName("UTF-8"));
+	         md.update(bytes);
+	         
+	         return Base64.getEncoder().encodeToString(md.digest());
+	         
+	      } catch (NoSuchAlgorithmException e) {
+	         
+	         System.out.println("암호화 에러 발생!");
+	         e.printStackTrace();
+	         
+	         return null;
+	      }
+	   }
+	
    private static final long serialVersionUID = 1L;
 
    /**
@@ -108,9 +131,11 @@ public class findId extends HttpServlet {
          // 임시 비밀번호 발급
          String newPwd = getRandomPwd(7);
          System.out.println("생성된 임시 비번 : " + newPwd);
-         
+        
          // 메일 전송
          sendEmail(email, newPwd);
+         
+         newPwd = getSHA512(newPwd);
          
          int result = ms.updatePwd(id, newPwd);
         
@@ -146,8 +171,8 @@ public class findId extends HttpServlet {
    }
    
    private void sendEmail(String email, String newPwd){
-      String user = "gkdud6717@naver.com";
-      String password = ""; // 실제 네이버 비번입력  // 전에 smtp 네이버메일에서 설정하기!!
+      String user = "dms45678@naver.com";
+      String password = "951753ad"; // 실제 네이버 비번입력  // 전에 smtp 네이버메일에서 설정하기!!
       
       String host = "smtp.naver.com"; // smtp 서버
       String content = "임시 비밀번호 : " + newPwd;
