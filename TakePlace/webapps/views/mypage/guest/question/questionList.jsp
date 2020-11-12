@@ -374,11 +374,11 @@
                         <% if ( mem != null ) { 
                          if( mem.getMtype().equals("GUEST")){ %>
                         <button class="btn btn-tp-custom-green" onclick="location.href='views/mypage/guest/question/questionForm.jsp'">
-                        작성하기
+                      		 작성하기
                         </button>
                         <% } else if ( mem.getMtype().equals("HOST")){ %>
                         <button class="btn btn-tp-custom-green" onclick="location.href='views/mypage/host/question/questionForm.jsp'">
-                        작성하기
+                        	작성하기
                         </button>
                         <% }    
                               } %>    
@@ -388,19 +388,6 @@
                 </div>   
               
          </div>
-         
-         
-         
-         
-         
-      
-      
-      
-      
-      
-      
-      
-         
                <script>
                $(function(){
                   $('#liContext ul li').mouseenter(function(){

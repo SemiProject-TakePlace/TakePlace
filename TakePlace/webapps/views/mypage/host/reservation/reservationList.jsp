@@ -206,6 +206,7 @@
 		}	
 	.disabled:hover {
 		background: gray;
+		color: #ffffff;
 		border: none;
 		cursor: default;
 		}	

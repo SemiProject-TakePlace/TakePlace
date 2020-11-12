@@ -1,8 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.kh.jsp.productReview.model.vo.*, java.util.*, com.kh.jsp.products.model.vo.*" %>
+    pageEncoding="UTF-8" import="com.kh.jsp.productReview.model.vo.*, java.util.*, com.kh.jsp.products.model.vo.*, com.kh.jsp.mypage.model.vo.*" %>
 <%
    ArrayList<ProductReview> list = (ArrayList<ProductReview>)request.getAttribute("list");
-   Product p = (Product)request.getAttribute("p");
+   // Product p = (Product)request.getAttribute("p");
+   PageInfo pi = (PageInfo)request.getAttribute("pi");
+   int listCount = pi.getListCount();
+   int currentPage = pi.getCurrentPage();
+   int maxPage = pi.getMaxPage();
+   int startPage = pi.getStartPage();
+   int endPage = pi.getEndPage();   
 %>
 <!DOCTYPE html>
 <html>
@@ -298,7 +304,6 @@
                                       </li>
                                       <!-- 게시물이 출력될 영역 -->                                 
                                       <% for(ProductReview pr : list) { %>
-                                      <% if(pr.getMno() == mem.getMno()) { %>
                                       <li id="liContext">
                                           <ul>
                                               <li><%= pr.getRno() %></li>
@@ -314,7 +319,6 @@
                        						  </li>
                                           </ul>
                                       </li>
-                                       <% } %>  
                                     <% } %>                              
                                   </ul>
                               </li>
@@ -323,7 +327,34 @@
                                   </div> 
                                  
                                </div>
-              
+              		
+              		<div class="pagingArea" align="center">
+      
+      <button class="btn btn-tp-custom-white" onclick="location.href='<%= request.getContextPath() %>/selectReview.me?currentPage=1'"><<</button>
+         <%  if(currentPage <= 1){  %>
+         <button class="btn btn-tp-custom-white" disabled><</button>
+         <%  }else{ %>
+         <button class="btn btn-tp-custom-white" onclick="location.href='<%= request.getContextPath() %>/selectReview.me?currentPage=<%=currentPage - 1 %>'"><</button>
+         <%  } %>
+         
+         <% for(int p = startPage; p <= endPage; p++){
+               if(p == currentPage){   
+         %>
+            <button class="btn btn-tp-custom-white" disabled><%= p %></button>
+         <%      }else{ %>
+            <button class="btn btn-tp-custom-white" onclick="location.href='<%= request.getContextPath() %>/selectReview.me?currentPage=<%= p %>'"><%= p %></button>
+         <%      } %>
+         <% } %>
+            
+         <%  if(currentPage >= maxPage){  %>
+         <button class="btn btn-tp-custom-white" disabled>></button>
+         <%  }else{ %>
+         <button class="btn btn-tp-custom-white" onclick="location.href='<%= request.getContextPath() %>/selectReview.me?currentPage=<%=currentPage + 1 %>'">></button>
+         <%  } %>
+         <button class="btn btn-tp-custom-white" onclick="location.href='<%= request.getContextPath() %>/selectReview.me?currentPage=<%= maxPage %>'">>></button>
+      
+      </div>
+              		
                 
                 </div>   
               

@@ -208,9 +208,10 @@
    color: #6C7994;
 }
 
-.btn {
+.rbtn {
    width: 170px;
-   margin: 20px;
+   margin: 15px;
+   padding: 10px;
 }
 
 </style>
@@ -240,7 +241,7 @@
               <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/use/useList.jsp">이용 내역</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="http://localhost:8088/takeplace/views/mypage/guest/review/reviewList.jsp">이용 후기</a>
+               <a class="nav-link" href="<%= request.getContextPath()%>/selectReview.me">이용 후기</a>
             </li>
             <%  } else { %>
             <li class="nav-item">
@@ -329,9 +330,9 @@
             <div align="center">
                
                
-               <button class="btn btn-tp-custom-green" onclick="location.href='selectQlist.me'">목록으로 돌아가기</button>
+               <button class="btn btn-tp-custom-green rbtn" onclick="location.href='selectQlist.me'">목록으로 돌아가기</button>
                
-               <button  class="btn btn-tp-custom-white" onclick="location.href='<%=request.getContextPath() %>/deleteQ.me?inqno='+<%= q.getInqNo()%>">삭제하기</button>
+               <button  class="btn btn-tp-custom-white rbtn" onclick="location.href='<%=request.getContextPath() %>/deleteQ.me?inqno='+<%= q.getInqNo()%>">삭제하기</button>
 
             </div>
             

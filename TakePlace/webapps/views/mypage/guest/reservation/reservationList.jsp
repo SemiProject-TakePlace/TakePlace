@@ -152,13 +152,13 @@
         vertical-align:baseline;
 }    
 
-    #ulTable > li > ul > li:first-child                  {width:10%;} /*No 크기*/
-    #ulTable > li > ul > li:first-child +li              {width:20%;} /*공 간 명 */
+    #ulTable > li > ul > li:first-child                  {width:5%;} /*No 크기*/
+    #ulTable > li > ul > li:first-child +li              {width:15%;} /*공 간 명 */
     #ulTable > li > ul > li:first-child +li+li           {width:20%;} /*대여날짜*/
     #ulTable > li > ul > li:first-child +li+li+li        {width:30%;} /*요구사항*/
     #ulTable > li > ul > li:first-child +li+li+li+li     {width:10%;} /*승인여부*/
    #ulTable > li > ul > li:first-child +li+li+li+li+li  {width:10%;} /*승인여부*/
-
+#ulTable > li > ul > li:first-child +li+li+li+li+li+li {width:10%;} /*취소*/
     #divPaging {
         clear:both; 
         margin:0 auto; 
@@ -201,7 +201,17 @@
 }
 */
 
-   
+.disabled {
+		background: gray;
+		border: none;
+		color: #ffffff;
+		}	
+	.disabled:hover {
+		background: gray;
+		color: #ffffff;
+		border: none;
+		cursor: default;
+		}
 
 </style>
 
@@ -295,6 +305,7 @@
                                               <li>요구 사항</li>
                                               <li>승인 여부</li>
                                               <li>결제</li>
+                                              <li>취소</li>
                                        </ul>                                        
                                       </li>
                                       <!-- 게시물이 출력될 영역 -->                                 
@@ -316,7 +327,7 @@
                                               <li>미승인</li>
                                               <% } %>
                                               <li>
-                                                    <button class="btn btn-tp-custom-green" hidden="hidden">결제하기</button>
+                                                    <button class="btn btn-tp-custom-white disabled" disabled="disabled">결제하기</button>
                                                </li>
                                               <% } else { %>
                                                <li>승인</li>
@@ -324,6 +335,10 @@
                                                     <button class="btn btn-tp-custom-green">결제하기</button>
                                                </li>
                                                 <% } %>
+                                                
+                                                <li>
+                                                    <div class="btn btn-tp-custom-green">예약취소</div>
+                                               </li>
                                               
                                           </ul>
                                       </li>
@@ -341,8 +356,18 @@
                 </div>   
               
          </div>
-         
-            
+    	
+    	<script>
+               $(function(){
+                  $('#liContext ul li').click(function(){
+                     var preqno = $(this).parent().children().eq(0).text();
+                     location.href = "<%= request.getContextPath() %>/deleteReservation.me?preqno=" + preqno; 
+                     
+                  });
+               });
+            </script>
+                 
+	            
             <!-- 여기가 컨텐츠 끝 -->
          </div>
       </div>
