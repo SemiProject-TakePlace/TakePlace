@@ -75,7 +75,7 @@ public class signIn extends HttpServlet {
             
             session.setAttribute("member", m);
             
-            response.sendRedirect("index");
+            response.getWriter().write("index");
   	        
     	  }
 
@@ -84,7 +84,7 @@ public class signIn extends HttpServlet {
            
            session.setAttribute("member", m);
            
-           response.sendRedirect("index");
+           response.getWriter().write("index");
 
        		}
 
