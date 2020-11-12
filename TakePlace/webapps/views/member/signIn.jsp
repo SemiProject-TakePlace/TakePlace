@@ -100,16 +100,15 @@
                pwd : $("#userpwd").val()
             },
             // dataType
-            success : function(data) 
+            success : function(data) {
                if(data != "fail"){
-                 window.location.href="<%= request.getContextPath() %>/index";
-               } else if (data.equals("hostfail")){
-            	   
-            	   location.href="<%= request.getContextPath() %>/views/common/errorPage.jsp";
-               } else {
-            	   $("#message").html("<small class='form-text text-error'>아이디 또는 비밀번호가 잘못되었습니다.</span>");
+                  window.location.href="<%=request.getContextPath()%>/index";
+               } else if(data == "hostfail"){
+                   window.location.href="<%=request.getContextPath()%>/views/common/errorPage.jsp";
                }
-               
+               else {
+                  $("#message").html("<small class='form-text text-error'>아이디 또는 비밀번호가 잘못되었습니다.</span>");
+               }
             },
             error : function(request, status, error) {
                alert("오류가 발생했습니다. 관리자에게 문의 주세요:)");
