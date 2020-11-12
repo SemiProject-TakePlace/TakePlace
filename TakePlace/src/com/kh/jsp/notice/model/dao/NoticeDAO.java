@@ -98,6 +98,43 @@ public class NoticeDAO {
 		
 		return result;
 	}
+	
+	public Notice selectOne(Connection con, int nno) throws NoticeException {
+		Notice result = null;
+		PreparedStatement pstmt =null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectOne");
+		
+		try {
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, nno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = new Notice();
+				
+				result.setNno( nno );
+				result.setNtitle( rset.getString("ntitle"));
+				result.setNcontent( rset.getString("ncontent"));
+				
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			throw new NoticeException("[DAO] :" + e.getMessage());
+			
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+	}
 	public int updateNotice(Connection con, Notice n) throws NoticeException {
 		int result = 0;
 		
@@ -109,7 +146,7 @@ public class NoticeDAO {
 			pstmt = con.prepareStatement(sql);
 			
 			pstmt.setString(1, n.getNtitle());
-		//	pstmt.setString(2, n.getNcontent());
+			pstmt.setString(2, n.getNcontent());
 			pstmt.setInt(3, n.getNno());
 			
 			result = pstmt.executeUpdate();

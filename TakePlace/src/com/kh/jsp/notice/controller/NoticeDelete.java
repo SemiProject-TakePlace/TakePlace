@@ -16,7 +16,7 @@ import com.kh.jsp.notice.model.service.NoticeService;
  */
 @WebServlet("/nDelete.no")
 public class NoticeDelete extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 11L;
        
     /**
      * @see HttpServlet#HttpServlet()

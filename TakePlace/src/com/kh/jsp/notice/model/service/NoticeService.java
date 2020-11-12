@@ -72,6 +72,22 @@ public class NoticeService {
 		return result;
 	}
 
+	
+	public Notice updateView(int nno) throws NoticeException {
+		con = getConnection();
+		
+		// 수정하는 페이지에 해당 공지사항의 내용을
+		// 보여주기 위한 화면이기 때문에, 상세 조회하던 SQL을
+		// 그대로 재사용할 수 있다.
+		
+		Notice n = nDAO.selectOne(con, nno);
+		
+		close(con);
+		
+		return n;
+	}
+
+	
 	public ArrayList<Notice> searchNotice(String keyword) throws NoticeException {
 		con = getConnection();
 		
