@@ -14,7 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Servlet Filter implementation class EncryptFilter
  */
-@WebFilter({ "/mInsert.me", "/login.me", "/mUpdate.me" })
+@WebFilter({ "/insertG.me", "/insertH.me", "/signIn.me", 
+	         "/updateGuest.me", "/updateHost.me", "/find.me"})
 public class EncryptFilter implements Filter {
 
     /**
@@ -41,7 +42,7 @@ public class EncryptFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest)request;
 		
 		// 비밀번호 확인을 위한 원본 값 별도 저장
-		request.setAttribute("originPwd", req.getParameter("userPwd"));
+		request.setAttribute("originPwd", req.getParameter("pwd"));
 		
 		// 비밀번호를 암호화 포장(Wrap)할 래퍼 클래스 생성하기
 		EncryptWrapper ew = new EncryptWrapper(req);

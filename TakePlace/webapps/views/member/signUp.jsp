@@ -73,7 +73,7 @@
 	                   <label for="userNick" class="font-green font-bold" >닉네임</label>
 	                   <div class="inline-block">
 		                   <input type="text" class="form-control" id="userNick" name="userNick"
-		                   		 placeholder="닉네임 입력" required="required">
+		                   		 placeholder="닉네임 입력" required="required" maxlength="12">
 		                   <small id="infoNick" class="form-text text-muted">한글, 숫자, 영소문자를 조합하여 5자 이상 입력하세요.</small>
 		                   <small id="validationNick" class="form-text text-error" style="display:none;">한글, 숫자, 영소문자를 조합하여 5자 이상 입력하세요.</small>
 		                   <small id="nickErr" class="form-text text-error" style="display:none;">중복된 닉네임 입니다.</small>
@@ -86,7 +86,7 @@
 	              <div class="form-group">
 	                   <label for="userpwd" class="font-green font-bold" >비밀번호</label>
 	                   <div class="inline-block">
-		                   <input type="password" class="form-control" id="userpwd" name="guestPwd"
+		                   <input type="password" class="form-control" id="userpwd" name="pwd"
 		                   		placeholder="비밀번호 입력" maxlength="30" required="required">
 		                      
 		                   <small id="infoPwd" class="form-text text-muted">영문자, 숫자, 특수문자를 조합하여 8~30자를 입력하세요.</small>
@@ -179,7 +179,7 @@
 			              <div class="form-group">
 			                     <label for="hostpwd" class="font-green" >비밀번호</label>
 			                   <div class="inline-block">
-				                   <input type="password" class="form-control" id="hostpwd" name="hostpwd"
+				                   <input type="password" class="form-control" id="hostpwd" name="pwd"
 				                   			placeholder="비밀번호 입력" required="required">
 				                   
 				                   <small id="hostinfoPwd" class="form-text text-muted">영대문자, 숫자, 특수문자를 조합하여 8~30자를 입력하세요.</small>

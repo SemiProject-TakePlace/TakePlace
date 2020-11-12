@@ -47,7 +47,7 @@ public class signIn extends HttpServlet {
          // doGet(request, response);
       
        String id = request.getParameter("userId");
-       String pwd = request.getParameter("userPwd");
+       String pwd = request.getParameter("pwd");
 
 //       Member m = new Member(id, pwd);
 //       Host h = new Host(id, pwd);

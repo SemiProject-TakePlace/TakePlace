@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>My Page UI</title>
+<title>Take Place : 프로필 수정</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/bootstrap.min.css" type="text/css" />
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/common.css" type="text/css" />
 
@@ -184,7 +184,7 @@ padding-left : 30%;
               
                     <div class="form-group">
                       <label class="font-green inline-block" >새 비밀번호</label>
-                      <input type="password" name="hostPwd" class="form-control inline-block" aria-describedby="emailHelp" placeholder="비밀번호 입력" maxlength="30">
+                      <input type="password" name="pwd" class="form-control inline-block" aria-describedby="emailHelp" placeholder="비밀번호 입력" maxlength="30">
                       <small id="infoPwd" class="form-text text-muted">영대문자, 숫자, 특수문자를 조합하여 8~30자를 입력하세요.</small>
                     </div>
               

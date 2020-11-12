@@ -34,7 +34,7 @@ public class insertHost extends HttpServlet implements Servlet {
 		
 		String id = request.getParameter("hostid");
 		String mName = request.getParameter("companyName");
-		String pwd = request.getParameter("hostpwd");
+		String pwd = request.getParameter("pwd");
 		String mType = request.getParameter("mType");
 		String email = request.getParameter("hostEmail");
 		

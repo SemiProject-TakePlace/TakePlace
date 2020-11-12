@@ -62,9 +62,9 @@
               
               <!-- 비밀번호 입력 -->
               <div class="form-group">
-                  <label for="userpwd" class="font-green inline-block" >비밀번호</label>
+                  <label for="pwd" class="font-green inline-block" >비밀번호</label>
                   <div class="inline-block">
-                  	<input type="password" class="form-control inline-block" name="userPwd" id="userpwd" required="required" placeholder="비밀번호 입력">
+                  	<input type="password" class="form-control inline-block" name="pwd" id="userpwd" required="required" placeholder="비밀번호 입력">
               	</div>
               </div>
               
@@ -89,15 +89,15 @@
    $(document).ready(function() {
       $("#loginSubmit").click(function() {
          var userid = $("#userid").val();
-         var userpwd = $("#userpwd").val();
+         var pwd = $("#userpwd").val();
          
          // ajax 시작
          $.ajax({
             url : "/takeplace/signIn.me",
             type : "POST",
             data : {
-               userId :  $("#userid").val(),
-               userPwd : $("#userpwd").val()
+               userId : $("#userid").val(),
+               pwd : $("#userpwd").val()
             },
             // dataType
             success : function(data) {
