@@ -499,10 +499,16 @@
 		    var startMonth = ableDate[0].substr(5, 2);
 		    var startDay = ableDate[0].substr(8, 2);
 		    var startTime = ableDate[0].substr(11, 2);
+		    var endYear = ableDate[1].substr(0, 4);
+		    var endMonth = ableDate[1].substr(5, 2);
+		    var endDay = ableDate[1].substr(8, 2);
 		    
 		    var fromAbleDate = new Date(startYear, startMonth - 1 , startDay);
+		    var toAbleDate = new Date(endYear, endMonth - 1 , endDay);
+		    
 			var start = new Date(startYear, startMonth - 1 , startDay),
-								prevDay;		
+								prevDay;
+			var end = new Date(endYear, endMonth - 1 , endDay);
 
 		    $("#selectDate").datepicker({
 		    	multipleDates: true,
