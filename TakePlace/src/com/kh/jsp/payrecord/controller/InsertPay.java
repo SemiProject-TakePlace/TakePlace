@@ -66,7 +66,9 @@ public class InsertPay extends HttpServlet {
 		try {
 
 			ps.insertPay(pr);
-			response.sendRedirect("views/payrecord/paySuccess.jsp");
+			//response.sendRedirect("views/payrecord/paySuccess.jsp");
+			
+			page = "views/payrecord/paySuccess.jsp";
 
 		} catch (Exception e) {
 
