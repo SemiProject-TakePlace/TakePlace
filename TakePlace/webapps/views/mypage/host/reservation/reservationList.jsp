@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>예약 현황</title>
+<title>Take Place : 예약 현황</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/bootstrap.min.css" type="text/css" />
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/common.css" type="text/css" />
 
@@ -297,7 +297,14 @@
                                               <li>결과</li>
                                        </ul>                                        
                                       </li>
-                                      <!-- 게시물이 출력될 영역 -->                                 
+                                      <!-- 게시물이 출력될 영역 -->     
+                                      <% int count=0; %> 
+                                      <% for(Reservation r : list) { %>
+                                      <% if(r.getBsnum().equals(mem.getBsnum())) { %>   
+                                         <% count++;%>
+                                      <% } %>  
+                                    <% } %> 
+                                                                  
                                       <% for(Reservation r : list) { %>
                                       <% if(r.getBsnum().equals(mem.getBsnum())){ %>
                                <input type="hidden" name="pno" value="<%= p.getPno() %>"/>
@@ -305,7 +312,7 @@
                                <input type="hidden" name="pisok" value="<%= r.getPisOk() %>"/>     
                                       <li id="liContext">
                                           <ul>
-                                              <li><%= r.getPreqno() %></li>
+                                              <li><%= count-- %></li>
                                               <li><%= r.getPname() %></li>
                                               <li><%= r.getResDate() %></li>
                                               <li><%= r.getGname() %></li>

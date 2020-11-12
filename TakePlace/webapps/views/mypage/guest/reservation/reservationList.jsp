@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>예약 현황</title>
+<title>Take Place : 예약 현황</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/bootstrap.min.css" type="text/css" />
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/common.css" type="text/css" />
 
@@ -202,16 +202,16 @@
 */
 
 .disabled {
-		background: gray;
-		border: none;
-		color: #ffffff;
-		}	
-	.disabled:hover {
-		background: gray;
-		color: #ffffff;
-		border: none;
-		cursor: default;
-		}
+      background: gray;
+      border: none;
+      color: #ffffff;
+      }   
+   .disabled:hover {
+      background: gray;
+      color: #ffffff;
+      border: none;
+      cursor: default;
+      }
 
 </style>
 
@@ -307,13 +307,13 @@
                                       </li>
                                       <!-- 게시물이 출력될 영역 -->                                 
                                       <% for(Reservation r : list) { %>
-                                   	  <% if( r.getPisPaid() == 'N'){ %>
+                                        <% if( r.getPisPaid() == 'N'){ %>
                                <input type="hidden" name="pno" value="<%= p.getPno() %>"/>
                                <input type="hidden" name="preqno" value="<%= r.getPreqno() %>"/>
                                       
-                                      <li id="liContext">
+                                      <li class="liContext">
                                           <ul>
-                                              <li><%= r.getPreqno() %></li>
+                                              <li class="preqno"><%= r.getPreqno() %></li>
                                               <li><%= r.getPname() %></li>
                                               <li><%= r.getResDate() %></li>
                                               <li><%= r.getGdemand() %></li>
@@ -329,18 +329,18 @@
                                               <% } else { %>
                                                <li>승인</li>
                                                <li>
-                                                    <button class="btn btn-tp-custom-green" id="paybtn" onclick="pay();">결제하기</button>
+                                                    <button class="btn btn-tp-custom-green"">결제하기</button>
                                                </li>
                                                 <% } %>
                                                 
                                                 <li>
-                                                    <div class="btn btn-tp-custom-green">예약취소</div>
+                                                    <div class="btn btn-tp-custom-green payBtn">예약취소</div>
                                                </li>
                                               
                                           </ul>
                                       </li>
                                       <% } %>
-                            		<% } %>                          
+                                  <% } %>                          
                                   </ul>
                               </li>
                               </ul>
@@ -354,21 +354,22 @@
                 </div>   
               
          </div>
-    	
-    		<script>
-              
-               $(function(){
-                   $('#liContext ul li #paybtn').click(function(){
-                      var preqno = $(this).siblings().eq(0).text();
-                      console.log(preqno);
-                      
-                      // location.href = "<%= request.getContextPath() %>/deleteReservation.me?preqno=" + preqno; 
-                      
-                   });
-                });
+       
+          <script>
+       
+           $(function(){
+                 $(".container").on("click", ".payBtn", function(){
+ 				 var preqno = $(this).parents(".liContext").find(".preqno").text();
+				 console.log(preqno);
+				
+				 location.href = "<%= request.getContextPath() %>/deleteReservation.me?preqno=" + preqno; 
+
+                 });
+              });
+       
             </script>
                  
-	            
+               
             <!-- 여기가 컨텐츠 끝 -->
          </div>
       </div>

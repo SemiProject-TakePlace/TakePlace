@@ -35,7 +35,7 @@ public class insertGuest extends HttpServlet {
 		
 		String id = request.getParameter("guestId");
 		String mName = request.getParameter("userNick");
-		String pwd = request.getParameter("guestPwd");
+		String pwd = request.getParameter("pwd");
 		String mType = request.getParameter("mType");
 		String email = request.getParameter("guestEmail");
 
