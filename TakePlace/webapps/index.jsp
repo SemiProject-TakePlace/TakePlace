@@ -86,7 +86,7 @@
 					<div class="row">
 					<!-- 여기서부터 for문 사용하여 8개 상품 돌리기 -->
 						<% for(Product p : listTop) { %>
-						<div class="col">
+						<div class="pcard">
 							<input type="hidden" name="pno" id="pno" value="<%= p.getPno() %>" />
 							
 								<div class="card">
@@ -110,7 +110,6 @@
 									  		</small>
 										    <h5 class="card-title font-bold"><%= p.getPname() %></h5>
 										    <p class="card-text"><%= p.getPprice() %>원</p>
-										    <small class="rating">평점 <span class="font-green"><%= p.getPrating() %></span></small>
 									  </div>
 								</div>
 						</div>
@@ -127,7 +126,7 @@
 				<div class="container">
 					<div class="row">
 						<% for(Product p : list) { %>
-						<div class="col">
+						<div class="pcard">
 							<input type="hidden" name="pno" id="pno" value="<%= p.getPno() %>" />
 							
 								<div class="card">
@@ -151,7 +150,6 @@
 									  		</small>
 										    <h5 class="card-title font-bold"><%= p.getPname() %></h5>
 										    <p class="card-text"><%= p.getPprice() %>원</p>
-										    <small class="rating">평점 <span class="font-green"><%= p.getPrating() %></span></small>
 									  </div>
 								</div>
 						</div>
@@ -164,7 +162,14 @@
 	
 	<%@ include file="views/common/footer.jsp" %>
 
-
+	<script>
+		$(function() {
+			$(".pcard").click(function() {
+				var pno = $(this).children("#pno").val();
+				location.href="<%= request.getContextPath()%>/selectOneProduct.pr?pno=" + pno;
+			})
+		})
+	</script>
 
 
 </body>

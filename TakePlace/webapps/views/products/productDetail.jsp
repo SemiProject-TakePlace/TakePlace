@@ -322,7 +322,7 @@
 						<dd><%= p.getMname() %></dd>
 						<dt class="font-bold font-green">가격</dt>
 						<dd><%= p.getPprice() %></dd>
-						<dt class="font-bold font-green">HOST 평점</dt>
+						<dt class="font-bold font-green">공간 평점</dt>
 						<dd><%= rating %></dd>
 					</dl>
 				</div>
