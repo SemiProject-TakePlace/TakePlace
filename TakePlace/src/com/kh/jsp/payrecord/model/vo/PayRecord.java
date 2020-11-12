@@ -31,6 +31,15 @@ public class PayRecord implements Serializable{
 		this.payAmount = payAmount;
 		this.payStatus = payStatus;
 	}
+	
+	
+
+
+	public PayRecord(int mno, int preqno) {
+		super();
+		this.mno = mno;
+		this.preqno = preqno;
+	}
 
 
 	public PayRecord(int payno, int mno, int preqno) {

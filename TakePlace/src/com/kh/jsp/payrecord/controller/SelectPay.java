@@ -34,8 +34,6 @@ public class SelectPay extends HttpServlet {
       
       int pno = Integer.parseInt(request.getParameter("pno"));
       int preqno = Integer.parseInt(request.getParameter("preqno"));
-      
-      System.out.println("pno= " + pno + ", preqno : " + preqno);
 
       PayService ps = new PayService();
 
@@ -46,9 +44,9 @@ public class SelectPay extends HttpServlet {
 		 request.setAttribute("pno", pno);
 		 request.setAttribute("preqno", preqno);
          
-         Product p = ps.selectOnePay(pno);
+         Reservation r = ps.selectOnePay(pno, preqno);
          
-         request.setAttribute("product", p);
+         request.setAttribute("reservation", r);
          
          // Reservation r = ps.selectOnePayReservation(preqno);
          

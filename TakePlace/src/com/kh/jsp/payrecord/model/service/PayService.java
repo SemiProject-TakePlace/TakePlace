@@ -15,16 +15,21 @@ public class PayService {
 	private Connection con;
 	private PayDAO pDAO = new PayDAO();
 
-	public Product selectOnePay(int pno) {
+	public Reservation selectOnePay(int pno, int preqno) {
 		con = getConnection();
 		
-		Product p = pDAO.selectOnePay(con, pno);
+		Reservation r = pDAO.selectOnePay(con, pno);
 		
-		if( p != null ) {
-			// 예약 횟수 1 증가
+		if( r != null ) {
+			// PRODUCT 테이블 예약 횟수 1 증가
 			int result = pDAO.updatePayCount(con, pno);
 			
-			if(result > 0 ) {
+			// RESERVATION 테이블 결제 여부 변경
+			int result2 = pDAO.updateIsPay(con, preqno);
+			
+			System.out.println("result = " + result + ", result2 = " + result2);
+			
+			if(result > 0 && result2 > 0) {
 				commit(con);
 			} else {
 				rollback(con);
@@ -35,7 +40,7 @@ public class PayService {
 		
 		//System.out.println(p);
 		
-		return p;
+		return r;
 	}
 	
 //	public Reservation selectOnePayReservation(int preqno) {
@@ -50,10 +55,10 @@ public class PayService {
 //		return r;
 //	}
 
-	public int insertPay(PayRecord pr) {
+	public int insertPay(int mno, int preqno) {
 		con = getConnection();
 		
-		int result = pDAO.insertPay(con, pr);
+		int result = pDAO.insertPay(con, mno, preqno);
 		
 		if(result > 0) commit(con);
 		else rollback(con);
