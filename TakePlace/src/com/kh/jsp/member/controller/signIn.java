@@ -59,27 +59,42 @@ public class signIn extends HttpServlet {
        m = ms.selectMember(m);
        
        if (m != null) {
-    	 
-          // h = ms.selectHost(h, m);
     	   
-          HttpSession session = request.getSession();
-          
-//          session.setAttribute("member", m);
-//          session.setAttribute("host", h);
-          
-          session.setAttribute("member", m);
-          
-          response.sendRedirect("index");
+    	   if(m.getMtype().equals("HOST")) {
+    		   
+    	   
+    		   if(m.getHisok().equals("N")) { // 승인 받지않은 호스트
 
-       } else {
-          response.getWriter().write("fail");
-          
-          request.setAttribute("error-msg", "회원 로그인 실패!");
-          
-          return;
+    			   request.setAttribute("error-msg", "관리자의 승인을 기다려주세요!");
+    			   // 왜 안가냐.. 에러페이지로....?
+    			   request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+    			   
+    	     
+    	  } else if(m.getHisok().equals("Y")) { // 승인 받은 호스트
+            HttpSession session = request.getSession();
+            
+            session.setAttribute("member", m);
+            
+            response.sendRedirect("index");
+  	        
+    	  }
 
+       } else { // 게스트와 매니저는 그냥 로그인 가능
+    	   HttpSession session = request.getSession();
+           
+           session.setAttribute("member", m);
+           
+           response.sendRedirect("index");
+
+       		}
+
+       } else { // m이 null 즉, 잘못된 정보로 로그인 시 ajax로..
+           response.getWriter().write("fail");
+           
+           request.setAttribute("error-msg", "회원 로그인 실패!");
+           
+           return;
        }
-
    }
-
 }
+

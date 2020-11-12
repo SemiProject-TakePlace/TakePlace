@@ -112,6 +112,38 @@ public class MypageService {
 		return hmap;
 	}
 
-	
+	public int pisokChange(int preqno) {
+		con = getConnection(); 
+		
+		int result = mDAO.pisokChange(con, preqno); 
+		
+		if(result > 0) { 
+			commit(con);
+		} else {
+			rollback(con);
+		} 
+		
+		close(con);
+		
+		return result;
+
+	}
+
+	public int pisokCancel(int preqno) {
+		con = getConnection(); 
+		
+		int result = mDAO.pisokCancel(con, preqno); 
+		
+		if(result > 0) { 
+			commit(con);
+		} else {
+			rollback(con);
+		} 
+		
+		close(con);
+		
+		return result;
+
+	}
 }
 

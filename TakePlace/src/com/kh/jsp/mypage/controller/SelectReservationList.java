@@ -38,6 +38,7 @@ public class SelectReservationList extends HttpServlet {
 		// 1. 게시판 목록 처리용 변수
 		ArrayList<Reservation> list = new ArrayList<>();
 		Product p = new Product();
+		
 		MypageService ms = new MypageService();
 		
 		HashMap<String, Object> product = ms.selectRList(list, p);
@@ -48,8 +49,6 @@ public class SelectReservationList extends HttpServlet {
 	
 		String page = "";
 		
-		
-			
 			if(mem.getMtype().equals("GUEST")) {
 				
 			request.setAttribute("list", product.get("list"));
@@ -65,6 +64,10 @@ public class SelectReservationList extends HttpServlet {
 			page = "views/mypage/host/reservation/reservationList.jsp";
 				
 			}
+			
+			 request.getRequestDispatcher(page)
+             .forward(request, response);
+      
 			
 	}
 

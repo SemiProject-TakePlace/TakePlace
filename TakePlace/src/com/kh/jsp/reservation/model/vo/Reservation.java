@@ -1,7 +1,6 @@
 package com.kh.jsp.reservation.model.vo;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 public class Reservation implements Serializable{
 
@@ -19,13 +18,15 @@ public class Reservation implements Serializable{
    private int payAmount;     // 총 결제금액
    
    private String pname; 
+   private String bsnum;
+   private int mno;
    
    public Reservation() {
       super();
    }
 
    public Reservation(int preqno, int pno, String gname, String gtel, String resDate, String gdemand, char pisOk,
-         char pisPaid, char pisCncld, int payAmount, String pname) {
+         char pisPaid, char pisCncld, int payAmount, String pname, String bsnum, int mno) {
       super();
       this.preqno = preqno;
       this.pno = pno;
@@ -38,9 +39,9 @@ public class Reservation implements Serializable{
       this.pisCncld = pisCncld;
       this.payAmount = payAmount;
       this.pname = pname;
+      this.bsnum = bsnum;
+      this.mno = mno;
    }
-
-   
 
    public Reservation(int pno, String gname, String gtel, String resDate, String gdemand) {
       super();
@@ -51,14 +52,15 @@ public class Reservation implements Serializable{
       this.gdemand = gdemand;
    }
 
-   @Override
-   public String toString() {
-      return "Reservation [preqno=" + preqno + ", pno=" + pno + ", gname=" + gname + ", gtel=" + gtel + ", resDate="
-            + resDate + ", gdemand=" + gdemand + ", pisOk=" + pisOk + ", pisPaid=" + pisPaid + ", pisCncld="
-            + pisCncld + ", payAmount=" + payAmount + "]";
-   }
+@Override
+public String toString() {
+	return "Reservation [preqno=" + preqno + ", pno=" + pno + ", gname=" + gname + ", gtel=" + gtel + ", resDate="
+			+ resDate + ", gdemand=" + gdemand + ", pisOk=" + pisOk + ", pisPaid=" + pisPaid + ", pisCncld=" + pisCncld
+			+ ", payAmount=" + payAmount + ", pname=" + pname + ", bsnum=" + bsnum + ", mno=" + mno + "]";
+}
 
-   public int getPreqno() {
+
+public int getPreqno() {
       return preqno;
    }
 
@@ -145,8 +147,24 @@ public class Reservation implements Serializable{
    public void setPname(String pname) {
       this.pname = pname;
    }
+
+   public String getBsnum() {
+	   return bsnum;
+   }
+
+   public void setBsnum(String bsnum) {
+	   this.bsnum = bsnum;
+   }
+
+   public int getMno() {
+	   return mno;
+   }
+
+   public void setMno(int mno) {
+	   this.mno = mno;
+   }
    
-   
+   	
    
    
 
