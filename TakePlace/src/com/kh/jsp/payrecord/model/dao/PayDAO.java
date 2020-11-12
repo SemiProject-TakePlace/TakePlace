@@ -37,8 +37,8 @@ public class PayDAO {
 		}
 	}
 
-	public Product selectOnePay(Connection con, int pno) {
-		Product p = null;
+	public Reservation selectOnePay(Connection con, int preqno) {
+		Reservation r = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
@@ -47,15 +47,14 @@ public class PayDAO {
 		try {
 			pstmt = con.prepareStatement(sql);
 			
-			pstmt.setInt(1, pno);
+			pstmt.setInt(1, preqno);
 			
 			rset = pstmt.executeQuery();
 			
 			if (rset.next()) {
-				p = new Product();
+				r = new Reservation();
 				
-	            p.setPno(rset.getInt("pno"));
-	            p.setPname(rset.getString("pname"));
+	            r.setPreqno(rset.getInt("preqno"));
 				
 			}
 			
@@ -66,14 +65,12 @@ public class PayDAO {
 			close(pstmt);
 		}
 		
-		//System.out.println(p);
+		System.out.println(r);
 		
-		
-		
-		return p;
+		return r;
 	}
 
-	public int insertPay(Connection con, PayRecord pr) {
+	public int insertPay(Connection con, int mno, int preqno) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("insertPay");
@@ -81,10 +78,14 @@ public class PayDAO {
 		try {
 			pstmt = con.prepareStatement(sql);
 			
-			pstmt.setInt(1, pr.getMno());
-			pstmt.setInt(2, pr.getPreqno());
+			pstmt.setInt(1, mno);
+			pstmt.setInt(2, preqno);
 			
 			result = pstmt.executeUpdate();
+			
+			System.out.println(mno);
+			System.out.println(preqno);
+			System.out.println("result : " + result);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -117,6 +118,31 @@ public class PayDAO {
 		
 		return result;
 	}
+
+	public int updateIsPay(Connection con, int preqno) {
+		int result2 = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateIsPay");
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, preqno);
+			
+			result2 = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result2;
+	}
+
+	
 
 	
 	/*

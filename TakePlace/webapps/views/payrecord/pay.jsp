@@ -59,8 +59,8 @@
 				  <input type="hidden" name="mno" id="mno" value="<%= mem.getMno() %>" />
 				  <input type="hidden" name="preqno" id="preqno" value="<%= preqno %>" />
 				  <input type="hidden" name="pno" id="pno" value="<%= pno %>" />
-				  <input type="hidden" name="pname" id="pname" value="<%= p.getPname() %>" />
-				  <input type="hidden" name="price" id="price" value="10000" />
+				  <input type="hidden" name="pname" id="pname" value="공간" />
+				  <input type="hidden" name="price" id="price" value="100" />
 				  <input type="hidden" name="num" id="num" value="1" />
 				  
 				  <input type="hidden" name="email" value="<%= mem.getEmail() %>" />
@@ -129,9 +129,16 @@
 							//기타 필요한 데이터가 있으면 추가 전달
 							}
 						});
-						location.href="/takeplace/views/payrecord/paySuccess.jsp?item=place&pay_method="+rsp.pay_method
+						<%--
+						location.href="/takeplace/insertPay.pa?item=place&pay_method="+rsp.pay_method
 								+"&num=" + $('#num').val() + "&nick="+rsp.buyer_name + "&price="+ $('#price').text()
 								+"&date="+rsp.paid_at+"&price="+rsp.paid_amount;
+						--%>		
+						<%--
+						location.href="/takeplace/insertPay.pa?mno= + $('#mno').val() + "&preqno=" + $('#preqno').val();
+						--%>
+						location.href="<%=request.getContextPath()%>/insertPay.pa?mno="+$('#mno').val()+"&preqno="+$('#preqno').val();
+						
 					} else {
 						var msg = '결제에 실패하였습니다.';
 						msg += '\n에러내용 : ' + rsp.error_msg;

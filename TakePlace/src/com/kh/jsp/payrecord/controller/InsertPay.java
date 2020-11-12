@@ -41,14 +41,9 @@ public class InsertPay extends HttpServlet {
 		
 		int mno = Integer.parseInt(request.getParameter("mno")); // 회원 번호
 		int preqno = Integer.parseInt(request.getParameter("preqno")); // 예약 고유 번호
-		
-		int price = Integer.parseInt(request.getParameter("price"));
-		int num = Integer.parseInt(request.getParameter("num"));
-		
-		request.setAttribute("price", price);
-		request.setAttribute("num", num);
+		System.out.println("인서트 페이 서블릿임. mno : " + mno + "preqno" + preqno);
 
-		PayRecord pr = new PayRecord();
+		PayRecord pr = new PayRecord(mno, preqno);
 
 		//r.setPno(preqno);
 		pr.setMno(mno);
@@ -59,26 +54,29 @@ public class InsertPay extends HttpServlet {
 		PayService ps = new PayService();
 
 		//String page = "views/reservation/reservationWait.jsp";
-		String page = "views/payrecord/pay.jsp";
+		String page = "";
 		
 		System.out.println(pr);
 
-		try {
-
-			ps.insertPay(pr);
-			//response.sendRedirect("views/payrecord/paySuccess.jsp");
+			int result = ps.insertPay(mno, preqno);
 			
-			page = "views/payrecord/paySuccess.jsp";
+			if (result > 0 ) {
+				page = "views/payrecord/paySuccess.jsp";
+				
+			} else {
+				
+			//response.sendRedirect("views/payrecord/paySuccess.jsp");
 
-		} catch (Exception e) {
-
-			request.setAttribute("exception", e);
+			request.setAttribute("exception", new Exception("공간 등록 에러!"));
 			request.setAttribute("error-msg", "예약 요청 페이지 조회 실패!");
 
 			page = "views/common/errorPage.jsp";
-
-			e.printStackTrace();
-		}
+			
+			
+			} 
+		
+			request.getRequestDispatcher(page).forward(request, response);
+		
 		
 		
 		
