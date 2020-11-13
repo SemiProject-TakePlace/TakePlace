@@ -194,22 +194,22 @@
         height:100px;
         align : center;
 
-	}
-	
-	#liContext ul li:last-child {
-		display:flex;
-	}
-	
-	.disabled {
-		background: gray;
-		border: none;
-		}	
-	.disabled:hover {
-		background: gray;
-		color: #ffffff;
-		border: none;
-		cursor: default;
-		}	
+   }
+   
+   #liContext ul li:last-child {
+      display:flex;
+   }
+   
+   .disabled {
+      background: gray;
+      border: none;
+      }   
+   .disabled:hover {
+      background: gray;
+      color: #ffffff;
+      border: none;
+      cursor: default;
+      }   
 </style>
 
 </head>
@@ -298,13 +298,7 @@
                                        </ul>                                        
                                       </li>
                                       <!-- 게시물이 출력될 영역 -->     
-                                      <% int count=0; %> 
-                                      <% for(Reservation r : list) { %>
-                                      <% if(r.getBsnum().equals(mem.getBsnum())) { %>   
-                                         <% count++;%>
-                                      <% } %>  
-                                    <% } %> 
-                                                                  
+                                     
                                       <% for(Reservation r : list) { %>
                                       <% if(r.getBsnum().equals(mem.getBsnum())){ %>
                                <input type="hidden" name="pno" value="<%= p.getPno() %>"/>
@@ -312,7 +306,7 @@
                                <input type="hidden" name="pisok" value="<%= r.getPisOk() %>"/>     
                                       <li id="liContext">
                                           <ul>
-                                              <li><%= count-- %></li>
+                                              <li><%= r.getPreqno() %></li>
                                               <li><%= r.getPname() %></li>
                                               <li><%= r.getResDate() %></li>
                                               <li><%= r.getGname() %></li>
@@ -320,18 +314,18 @@
                                               
                                               <% if(r.getPisOk() == 'N' && r.getPisCncld() == 'N'){ %>
                                               <li>
-                                              	<button class="btn btn-tp-custom-green" onclick="pisok();">승인</button>
+                                                 <button class="btn btn-tp-custom-green" onclick="pisok();">승인</button>
                                               
-                                              	<button class="btn btn-tp-custom-green" onclick="pisCancel();">취소</button>
+                                                 <button class="btn btn-tp-custom-green" onclick="pisCancel();">취소</button>
                                               </li>
                                               <li>미승인</li> 
                                               <% } else if(r.getPisOk() == 'Y' || r.getPisCncld() == 'Y') { %>
                                                <li>
-                                              	<button class="btn btn-tp-custom-green disabled" disabled="disabled">승인</button>
-                                              	<button class="btn btn-tp-custom-green disabled" disabled="disabled">취소</button>
+                                                 <button class="btn btn-tp-custom-green disabled" disabled="disabled">승인</button>
+                                                 <button class="btn btn-tp-custom-green disabled" disabled="disabled">취소</button>
                                               </li>
                                               <% if(r.getPisOk() == 'Y') { %>
-                                              	<li>승인</li>
+                                                 <li>승인</li>
                                                 <% } else if(r.getPisCncld() == 'Y') { %>
                                                 <li>취소</li>
                                                <% } %> 
@@ -339,7 +333,7 @@
                                                
                                           </ul>
                                       </li>
-                          			 <% } %> 
+                                    <% } %> 
                                   <% } %>                        
                                   </ul>
                               </li>
@@ -357,26 +351,26 @@
             <script>
             
             function pisCancel() {
-            	$(function(){
+               $(function(){
                     $('#liContext ul li').click(function(){
                        var preqno = $(this).parent().children().eq(0).text();
                        console.log(preqno);
                        location.href = "<%= request.getContextPath() %>/reservationC.re?preqno=" + preqno; 
                     });
                  });
-				
-			}
+            
+         }
             
             function pisok() {
-            	$(function(){
+               $(function(){
                     $('#liContext ul li').click(function(){
                        var preqno = $(this).parent().children().eq(0).text();
                        console.log(preqno);
                        location.href = "<%= request.getContextPath() %>/reservationY.re?preqno=" + preqno; 
                     });
                  });
-				
-			}
+            
+         }
                 </script>
          
             
