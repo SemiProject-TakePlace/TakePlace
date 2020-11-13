@@ -20,6 +20,7 @@ margin-top: 100px;}
 <body>
 	<%@ include file="../common/header.jsp" %>
 	<% if(mem != null && mem.getMtype().equals("MANAGER")) {/*널포 방지용 !=NULL*/ %>
+	<section id="wrap-contents" class="footer-bottom">
 	<div class="outer">
 		<br>
 			<div class="container">
@@ -50,6 +51,7 @@ margin-top: 100px;}
 
 
 	</div>
+	</section>
 	<% } else {
 		request.setAttribute("msg", "관계자 외에 접근이 불가능한 페이지입니다.");
 		request.getRequestDispatcher("view/common/errorPage.jsp").forward(request, response);

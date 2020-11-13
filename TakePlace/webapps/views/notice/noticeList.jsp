@@ -58,7 +58,7 @@ justify-content: center;}
 <body>
 	<%@ include file="../common/header.jsp" %>
 	
-	<section id="wrap-contents">
+	<section id="wrap-contents" class="footer-bottom">
 		<div class="container">
 			<h2 class="content-title">공지사항</h2>
 	<table cellpadding="0" cellspacing="0" class="tbl-accordion">

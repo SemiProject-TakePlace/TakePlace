@@ -40,7 +40,7 @@
 	
 	<%@ include file="../../../common/managerSidebar.jsp" %>
 	
-	<section id="wrap-contents">
+	<section id="wrap-contents" class="footer-bottom">
 		<div class="mypage-content">
 			<div class="container" >
 				<nav aria-label="breadcrumb">
