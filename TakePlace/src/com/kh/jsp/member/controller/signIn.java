@@ -60,33 +60,33 @@ public class signIn extends HttpServlet {
        m = ms.selectMember(m);
        
        if (m != null) {
-    	   
-    	   if(m.getMtype().equals("HOST")) {
-    		   
-    	   
-    		   if(m.getHisok().equals("N")) { // 승인 받지않은 호스트
-    			   
-    			   response.getWriter().write("hostfail");
-    			   
-    			   request.setAttribute("error-msg", "관리자의 승인을 기다려주세요!");
-    	     
-    	  } else if(m.getHisok().equals("Y")) { // 승인 받은 호스트
+          
+          if(m.getMtype().equals("HOST")) {
+             
+          
+             if(m.getHisok().equals("N")) { // 승인 받지않은 호스트
+                
+                response.getWriter().write("hostfail");
+                
+                request.setAttribute("error-msg", "관리자의 승인을 기다려주세요!");
+            
+         } else if(m.getHisok().equals("Y")) { // 승인 받은 호스트
             HttpSession session = request.getSession();
             
             session.setAttribute("member", m);
             
             response.getWriter().write("index");
-  	        
-    	  }
+             
+         }
 
        } else { // 게스트와 매니저는 그냥 로그인 가능
-    	   HttpSession session = request.getSession();
+          HttpSession session = request.getSession();
            
            session.setAttribute("member", m);
            
            response.getWriter().write("index");
 
-       		}
+             }
 
        } else { // m이 null 즉, 잘못된 정보로 로그인 시 ajax로..
            response.getWriter().write("fail");
@@ -97,4 +97,3 @@ public class signIn extends HttpServlet {
        }
    }
 }
-

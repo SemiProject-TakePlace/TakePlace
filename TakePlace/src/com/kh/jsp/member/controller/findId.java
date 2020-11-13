@@ -171,8 +171,8 @@ public class findId extends HttpServlet {
    }
    
    private void sendEmail(String email, String newPwd){
-      String user = "dms45678@naver.com";
-      String password = "951753ad"; // 실제 네이버 비번입력  // 전에 smtp 네이버메일에서 설정하기!!
+      String user = "gkdud6717@naver.com";
+      String password = ""; // 실제 네이버 비번입력  // 전에 smtp 네이버메일에서 설정하기!!
       
       String host = "smtp.naver.com"; // smtp 서버
       String content = "임시 비밀번호 : " + newPwd;
