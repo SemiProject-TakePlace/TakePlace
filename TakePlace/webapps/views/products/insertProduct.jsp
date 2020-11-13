@@ -56,7 +56,7 @@ input[type="file"] {
 			<form id="insertProduct" method="post" name="insertProduct"
 					action="<%=request.getContextPath()%>/insertProduct.pr"
 					enctype="multipart/form-data">
-					
+				
 				<input type="hidden" name="bsNum" id="bsNum" value="<%=mem.getBsnum()%>"/>
 				
 			  <div class="form-group">

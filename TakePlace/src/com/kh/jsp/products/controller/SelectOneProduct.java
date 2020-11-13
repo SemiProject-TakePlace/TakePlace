@@ -36,9 +36,6 @@ public class SelectOneProduct extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession session = request.getSession();
-		AllMember mem = (AllMember)session.getAttribute("member");
-		
 		int pno = Integer.parseInt(request.getParameter("pno"));
 		
 		HashMap<String, Object> product = new ProductService().selectOne(pno);
@@ -48,6 +45,8 @@ public class SelectOneProduct extends HttpServlet {
         						= new ProductReviewService().selectList(pno);
 		 
 		ProductService ps = new ProductService();
+		
+		ps.calcRating(pno); // 이용후기가 있으면 평균 점수 계산
 		
 		String page = "";
 
