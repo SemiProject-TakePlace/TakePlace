@@ -22,6 +22,7 @@ margin-top: 100px;}
 <body>
 	<%@ include file="../common/header.jsp" %>
 	<% if(mem != null && mem.getMtype().equals("MANAGER")){ %>
+	<section id="wrap-contents" class="footer-bottom">
 	<div class="container">
 		<br>
 		<div class="tableArea">
@@ -66,6 +67,7 @@ margin-top: 100px;}
 				</div>
 			
 		</div>
+		</section>
 	
 	<% } else {
 		request.setAttribute("msg", "관계자 외에 접근이 불가능한 페이지입니다.");
