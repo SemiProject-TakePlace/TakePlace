@@ -25,17 +25,17 @@
    }
    
    /*
-   	컨텐츠 상하 가운데 정렬 / 해상도에 따라 다르기때문에 우선 보류
+      컨텐츠 상하 가운데 정렬 / 해상도에 따라 다르기때문에 우선 보류
    .login-content {
-	   	position: absolute;
-	    top: 45%;
-	    left: 50%;
-	    transform: translate(-50%, -50%);
+         position: absolute;
+       top: 45%;
+       left: 50%;
+       transform: translate(-50%, -50%);
    }
    */
  
    .to-login a:hover {
-   		color: #82cbc4;
+         color: #82cbc4;
    }
   
    
@@ -56,16 +56,16 @@
             <div class="form-group">
                <label for="userid" class="font-green inline-block" >아이디</label>
                <div class="inline-block">
-               		<input type="text" class="form-control inline-block" name="userId" id="userid" required="required" placeholder="아이디 입력">         
-            	</div>
+                     <input type="text" class="form-control inline-block" name="userId" id="userid" required="required" placeholder="아이디 입력">         
+               </div>
             </div>
               
               <!-- 비밀번호 입력 -->
               <div class="form-group">
                   <label for="pwd" class="font-green inline-block" >비밀번호</label>
                   <div class="inline-block">
-                  	<input type="password" class="form-control inline-block" name="pwd" id="userpwd" required="required" placeholder="비밀번호 입력">
-              	</div>
+                     <input type="password" class="form-control inline-block" name="pwd" id="userpwd" required="required" placeholder="비밀번호 입력">
+                 </div>
               </div>
               
               <div id="box">
